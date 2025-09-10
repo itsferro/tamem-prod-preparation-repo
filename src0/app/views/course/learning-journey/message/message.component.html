@@ -1,213 +1,0 @@
-<!-- message/message.component.html -->
-<div class="message-container" [ngClass]="messageTemplate + '-message'">
-    <div class="message-icon">
-        @switch (messageTemplate) {
-            @case ('welcome-message') {
-                <div class="icon intro-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                    </svg>
-                </div>
-                }
-<!-- 
-        @case ('journey-intro') {
-        <div class="icon intro-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-        </div>
-        }
-        @case ('success') {
-        <div class="icon success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-        </div>
-        }
-        @case ('practice') {
-        <div class="icon practice-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-        </div>
-        }
-        @case ('test') {
-        <div class="icon test-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-        </div>
-        } -->
-        }
-    </div>
-
-    <div class="message-content">
-        @switch (messageTemplate) {
-        <!-- Updated intro message template section -->
-
-        @case ('welcome-message') {
-            <div class="message-header">
-                <h2>لنبدأ رحلة التعلم الخاصة بك!</h2>
-                <span class="badge">جديد</span>
-            </div>
-            <div class="message-body">
-                <p class="highlighted-text">أنت على وشك البدء في: <strong> block.title </strong></p>
-                <p>اختر كيف تريد البدء في رحلة التعلم الخاصة بك:</p>
-    
-                <div class="mode-selection">
-                    <div class="mode-option" (click)="setResp('practice')">
-                        <div class="mode-icon practice-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <h3>وضع التدريب</h3>
-                        <p>تدرب بدون ضغط وتعلم من أخطائك</p>
-                        <button class="mode-button">ابدأ التدريب</button>
-                    </div>
-    
-                    <div class="mode-option" (click)="setResp('test')">
-                        <div class="mode-icon test-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                        </div>
-                        <h3>وضع الاختبار</h3>
-                        <p>اختبر معرفتك وتقدم في رحلتك</p>
-                        <button class="mode-button">ابدأ الاختبار</button>
-                    </div>
-                </div>
-            </div>
-            }
-
-
-<!-- 
-        @case ('journey-intro') {
-        <div class="message-header">
-            <h2>لنبدأ رحلة التعلم الخاصة بك!</h2>
-            <span class="badge">جديد</span>
-        </div>
-        <div class="message-body">
-            <p class="highlighted-text">أنت على وشك البدء في: <strong> block.title </strong></p>
-            <p>اختر كيف تريد البدء في رحلة التعلم الخاصة بك:</p>
-
-            <div class="mode-selection">
-                <div class="mode-option" (click)="setResp('practice')">
-                    <div class="mode-icon practice-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>وضع التدريب</h3>
-                    <p>تدرب بدون ضغط وتعلم من أخطائك</p>
-                    <button class="mode-button">ابدأ التدريب</button>
-                </div>
-
-                <div class="mode-option" (click)="setResp('test')">
-                    <div class="mode-icon test-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                    </div>
-                    <h3>وضع الاختبار</h3>
-                    <p>اختبر معرفتك وتقدم في رحلتك</p>
-                    <button class="mode-button">ابدأ الاختبار</button>
-                </div>
-            </div>
-        </div>
-        }
-        @case ('success') {
-        <div class="message-header">
-            <h2>تهانينا!</h2>
-            <div class="animation-confetti"></div>
-        </div>
-        <div class="message-body">
-            <p>لقد أكملت هذا التحدي بنجاح.</p>
-            @if (score) {
-            <div class="score-display">
-                <div class="score-circle">
-                    <span class="score-value"> score</span>
-                    <span class="score-label">النتيجة</span>
-                </div>
-                <div class="stars-container">
-                    @for (star of [1, 2, 3, 4, 5]; track star) {
-                    <span class="star" [class.filled]="star <= Math.ceil(score/20)">★</span>
-                    }
-                </div>
-            </div>
-            }
-        </div>
-        }
-        @case ('practice') {
-        <div class="message-header">
-            <h2>وضع الممارسة</h2>
-            <span class="badge practice-badge">تدريب</span>
-        </div>
-        <div class="message-body">
-            <p class="highlighted-text">خذ وقتك للتدرب بدون ضغط.</p>
-            <p>يمكنك إعادة المحاولة عدة مرات حسب حاجتك.</p>
-            <div class="practice-tips">
-                <div class="tip">
-                    <div class="tip-icon">💡</div>
-                    <p>راجع إجاباتك واستفد من الملاحظات</p>
-                </div>
-                <div class="tip">
-                    <div class="tip-icon">🔄</div>
-                    <p>كرر المحاولة حتى تتقن المفاهيم</p>
-                </div>
-            </div>
-        </div>
-        }
-        @case ('test') {
-        <div class="message-header">
-            <h2>وضع الاختبار</h2>
-            <span class="badge test-badge">اختبار</span>
-        </div>
-        <div class="message-body">
-            <p class="highlighted-text">حان الوقت لاختبار معرفتك.</p>
-            <p>أكمل التحدي للتقدم في رحلة التعلم الخاصة بك.</p>
-            <div class="test-info">
-                <div class="info-item">
-                    <div class="info-label">وقت الاختبار:</div>
-                    <div class="info-value">10 دقائق</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">درجة النجاح:</div>
-                    <div class="info-value">70%</div>
-                </div>
-            </div>
-        </div>
-        } -->
-        @default {
-        <div class="message-body">
-            <p>استمر في رحلة التعلم الخاصة بك.</p>
-        </div>
-        }
-        }
-    </div>
-</div>
