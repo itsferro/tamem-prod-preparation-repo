@@ -1,0 +1,180 @@
+<div class="bg-light rounded-3 p-4 mb-3">
+  <div class="d-md-flex justify-content-between align-items-center">
+    <div>
+      <h6 class="h5">Activity Logs</h6>
+      <p class="mb-1 mb-md-0">
+        You can save your all activity logs including unusual activity detected.
+      </p>
+    </div>
+
+    <div class="form-check form-switch form-check-md mb-0">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="checkPrivacy1"
+        checked
+      />
+    </div>
+  </div>
+</div>
+
+<div class="bg-light rounded-3 p-4 mb-3">
+  <div class="d-md-flex justify-content-between align-items-center">
+    <div>
+      <h6 class="h5">Change Password</h6>
+      <p class="mb-1 mb-md-0">Set a unique password to protect your account.</p>
+    </div>
+
+    <div>
+      <a class="btn btn-primary mb-1" (click)="openModal(changePassword)"
+        >Change Password</a
+      >
+      <p class="mb-0 small h6">Last change 10 Aug 2020</p>
+    </div>
+  </div>
+</div>
+
+<div class="bg-light rounded-3 p-4">
+  <div class="d-md-flex justify-content-between align-items-center">
+    <div>
+      <h6 class="h5">2 Step Verification</h6>
+      <p class="mb-1 mb-md-0">
+        Secure your account with 2 Step security. When it is activated you will
+        need to enter not only your password, but also a special code using app.
+        You can receive this code by in mobile app.
+      </p>
+    </div>
+
+    <div class="form-check form-switch form-check-md mb-0">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="checkPrivacy13"
+        checked
+      />
+    </div>
+  </div>
+</div>
+
+<div class="card border mt-4">
+  <div class="card-header border-bottom">
+    <h5 class="card-header-title">Active Logs</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive border-0">
+      <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="border-0 rounded-start">Browser</th>
+            <th scope="col" class="border-0">IP</th>
+            <th scope="col" class="border-0">Time</th>
+            <th scope="col" class="border-0 rounded-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of logList; track $index) {
+            <tr>
+              <td>{{ item.device }}</td>
+
+              <td>{{ item.ip }}</td>
+
+              <td>{{ item.date }}</td>
+
+              <td>
+                <button class="btn btn-sm btn-danger-soft me-1 mb-1 mb-md-0">
+                  Sign out
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #changePassword let-modal>
+  <div class="modal-header bg-dark">
+    <h5 class="modal-title text-white" id="changePasswordLabel">
+      Change Password
+    </h5>
+    <button
+      type="button"
+      class="btn btn-sm btn-light mb-0 ms-auto"
+      (click)="modal.close()"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="row">
+      <p class="mb-2">
+        Your password has expired, Please choose a new passowrd
+      </p>
+
+      <div class="col-12">
+        <label class="form-label"
+          >Old Password <span class="text-danger">*</span></label
+        >
+        <input
+          type="Password"
+          class="form-control"
+          placeholder="Enter old password"
+        />
+      </div>
+
+      <p class="mb-2 mt-4">
+        Your password must be at least eight characters and cannot contain
+        space.
+      </p>
+
+      <div class="col-12 mb-3">
+        <label class="form-label"
+          >New Passowrd <span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter new passowrd"
+        />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label"
+          >Confirm Passowrd <span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter confirm passowrd"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger-soft my-0"
+      (click)="modal.close()"
+    >
+      Close
+    </button>
+    <button type="button" class="btn btn-success my-0">Change Password</button>
+  </div>
+</ng-template>
+
+<div
+  class="modal fade"
+  id="changePassword"
+  tabindex="-1"
+  aria-labelledby="changePasswordLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>

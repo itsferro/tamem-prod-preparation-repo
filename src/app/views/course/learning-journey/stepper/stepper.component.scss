@@ -1,0 +1,53 @@
+/* stepper/stepper.component.scss */
+.stepper-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px 20px 0px ;
+    flex-direction: row-reverse; /* For RTL layout */
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    flex-direction: row-reverse; /* For RTL layout */
+    
+    &:last-child {
+      flex: 0;
+    }
+  }
+  
+  .step-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 1; /* Ensure markers appear above lines */
+    
+    &.active {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    &.completed {
+      background-color: #28a745;
+      color: white;
+    }
+  }
+  
+  .step-line {
+    flex: 1;
+    height: 3px;
+    background-color: #e0e0e0;
+    margin: 0 5px;
+    
+    &.completed {
+      background-color: #28a745;
+    }
+  }

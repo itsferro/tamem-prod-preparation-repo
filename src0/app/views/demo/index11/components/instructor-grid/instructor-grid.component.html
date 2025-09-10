@@ -1,0 +1,40 @@
+<section>
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-8 text-center mx-auto">
+        <h2 class="fs-1">Featured Courses With Their Instructors</h2>
+        <p class="mb-0">Space is limited. Reserve your spot today!</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of instructors; track $index) {
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <div class="card p-2 shadow h-100">
+            <div class="card-image-scale rounded-3 position-relative">
+              <img [src]="item.image" class="card-img" alt="" />
+
+              <div class="card-img-overlay d-flex flex-column p-2 z-index-1">
+                <div>
+                  <span class="badge text-bg-dark"
+                    ><i class="bi bi-star-fill text-warning me-2"></i
+                    >{{ item.rating | number: '1.1' }}</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body px-2">
+              <h5 class="card-title">
+                <a routerLink="/workshop-detail" class="stretched-link">{{
+                  item.title
+                }}</a>
+              </h5>
+              <h6 class="mb-0 fw-normal">With {{ item.instructor }}</h6>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,75 @@
+<div class="quran-container">
+    <!-- Empty container as base -->
+  </div>
+  
+  <!-- Auto-popup panel that shows on component init -->
+  <div class="quran-panel-overlay">
+    <div class="quran-panel">
+      <div class="quran-panel-header">
+        <h3>مراجعة الحفظ</h3>
+      </div>
+      
+      <div #quranTextContainer class="quran-text">
+        <span *ngFor="let word of visibleWords; let i = index" class="word visible" 
+              [class.highlighted]="selectedWordIndex === i"
+              (click)="selectWord(i)">
+          {{ word }}
+        </span>
+      </div>
+      
+      <div class="quran-controls">
+        <div class="progress-container">
+          <div class="progress-bar" [style.width.%]="(currentWordIndex / words.length) * 100"></div>
+        </div>
+        
+        <button class="next-button" (click)="nextWord()">
+          <span class="button-text">التالي</span>
+          <span class="button-icon">&#8594;</span>
+        </button>
+        
+        <div class="quran-page-info">
+          <div class="juz-hizb">حزب 12</div>
+          <div class="page-number">111</div>
+          <div class="surah-name">سورة المائدة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Word selection panel (appears when a word is clicked) -->
+  <div *ngIf="showPanel" class="word-panel-overlay">
+    <div class="word-panel">
+      <div class="context-words">
+        <span *ngFor="let contextWord of contextWords; let i = index" 
+              [class.selected-word]="i === contextSelectedIndex">
+          {{ contextWord }}
+        </span>
+      </div>
+      
+      <div class="notes-section">
+        <textarea [(ngModel)]="wordNotes" placeholder="أدخل ملاحظاتك هنا..."></textarea>
+        
+        <div class="issue-options">
+          <div class="radio-option">
+            <input type="radio" id="forget" name="wordIssue" value="forget" [(ngModel)]="wordIssue">
+            <label for="forget">نسيان</label>
+          </div>
+          
+          <div class="radio-option">
+            <input type="radio" id="similarity" name="wordIssue" value="similarity" [(ngModel)]="wordIssue">
+            <label for="similarity">تشابه</label>
+          </div>
+          
+          <div class="radio-option">
+            <input type="radio" id="doubt" name="wordIssue" value="doubt" [(ngModel)]="wordIssue">
+            <label for="doubt">شك</label>
+          </div>
+        </div>
+        
+        <div class="panel-buttons">
+          <button (click)="saveWordNote()" class="save-button">حفظ</button>
+          <button (click)="closePanel()" class="close-button">إغلاق</button>
+        </div>
+      </div>
+    </div>
+  </div>

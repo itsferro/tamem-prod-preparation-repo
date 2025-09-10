@@ -1,0 +1,19 @@
+<ng-tiny-slider
+  [config]="sliderConfig"
+  class="tiny-slider-inner"
+  data-arrow="false"
+  data-dots="false"
+  data-gutter="80"
+  data-items-xl="6"
+  data-items-lg="5"
+  data-items-md="4"
+  data-items-sm="3"
+  data-items-xs="2"
+  data-autoplay="2000"
+>
+  @for (img of clientList; track $index) {
+    <div class="item">
+      <img [class]="imageClass" [src]="img.image" alt="client-logo" />
+    </div>
+  }
+</ng-tiny-slider>

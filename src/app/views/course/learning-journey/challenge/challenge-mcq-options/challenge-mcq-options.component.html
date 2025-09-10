@@ -1,0 +1,140 @@
+<div class="mcq-options-container" dir="rtl">
+    <!-- Intro component for challenge start -->
+    @if (currentState === 'intro') {
+      <challenge-intro
+        [currentStep]="currentStep"
+        [questionData]="questionData"
+        [isLoading]="isLoading"
+        (startChallenge)="startChallenge($event)"
+        (exitChallenge)="onExitChallenge()">
+      </challenge-intro>
+    }
+  
+    <!-- Questions section - only shown during challenge -->
+    @if (currentState === 'questions' && questionData?.questions) {
+      <div class="knowledge-check-container">
+        <div class="challenge-header">
+          <div class="mode-indicator {{ mode === 'practice' ? 'practice-mode' : 'test-mode' }}">
+            <div class="mode-icon small">
+              @if (mode === 'practice') {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              }
+            </div>
+            <span>{{ mode === 'practice' ? 'وضع التدريب' : 'وضع الاختبار' }}</span>
+          </div>
+          
+          <h2>{{ questionData.title }}</h2>
+          
+          <div class="progress-indicator">
+            <span class="progress-text">السؤال {{currentQuestionIndex + 1}} من {{questionData.questions.length}}</span>
+            @if (mode === 'test') {
+              <span class="timer-display">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                {{ remainingTime }}
+              </span>
+            }
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="((currentQuestionIndex + 1) / questionData.questions.length) * 100"></div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="challenge-content">
+          <div class="question-card">
+            <div class="question-text">
+              <h3>{{ questionData.questions[currentQuestionIndex].text }}</h3>
+            </div>
+    
+            <div class="options-list">
+              @for (option of questionData.questions[currentQuestionIndex].options; track option.id) {
+                <div class="option-item"
+                     [class.selected]="userAnswers[questionData.questions[currentQuestionIndex].id] === option.id"
+                     [class.correct]="showAnswers && option.id === atob(questionData.questions[currentQuestionIndex].validationHash)"
+                     [class.incorrect]="showAnswers && userAnswers[questionData.questions[currentQuestionIndex].id] === option.id && option.id !== atob(questionData.questions[currentQuestionIndex].validationHash)"
+                     (click)="answerQuestion(questionData.questions[currentQuestionIndex].id, option.id)">
+                  <label class="option-label">
+                    <input type="radio" 
+                           [value]="option.id" 
+                           [checked]="userAnswers[questionData.questions[currentQuestionIndex].id] === option.id"
+                           [disabled]="showAnswers">
+                    <span class="option-text">{{ option.text }}</span>
+                  </label>
+                </div>
+              }
+            </div>
+    
+            @if (showAnswers && mode === 'practice') {
+              <div class="explanation-box">
+                <div class="explanation-content" [class.correct-answer]="isCorrect" [class.wrong-answer]="!isCorrect">
+                  <div class="explanation-header">
+                    @if (isCorrect) {
+                      <span class="correct-icon">✓</span>
+                      <h4>إجابة صحيحة!</h4>
+                    } @else {
+                      <span class="incorrect-icon">✗</span>
+                      <h4>إجابة خاطئة</h4>
+                      <div class="correct-answer-text">
+                        الإجابة الصحيحة هي: 
+                        <span class="highlight">
+                          {{ getCorrectAnswerText(questionData.questions[currentQuestionIndex]) }}
+                        </span>
+                      </div>
+                    }
+                  </div>
+                  <p>{{ questionData.questions[currentQuestionIndex].explanation }}</p>
+                </div>
+              </div>
+            }
+    
+            <div class="action-buttons">
+              @if (!showAnswers && mode === 'practice') {
+                <button type="button" 
+                        class="submit-btn" 
+                        [disabled]="!userAnswers[questionData.questions[currentQuestionIndex].id]"
+                        (click)="checkAnswer()">
+                  تحقق من الإجابة
+                </button>
+              }
+              
+              @if (showAnswers && mode === 'practice') {
+                <button type="button" 
+                        class="next-btn" 
+                        (click)="nextQuestion()">
+                  {{isLastQuestion ? 'إنهاء الاختبار' : 'السؤال التالي'}}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  
+    <!-- Result component for completion -->
+    @if (currentState === 'complete') {
+      <challenge-result
+        [currentStep]="currentStep"
+        [score]="score"
+        [totalCorrect]="totalCorrect"
+        [totalQuestions]="questionData?.questions?.length || 0"
+        [mode]="mode"
+        [passingScore]="currentStep?.passingThreshold || 70"
+        (retryChallenge)="onRetryChallenge()"
+        (finishChallenge)="onFinishChallenge()" 
+        (exitChallenge)="onExitChallenge()">
+      </challenge-result>
+    }
+  </div>

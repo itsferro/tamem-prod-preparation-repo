@@ -1,0 +1,267 @@
+<!-- block-managment.component.html - Final Clean Version with User Filter Only -->
+
+<div class="container-fluid">
+    <!-- Loading State -->
+    @if (isLoading) {
+        <div class="text-center p-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading course blocks...</p>
+        </div>
+    }
+
+    <!-- Error State -->
+    @if (errorMessage) {
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ errorMessage }}
+        </div>
+    }
+
+    <!-- Enhanced Filters Bar with User Filter -->
+    <div class="filters-bar">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <!-- Status Filter Buttons -->
+                <div class="status-filter-buttons mb-2">
+                    <button class="filter-btn" [class.active]="currentFilter === 'all'" (click)="setFilter('all')">
+                        All Blocks ({{ getFilterCount('all') }})
+                    </button>
+                    <button class="filter-btn" [class.active]="currentFilter === 'inProgress'"
+                        (click)="setFilter('inProgress')">
+                        In Progress ({{ getFilterCount('inProgress') }})
+                    </button>
+                    <button class="filter-btn" [class.active]="currentFilter === 'stuck'" (click)="setFilter('stuck')">
+                        Stuck/Issues ({{ getFilterCount('stuck') }})
+                    </button>
+                    <button class="filter-btn" [class.active]="currentFilter === 'completed'"
+                        (click)="setFilter('completed')">
+                        Completed ({{ getFilterCount('completed') }})
+                    </button>
+                    <button class="filter-btn" [class.active]="currentFilter === 'review'" (click)="setFilter('review')">
+                        Needs Review ({{ getFilterCount('review') }})
+                    </button>
+                </div>
+
+                <!-- User Filter Dropdown Row -->
+                <div class="dropdown-filters-row">
+                    <!-- User Filter Dropdown -->
+                    <div class="user-filter-container me-3">
+                        <label class="form-label mb-1 small">
+                            <i class="fas fa-user me-1"></i>Filter by User:
+                        </label>
+                        <select class="form-select form-select-sm user-select" 
+                                [(ngModel)]="selectedUser" 
+                                (ngModelChange)="onUserSelectionChange()">
+                            <option value="all">All Users ({{ getAllUsersCount() }})</option>
+                            @for (assignee of uniqueAssignees; track assignee) {
+                                <option [value]="assignee">{{ assignee }} ({{ getUserBlockCount(assignee) }})</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Clear Filter Button -->
+                    @if (selectedUser !== 'all') {
+                        <div class="clear-filters-container">
+                            <label class="form-label mb-1 small">&nbsp;</label>
+                            <button class="btn btn-outline-secondary btn-sm" (click)="clearUserFilter()">
+                                <i class="fas fa-eraser me-1"></i>Clear Filter
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <input type="text" class="search-box" placeholder="Search blocks..." [(ngModel)]="searchTerm"
+                    (ngModelChange)="onSearchChange()">
+            </div>
+        </div>
+
+        <!-- User Filter Indicator Panel -->
+        @if (selectedUser !== 'all') {
+            <div class="filter-indicators mt-3">
+                <!-- User Filter Indicator -->
+                <div class="alert alert-info alert-sm mb-2 py-2">
+                    <i class="fas fa-filter me-2"></i>
+                    <strong>Filtered by user:</strong> 
+                    <span class="user-badge">
+                        <div class="user-avatar-small me-1">{{ getUserInitialsForFilter(selectedUser) }}</div>
+                        {{ selectedUser }}
+                    </span>
+                    <button class="btn btn-sm btn-outline-info ms-2" 
+                            (click)="clearUserFilter()"
+                            title="Clear user filter">
+                        <i class="fas fa-times"></i> Clear User Filter
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Blocks Table -->
+    <div class="blocks-table-container">
+        <div class="table-header" style="background-color: #bed2e7; color: white; padding: 10px; border-radius: 5px;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6><i class="fas fa-list me-2"></i>Course Blocks Development Status</h6>
+                <div class="">
+                    <strong>Course:</strong> {{ selectedCourse.name }} <span style="margin:0px 15px;"> - </span> 
+                    <strong>Total Lessons:</strong> {{ courseStats.totalLessons }} <span style="margin:0px 15px;"> - </span> 
+                    <strong>Total Blocks:</strong> {{ courseStats.totalBlocks }}
+                    @if (selectedUser !== 'all') {
+                        <span class="ms-3">
+                            <i class="fas fa-filter me-1"></i>
+                            <strong>Filtered Results:</strong> {{ filteredBlocks.length }}
+                        </span>
+                    }
+                </div>
+                <div>
+                    <button class="btn btn-outline-light btn-sm me-2" (click)="refreshData()">
+                        <i class="fas fa-sync-alt me-1"></i>Refresh
+                    </button>
+                    <button class="btn btn-outline-light btn-sm" (click)="exportData()">
+                        <i class="fas fa-download me-1"></i>Export
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table blocks-table">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="20%">Block Details</th>
+                        <th width="15%">Current Phase</th>
+                        <th width="12%">Progress</th>
+                        <th width="10%">Status</th>
+                        <th width="12%">Assigned To</th>
+                        <th width="10%">Duration</th>
+                        <th width="8%">Flags</th>
+                        <th width="8%">Last Updated</th>
+                        <th width="5%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (paginatedBlocks.length === 0) {
+                        <tr>
+                            <td colspan="10">
+                                <div class="empty-state">
+                                    <i class="fas fa-inbox"></i>
+                                    <h5>No blocks found</h5>
+                                    @if (selectedUser !== 'all') {
+                                        <p class="mb-2">No blocks found for user:</p>
+                                        <div class="current-filters mb-3">
+                                            <span class="badge bg-info me-2">
+                                                <i class="fas fa-user me-1"></i>{{ selectedUser }}
+                                            </span>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-sm" 
+                                                (click)="clearUserFilter()">
+                                            <i class="fas fa-eraser me-1"></i>Clear User Filter
+                                        </button>
+                                    } @else {
+                                        <p class="mb-0">No blocks match your current filter criteria.</p>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    } @else {
+                        @for (block of paginatedBlocks; track block.id ; let i = $index) {
+                            <tr [class]="getRowClass(block)">
+                                <!-- Sequence number column -->
+                                <td>
+                                    <div class="sequence-number">
+                                        {{ i + 1 }}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="block-title">{{ block.title }}</div>
+                                    <div class="lesson-info">{{ block.lessonName }}</div>
+                                </td>
+                                <td>
+                                    <div class="current-phase" [ngClass]="getPhaseClass(block.currentPhase)">
+                                        <i [class]="block.currentPhase.iconClass + ' me-1'"></i>
+                                        {{ block.currentPhase.shortName }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress-container">
+                                        <div class="progress-ring">
+                                            <svg>
+                                                <circle class="bg" cx="25" cy="25" r="18"></circle>
+                                                <circle class="progress" cx="25" cy="25" r="18"
+                                                    [style.stroke-dashoffset]="getProgressOffset(block.progressPercentage)">
+                                                </circle>
+                                            </svg>
+                                            <div class="progress-text">{{ (block.progressPercentage | number:'1.0-1') }}%</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge" [ngClass]="getStatusClass(block.status)">
+                                        {{ getStatusLabel(block.status) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-avatar">{{ getUserInitials(block.assignedTo) }}</div>
+                                        <span>{{ block.assignedTo }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div><i class="fas fa-clock me-1"></i>{{ formatDuration(block.durationSeconds) }}</div>
+                                    <div class="text-muted small">{{ block.estimatedPoints }} pts</div>
+                                </td>
+                                <td>
+                                    <div class="flags-container">
+                                        @for (flag of block.flags; track flag) {
+                                            <div class="flag-icon" [ngClass]="getFlagClass(flag)" [title]="getFlagTitle(flag)">
+                                                <i [class]="getFlagIcon(flag)"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-muted small">{{ getRelativeTime(block.lastUpdated) }}</div>
+                                    <div class="text-muted small">by {{ block.lastUpdatedBy }}</div>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button class="action-btn btn-view" title="View Details"
+                                            (click)="viewBlockDetails(block)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn btn-track" title="Track Progress"
+                                            (click)="navigateToBlockContent(block)">
+                                            <i class="fas fa-tasks"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        @if (filteredBlocks.length > pageSize) {
+            <div class="d-flex justify-content-between align-items-center p-3 bg-light">
+                <div class="text-muted">
+                    Showing {{ getStartIndex() }}-{{ getEndIndex() }} of {{ filteredBlocks.length }} blocks
+                    @if (selectedUser !== 'all') {
+                        <span class="ms-2">
+                            <i class="fas fa-filter me-1"></i>
+                            filtered for {{ selectedUser }}
+                        </span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div style="margin-bottom: 80px;"></div>

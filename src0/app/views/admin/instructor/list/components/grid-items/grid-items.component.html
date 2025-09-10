@@ -1,0 +1,119 @@
+<div class="row g-4">
+  @for (item of instructors; track $index) {
+    <div class="col-md-6 col-xxl-4">
+      <div class="card bg-transparent border h-100">
+        <div
+          class="card-header bg-transparent border-bottom d-flex align-items-sm-center justify-content-between"
+        >
+          <div class="d-sm-flex align-items-center">
+            <div class="avatar avatar-md flex-shrink-0">
+              <img
+                class="avatar-img rounded-circle"
+                [src]="item.image"
+                alt="avatar"
+              />
+            </div>
+
+            <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+              <h5 class="mb-0">
+                <a href="javascript:void(0);">{{ item.name }}</a>
+              </h5>
+              <p class="mb-0 small">{{ item.title }}</p>
+            </div>
+          </div>
+
+          <div ngbDropdown placement="bottom-right" class="dropdown">
+            <a
+              ngbDropdownToggle
+              class="btn btn-sm btn-light btn-round small mb-0 arrow-none"
+              role="button"
+              id="dropdownShare1"
+            >
+              <i class="bi bi-three-dots fa-fw"></i>
+            </a>
+
+            <ul
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded"
+              aria-labelledby="dropdownShare1"
+            >
+              <li>
+                <a class="dropdown-item" href="javascript:void(0);"
+                  ><i class="bi bi-pencil-square fa-fw me-2"></i>Edit</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="javascript:void(0);"
+                  ><i class="bi bi-trash fa-fw me-2"></i>Remove</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center">
+              <div
+                class="icon-md bg-orange bg-opacity-10 text-orange rounded-circle flex-shrink-0"
+              >
+                <i class="fas fa-user-graduate fa-fw"></i>
+              </div>
+              <h6 class="mb-0 ms-2 fw-light">Total Students</h6>
+            </div>
+            <span class="mb-0 fw-bold">{{ item.score | number }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <div
+                class="icon-md bg-purple bg-opacity-10 text-purple rounded-circle flex-shrink-0"
+              >
+                <i class="fas fa-book fa-fw"></i>
+              </div>
+              <h6 class="mb-0 ms-2 fw-light">Total Courses</h6>
+            </div>
+            <span class="mb-0 fw-bold">{{
+              item.projects | number: '2.0'
+            }}</span>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent border-top">
+          <div class="d-flex justify-content-between align-items-center">
+            <ul class="list-inline mb-0">
+              <ng-template #t let-fill="fill">
+                <i class="far fa-star text-warning me-1">
+                  @if (fill > 0) {
+                    <i
+                      class="fas fa-star text-warning filled"
+                      [style.width.%]="fill"
+                    ></i>
+                  }
+                </i>
+              </ng-template>
+
+              <ngb-rating
+                [(rate)]="item.rating"
+                [starTemplate]="t"
+                [readonly]="true"
+                [max]="5"
+              />
+            </ul>
+
+            <a
+              href="javascript:void(0);"
+              class="btn btn-link text-body p-0 mb-0"
+              placement="top"
+              ngbTooltip=""
+              ngbTooltip="Message"
+              aria-label="Message"
+            >
+              <i class="bi bi-envelope-fill"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

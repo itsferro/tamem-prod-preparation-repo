@@ -1,0 +1,36 @@
+<section class="pt-0">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12">
+        <h2 class="mb-0">You may also like</h2>
+      </div>
+    </div>
+
+    <div class="tiny-slider arrow-round arrow-hover arrow-dark">
+      <ng-tiny-slider [config]="sliderConfig" class="tiny-slider-inner">
+        @for (item of relatedBlog; track $index) {
+          <div class="card bg-transparent">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  [src]="item.image"
+                  class="img-fluid rounded-start"
+                  alt="..."
+                />
+              </div>
+
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    <a href="javascript:void(0);">{{ item.title }}</a>
+                  </h6>
+                  <span class="small">{{ item.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </ng-tiny-slider>
+    </div>
+  </div>
+</section>

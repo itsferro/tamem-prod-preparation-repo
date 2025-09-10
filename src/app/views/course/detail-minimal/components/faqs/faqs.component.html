@@ -1,0 +1,8 @@
+<h5 class="mb-3">Frequently Asked Questions</h5>
+
+@for (item of faqs; track $index) {
+  <div class="mt-4">
+    <h6>{{ item.question }}</h6>
+    <p class="mb-0">{{ item.answer }}</p>
+  </div>
+}

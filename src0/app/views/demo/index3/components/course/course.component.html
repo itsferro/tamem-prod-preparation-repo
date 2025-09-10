@@ -1,0 +1,41 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="bg-light rounded-3 p-4">
+          <div
+            class="tiny-slider arrow-round arrow-creative arrow-blur arrow-hover py-1"
+          >
+            <ng-tiny-slider
+              [config]="sliderConfig"
+              class="tiny-slider-inner"
+              data-autoplay="true"
+              data-gutter="80"
+              data-arrow="true"
+              data-dots="false"
+              data-items="5"
+              data-items-lg="3"
+              data-items-md="2"
+              data-items-xs="1"
+            >
+              @for (item of courseList; track $index) {
+                <div>
+                  <div
+                    class="bg-body text-center rounded-2 border py-2 px-1 position-relative"
+                  >
+                    <img [src]="item.image" class="h-40px" alt="" />
+                    <a
+                      href="javascript:void(0);"
+                      class="text-primary-hover stretched-link"
+                      ><span class="h6 ms-2">{{ item.name }}</span></a
+                    >
+                  </div>
+                </div>
+              }
+            </ng-tiny-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

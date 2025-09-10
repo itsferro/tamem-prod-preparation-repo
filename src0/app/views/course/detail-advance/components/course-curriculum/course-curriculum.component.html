@@ -1,0 +1,86 @@
+<div class="card border rounded-3">
+  <div class="card-header border-bottom">
+    <h3 class="mb-0">Curriculum</h3>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-5">
+      @for (item of curriculumList; track $index) {
+        @if ($index < 3) {
+          <div class="col-12">
+            <ng-container
+              *ngTemplateOutlet="templateOutelet; context: { item: item }"
+            ></ng-container>
+          </div>
+        } @else {
+          <div
+            #collapse="ngbCollapse"
+            [(ngbCollapse)]="isCollapsed"
+            class="collapse mt-0"
+            id="collapseCourse"
+          >
+            <div class="col-12 mt-5">
+              <ng-container
+                *ngTemplateOutlet="templateOutelet; context: { item: item }"
+              ></ng-container>
+            </div>
+          </div>
+        }
+      }
+
+      <a
+        class="mb-0 mt-4 btn-more d-flex align-items-center justify-content-center"
+        (click)="isCollapsed = !isCollapsed"
+        role="button"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseCourse"
+      >
+        See <span class="see-more mx-1">more</span
+        ><span class="see-less mx-1">less</span> video<i
+          class="fas fa-angle-down ms-2"
+        ></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<ng-template #templateOutelet let-item="item">
+  <h5 class="mb-4">{{ item.title }} ({{ item.lectures.length }} lectures)</h5>
+  @for (lecture of item.lectures; track lecture; let last = $last) {
+    <div class="d-sm-flex justify-content-sm-between align-items-center">
+      <div class="d-flex">
+        <a
+          href="javascript:void(0);"
+          class="btn btn-round mb-0"
+          [ngClass]="
+            lecture.type == 'premium'
+              ? 'btn-light flex-shrink-0'
+              : 'btn-danger-soft'
+          "
+          ><i
+            [ngClass]="
+              lecture.type == 'premium' ? 'bi bi-lock-fill' : 'fas fa-play'
+            "
+          ></i
+        ></a>
+        <div class="ms-2 ms-sm-3 mt-1 mt-sm-0">
+          <h6 class="mb-0">{{ lecture.title }}</h6>
+          <p class="mb-2 mb-sm-0 small">{{ lecture.duration }}</p>
+        </div>
+      </div>
+      @if (lecture.type == 'premium') {
+        <a href="javascript:void(0);" class="btn btn-sm btn-orange mb-0"
+          >Premium</a
+        >
+      } @else {
+        <a href="javascript:void(0);" class="btn btn-sm btn-success mb-0"
+          >Play</a
+        >
+      }
+    </div>
+
+    @if (!last) {
+      <hr />
+    }
+  }
+</ng-template>

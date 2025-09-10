@@ -1,0 +1,162 @@
+<div class="row">
+  <div class="col-md-6 col-lg-12">
+    <div class="card shadow p-2 mb-4 text-center">
+      <div class="rounded-3">
+        <img
+          src="assets/images/instructor/07.jpg"
+          class="card-img"
+          alt="course image"
+        />
+      </div>
+
+      <div class="card-body px-3">
+        <ul class="list-inline">
+          <ng-template #t let-fill="fill">
+            <i class="far fa-star text-warning me-1">
+              @if (fill > 0) {
+                <i
+                  class="fas fa-star text-warning filled"
+                  [style.width.%]="fill"
+                ></i>
+              }
+            </i>
+          </ng-template>
+
+          <ngb-rating
+            [rate]="4.5"
+            [starTemplate]="t"
+            [readonly]="true"
+            [max]="5"
+          />
+          <li class="list-inline-item ms-2 h6 fw-light mb-0">4.5/5.0</li>
+        </ul>
+
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">
+            <a class="btn px-2 btn-sm bg-facebook" href="javascript:void(0);"
+              ><i class="fab fa-fw fa-facebook-f"></i
+            ></a>
+          </li>
+          <li class="list-inline-item ms-1">
+            <a
+              class="btn px-2 btn-sm bg-instagram-gradient"
+              href="javascript:void(0);"
+              ><i class="fab fa-fw fa-instagram"></i
+            ></a>
+          </li>
+          <li class="list-inline-item ms-1">
+            <a class="btn px-2 btn-sm bg-twitter" href="javascript:void(0);"
+              ><i class="fab fa-fw fa-twitter"></i
+            ></a>
+          </li>
+          <li class="list-inline-item ms-1">
+            <a class="btn px-2 btn-sm bg-linkedin" href="javascript:void(0);"
+              ><i class="fab fa-fw fa-linkedin-in"></i
+            ></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-12">
+    <div class="card card-body shadow p-4 mb-4">
+      <h4 class="mb-3">Education</h4>
+
+      <div class="d-flex align-items-center mb-4">
+        <span class="icon-md mb-0 bg-light rounded-3"
+          ><i class="fas fa-graduation-cap"></i
+        ></span>
+        <div class="ms-3">
+          <h6 class="mb-0">Harvard University</h6>
+          <p class="mb-0 small">Bachelor in Computer Graphics</p>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mb-4">
+        <span class="icon-md mb-0 bg-light rounded-3"
+          ><i class="fas fa-graduation-cap"></i
+        ></span>
+        <div class="ms-3">
+          <h6 class="mb-0">University of Toronto</h6>
+          <p class="mb-0 small">Master in Computer Graphics</p>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mb-4">
+        <span class="icon-md mb-0 bg-light rounded-3"
+          ><i class="fas fa-graduation-cap"></i
+        ></span>
+        <div class="ms-3">
+          <h6 class="mb-0">East Ray University</h6>
+          <p class="mb-0 small">Bachelor in Computer Graphics</p>
+        </div>
+      </div>
+
+      <hr />
+
+      <h4 class="mb-3">Skills</h4>
+
+      <div class="overflow-hidden mb-4">
+        <h6 class="uppercase">Graphic design</h6>
+
+        <ngb-progressbar
+          type="primary"
+          [value]="90"
+          class="progress-sm aos"
+          data-aos="slide-right"
+          data-aos-delay="200"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
+          <span class="progress-percent-simple h6 mb-0">90%</span>
+        </ngb-progressbar>
+      </div>
+
+      <div class="overflow-hidden mb-4">
+        <h6 class="uppercase">Web design</h6>
+        <ngb-progressbar
+          type="success"
+          [value]="80"
+          class="progress-sm aos"
+          data-aos="slide-right"
+          data-aos-delay="200"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
+          <span class="progress-percent-simple h6 mb-0">80%</span>
+        </ngb-progressbar>
+      </div>
+
+      <div class="overflow-hidden mb-4">
+        <h6 class="uppercase">HTML/CSS</h6>
+        <ngb-progressbar
+          type="warning"
+          [value]="60"
+          class="progress-sm aos"
+          data-aos="slide-right"
+          data-aos-delay="200"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
+          <span class="progress-percent-simple h6 mb-0">60%</span>
+        </ngb-progressbar>
+      </div>
+
+      <div class="overflow-hidden mb-4">
+        <h6 class="uppercase">UI/UX</h6>
+        <ngb-progressbar
+          type="danger"
+          [value]="50"
+          class="progress-sm aos"
+          data-aos="slide-right"
+          data-aos-delay="200"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
+          <span class="progress-percent-simple h6 mb-0">50%</span>
+        </ngb-progressbar>
+      </div>
+    </div>
+  </div>
+</div>

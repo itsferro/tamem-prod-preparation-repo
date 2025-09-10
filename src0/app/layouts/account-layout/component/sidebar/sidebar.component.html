@@ -1,0 +1,63 @@
+<div class="offcanvas-header bg-light">
+  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">My profile</h5>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="activeOffcanvas.close()"
+    aria-label="Close"
+  ></button>
+</div>
+
+<div class="offcanvas-body p-3 p-xl-0">
+  <div
+    class="bg-dark border rounded-3 p-3 w-100 {{
+      layout == 'instructor' ? 'pb-0' : ''
+    }}"
+  >
+    <div class="list-group list-group-dark list-group-borderless collapse-list">
+      @for (item of menuItems; track $index) {
+        @if (item.subItems) {
+          <a
+            class="list-group-item"
+            data-bs-toggle="collapse"
+            (click)="isCollapsed = !isCollapsed"
+            [ngClass]="{ active: !isCollapsed }"
+            role="button"
+            [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseauthentication"
+          >
+            <i class="bi bi-lock fa-fw me-2"></i>Dropdown level
+          </a>
+
+          <ul
+            #collapse="ngbCollapse"
+            [(ngbCollapse)]="isCollapsed"
+            class="nav collapse flex-column"
+            id="collapseauthentication"
+            data-bs-parent="#navbar-sidebar"
+          >
+            @for (subitem of item.subItems; track subitem) {
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0);">{{
+                  subitem.title
+                }}</a>
+              </li>
+            }
+          </ul>
+        } @else {
+          <a
+            class="list-group-item"
+            [ngClass]="{
+              'text-danger bg-danger-soft-hover': item.key == 'signout',
+              active: currentRoute == item.link,
+            }"
+            [routerLink]="item.link"
+            (click)="activeOffcanvas.close()"
+          >
+            <i class="{{ item.icon }} fa-fw me-2"></i>{{ item.title }}
+          </a>
+        }
+      }
+    </div>
+  </div>
+</div>

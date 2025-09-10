@@ -1,0 +1,56 @@
+<section class="position-relative pt-0 pt-lg-5">
+  <div class="container">
+    <div class="row g-4">
+      @for (item of gridList; track $index) {
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <div class="card bg-transparent">
+            <div class="overflow-hidden rounded-3">
+              <img [src]="item.image" class="card-img" alt="course image" />
+
+              <div class="bg-overlay bg-dark opacity-4"></div>
+              <div class="card-img-overlay d-flex align-items-start p-3">
+                <a
+                  href="javascript:void(0);"
+                  class="badge text-bg-{{ item.badgeColor }}"
+                  >{{ item.badge }}</a
+                >
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">
+                <a href="javascript:void(0);">{{ item.title }}</a>
+              </h5>
+              <p class="text-truncate-2">{{ item.description }}</p>
+
+              <div class="d-flex justify-content-between">
+                <h6 class="mb-0">
+                  <a href="javascript:void(0);">{{ item.author }}</a>
+                </h6>
+                <span class="small">{{ item.time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <nav class="d-flex justify-content-center mt-5" aria-label="navigation">
+      <ul class="pagination pagination-primary-soft rounded mb-0">
+        <ngb-pagination
+          [collectionSize]="60"
+          [maxSize]="2"
+          [page]="2"
+          class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+        >
+          <ng-template ngbPaginationPrevious
+            ><i class="fas fa-angle-double-left"></i>
+          </ng-template>
+          <ng-template ngbPaginationNext
+            ><i class="fas fa-angle-double-right"></i>
+          </ng-template>
+        </ngb-pagination>
+      </ul>
+    </nav>
+  </div>
+</section>

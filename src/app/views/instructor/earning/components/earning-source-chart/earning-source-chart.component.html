@@ -1,0 +1,50 @@
+<div class="card bg-transparent border rounded-3 mt-5">
+  <div class="card-header bg-transparent">
+    <h5 class="mb-0">Top five earning sources</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-4 g-md-5 align-items-center">
+      <div class="col-md-6">
+        <div id="ChartPageViews">
+          <apx-chart
+            [series]="pageViewsChart.series!"
+            [labels]="pageViewsChart.labels!"
+            [chart]="pageViewsChart.chart!"
+            [colors]="pageViewsChart.colors!"
+            [tooltip]="pageViewsChart.tooltip!"
+            [responsive]="pageViewsChart.responsive!"
+          ></apx-chart>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <ul class="list-group list-group-borderless mb-3">
+          <li class="list-group-item">
+            <h6 class="mb-0">Course Name</h6>
+          </li>
+          <li class="list-group-item">
+            <i class="text-success fas fa-circle me-2"></i>The Complete Digital
+            Marketing Course - 12 Courses in 1
+          </li>
+          <li class="list-group-item">
+            <i class="text-warning fas fa-circle me-2"></i>Google Ads Training:
+            Become a PPC Expert
+          </li>
+          <li class="list-group-item">
+            <i class="text-danger fas fa-circle me-2"></i>Microsoft Excel -
+            Excel from Beginner to Advanced
+          </li>
+          <li class="list-group-item">
+            <i class="text-primary fas fa-circle me-2"></i>Create a Design
+            System in Figma
+          </li>
+          <li class="list-group-item">
+            <i class="text-secondary fas fa-circle me-2"></i>Deep Learning with
+            React-Native
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

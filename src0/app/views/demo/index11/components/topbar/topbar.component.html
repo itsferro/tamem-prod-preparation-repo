@@ -1,0 +1,94 @@
+<header
+  class="navbar-light navbar-sticky"
+  [class.navbar-sticky-on]="scrollY >= 300"
+>
+  <nav class="navbar navbar-expand-xl">
+    <div class="container">
+      <app-logo-box />
+
+      <button
+        class="navbar-toggler ms-sm-auto"
+        (click)="collapse.toggle()"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-animation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="isCollapsed"
+        class="navbar-collapse collapse"
+        id="navbarCollapse"
+      >
+        <div class="col-xl-7">
+          <div class="nav my-3 my-xl-0 px-4 flex-nowrap align-items-center">
+            <div class="nav-item w-100">
+              <form class="rounded position-relative">
+                <input
+                  class="form-control pe-5 bg-secondary bg-opacity-10 border-0"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button
+                  class="btn btn-link bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+                  type="submit"
+                >
+                  <i class="fas fa-search fs-6 text-primary"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <ul class="navbar-nav navbar-nav-scroll ms-auto">
+          <li ngbDropdown class="nav-item dropdown">
+            <a
+              ngbDropdownToggle
+              class="nav-link dropdown-toggle active"
+              href="javascript:void(0);"
+              id="demoMenu"
+              >{{ menuItems.title }}</a
+            >
+            <ul
+              ngbDropdownMenu
+              class="dropdown-menu"
+              aria-labelledby="demoMenu"
+            >
+              @for (subitem of menuItems.subItems; track $index) {
+                <li>
+                  <a class="dropdown-item" [routerLink]="subitem.link">{{
+                    subitem.title
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" routerLink="/course/grid">Courses</a>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+        <li class="nav-item ms-0 ms-md-3 dropdown">
+          <app-notification />
+        </li>
+
+        <li class="nav-item ms-3 dropdown">
+          <app-profile-menu />
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

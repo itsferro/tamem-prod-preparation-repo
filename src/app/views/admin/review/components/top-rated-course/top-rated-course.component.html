@@ -1,0 +1,109 @@
+<div class="card bg-transparent border h-100">
+  <div class="card-header bg-light border-bottom">
+    <h5 class="mb-0">Top Rated Courses</h5>
+  </div>
+
+  <div class="card-body pb-0">
+    <div class="table-responsive border-0">
+      <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="border-0 rounded-start">Course Name</th>
+            <th scope="col" class="border-0">Enrolled</th>
+            <th scope="col" class="border-0">Rating</th>
+            <th scope="col" class="border-0 rounded-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of ratedList; track $index) {
+            <tr>
+              <td
+                class="text-center text-sm-start d-flex align-items-center position-relative"
+              >
+                <div class="w-60px">
+                  <img [src]="item.image" class="rounded" alt="" />
+                </div>
+                <h6 class="mb-0 ms-2">
+                  <a href="javascript:void(0);" class="stretched-link">{{
+                    item.title
+                  }}</a>
+                </h6>
+              </td>
+
+              <td>{{ item.views | number }}</td>
+
+              <td>
+                <ul class="list-inline mb-0">
+                  <ng-template #t let-fill="fill">
+                    <i class="far fa-star text-warning me-1">
+                      @if (fill > 0) {
+                        <i
+                          class="fas fa-star text-warning filled"
+                          [style.width.%]="fill"
+                        ></i>
+                      }
+                    </i>
+                  </ng-template>
+
+                  <ngb-rating
+                    [(rate)]="item.rating"
+                    [starTemplate]="t"
+                    [readonly]="true"
+                    [max]="5"
+                  />
+                </ul>
+              </td>
+
+              <td>
+                <a
+                  href="javascript:void(0);"
+                  class="btn btn-success-soft btn-round me-1 mb-1 mb-md-0"
+                  placement="top"
+                  ngbTooltip="Edit"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <button
+                  class="btn btn-danger-soft btn-round me-1 mb-1 mb-md-0 ms-1"
+                  placement="top"
+                  ngbTooltip="Delete"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+                <a
+                  href="javascript:void(0);"
+                  class="btn btn-sm btn-info-soft mb-0 ms-1"
+                  (click)="openModal()"
+                  >View</a
+                >
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-footer bg-transparent">
+    <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+      <p class="mb-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
+
+      <nav class="d-flex justify-content-center mb-0" aria-label="navigation">
+        <ngb-pagination
+          [collectionSize]="30"
+          [page]="2"
+          size="sm"
+          class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+        >
+          <ng-template ngbPaginationPrevious
+            ><i class="fas fa-angle-left"></i>
+          </ng-template>
+          <ng-template ngbPaginationNext
+            ><i class="fas fa-angle-right"></i>
+          </ng-template>
+        </ngb-pagination>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <!-- =======================
+  Page Banner START -->
+  <list-banner />
+  <!-- =======================
+  Page Banner END -->
+
+  <!-- =======================
+  Page content START -->
+  <section class="pb-0 py-sm-5">
+    <div class="container">
+      <div class="row g-3 align-items-center mb-4">
+        <div class="col-md-4">
+          <h4 class="mb-0">Showing 1-7 of 32 result</h4>
+        </div>
+
+        <div class="col-md-8">
+          <div
+            class="row g-3 align-items-center justify-content-md-end me-auto"
+          >
+            <div class="col-sm-4 col-xl-6 text-md-end d-none d-md-block">
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item me-2">
+                  <a
+                    routerLink="/course/grid"
+                    class="btn btn-outline-light mb-0 me-2"
+                    ><i class="fas fa-fw fa-th-large"></i
+                  ></a>
+                </li>
+
+                <li class="list-inline-item ms-1">
+                  <a
+                    routerLink="/course/list"
+                    class="btn btn-outline-light mb-0 me-2"
+                    ><i class="fas fa-fw fa-list-ul"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+
+            <form class="col-md-4 border rounded p-1 input-borderless">
+              <select
+                selectFormInput
+                class="form-select js-choice z-index-9"
+                aria-label=".form-select-sm"
+              >
+                <option value="">Sort by</option>
+                <option>Free</option>
+                <option>Newest</option>
+                <option>Most popular</option>
+                <option>Most Viewed</option>
+              </select>
+            </form>
+
+            <div class="col-4 text-md-end">
+              <button
+                class="btn btn-primary mb-0 d-xl-none"
+                type="button"
+                data-bs-toggle="offcanvas"
+                (click)="openFilter()"
+              >
+                <i class="fas fa-sliders-h me-1"></i> Show filter
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-9 col-xxl-8">
+          <list-product />
+        </div>
+
+        <div class="col-lg-3 col-xxl-4">
+          <div
+            class="offcanvas-xl offcanvas-end"
+            tabindex="-1"
+            id="offcanvasSidebar"
+          >
+            <list-right-sidebar />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Page content END -->
+
+  <!-- =======================
+  Newsletter START -->
+  <list-news-letter />
+  <!-- =======================
+  Newsletter END -->
+</main>
+
+<app-footer className="bg-light" />

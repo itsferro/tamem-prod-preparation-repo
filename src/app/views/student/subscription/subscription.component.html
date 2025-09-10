@@ -1,0 +1,110 @@
+<div class="card card-body bg-transparent border rounded-3">
+  <div class="row g-4">
+    <div class="col-6 col-lg-3">
+      <span>Active Plan</span>
+      <h4>Basic</h4>
+    </div>
+
+    <div class="col-6 col-lg-3">
+      <span>Monthly limit</span>
+      <h4>Unlimited</h4>
+    </div>
+
+    <div class="col-6 col-lg-3">
+      <span>Cost</span>
+      <h4>{{ currency }}99/Month</h4>
+    </div>
+
+    <div class="col-6 col-lg-3">
+      <span>Renewal Date</span>
+      <h4>Feb 17, {{ currentYear }}</h4>
+    </div>
+  </div>
+
+  <div class="overflow-hidden my-4">
+    <h6 class="mb-0">85%</h6>
+    <ngb-progressbar
+      type="primary"
+      [value]="85"
+      class="progress-sm aos"
+      data-aos="slide-right"
+      data-aos-delay="200"
+      data-aos-duration="1000"
+      data-aos-easing="ease-in-out"
+    ></ngb-progressbar>
+  </div>
+
+  <div class="d-sm-flex justify-content-sm-between align-items-center">
+    <div>
+      <div class="d-sm-flex">
+        <div class="form-check form-switch form-check-md">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="checkPrivacy1"
+            checked=""
+          />
+          <label class="form-check-label" for="checkPrivacy1"
+            >Auto Renewal</label
+          >
+        </div>
+      </div>
+      <p class="mb-0 small">
+        Your plan will automatically renew on: 02/17/{{ currentYear }}. Payment
+        Amount: USD250
+      </p>
+    </div>
+
+    <div class="mt-2 mt-sm-0">
+      <button type="button" class="btn btn-sm btn-danger-soft me-2 mb-0">
+        Cancel plan
+      </button>
+      <a href="javascript:void(0);" class="btn btn-sm btn-success mb-0 ms-1"
+        >Upgrade plan</a
+      >
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <h6 class="mb-3">The plan includes</h6>
+    <div class="col-md-6">
+      <ul class="list-unstyled">
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Up to 05 users
+          monthly
+        </li>
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Free 5 host
+          &amp; domain
+        </li>
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Custom
+          infrastructure
+        </li>
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Access to all
+          our room
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6">
+      <ul class="list-unstyled">
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>24/7 dedicated
+          Support
+        </li>
+        <li class="mb-3 h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Unlimited
+          updates
+        </li>
+        <li class="h6 fw-light">
+          <i class="bi bi-patch-check-fill text-success me-2"></i>Landing pages
+          &amp; Web widgets
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

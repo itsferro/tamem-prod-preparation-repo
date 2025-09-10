@@ -1,0 +1,25 @@
+<section>
+  <div class="container">
+    <div class="row g-4">
+      @for (item of categoryData; track $index) {
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <div class="card card-body shadow rounded-3">
+            <div class="d-flex align-items-center">
+              <div class="icon-lg rounded-circle {{ item.iconClass }}">
+                <i [class]="item.icon"></i>
+              </div>
+              <div class="ms-3">
+                <h5 class="mb-0">
+                  <a href="javascript:void(0);" class="stretched-link">{{
+                    item.category
+                  }}</a>
+                </h5>
+                <span>{{ item.courses }} Courses</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,106 @@
+<div class="challenge-complete">
+  <!-- Celebration confetti for successful completion -->
+  @if (score >= passingScore) {
+    <div class="celebration-confetti">
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track i) {
+        <div class="confetti-piece" [style.background-color]="getRandomColor(i)"></div>
+      }
+    </div>
+  }
+
+  <!-- Main Result Circle - Moved to the top for both success and failure -->
+  <div class="score-circle-container">
+    <div class="score-circle" 
+         [class.success]="score >= passingScore" 
+         [class.failed]="score < passingScore"
+         [style.--percentage]="score + '%'">
+      <div class="score-value">{{ score }}%</div>
+    </div>
+  </div>
+
+  <!-- Result message based on score -->
+  @if (score >= passingScore) {
+    <h2>تهانينا! لقد أكملت التمرين بنجاح</h2>
+    <p class="result-message">أحسنت، استمر في تقدمك العلمي!</p>
+  } @else {
+    <h2>محاولة جيدة، لكن يمكن تحسين النتيجة</h2>
+    <p class="result-message">لا تقلق، يمكنك إعادة المحاولة للتحسن!</p>
+    @if (mode === 'test') {
+      <div class="test-failure-message">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        <p>يجب تحقيق نسبة {{ passingScore }}% على الأقل للانتقال إلى الخطوة التالية</p>
+      </div>
+    }
+  }
+
+  <!-- Score details -->
+  <div class="score-details-container">
+    <div class="score-details">
+      <div class="score-item">
+        <span class="score-label">الإجابات الصحيحة:</span>
+        <span class="score-number">{{ totalCorrect }} من {{ totalQuestions }}</span>
+      </div>
+      <div class="score-item">
+        <span class="score-label">الوضع:</span>
+        <span class="score-mode {{ mode === 'practice' ? 'practice-badge' : (mode === 'test' ? 'test-badge' : 'view-badge') }}">
+          {{ mode === 'practice' ? 'تدريب' : (mode === 'test' ? 'اختبار' : 'مشاهدة') }}
+        </span>
+      </div>
+      <div class="score-item">
+        <span class="score-label">المستوى:</span>
+        <span class="score-level" [class.beginner]="score < 50" [class.intermediate]="score >= 50 && score < 80" [class.advanced]="score >= 80">
+          {{ score < 50 ? 'مبتدئ' : score < 80 ? 'متوسط' : 'متقدم' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+   <!-- Action buttons -->
+  <div class="action-buttons">
+    <button class="retry-button" type="button" (click)="onRetryChallenge()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+        <path d="M3 3v5h5"></path>
+      </svg>
+      إعادة المحاولة
+    </button>
+    
+    <!-- Show Exit button for practice mode -->
+    @if (mode === 'practice') {
+      <button class="exit-button" type="button" (click)="onExitChallenge()">
+        خروج
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    }
+    
+    <!-- Show Next button for other modes (test/view) - disabled in test mode if score is below passing score -->
+    @if (mode !== 'practice') {
+      <button 
+        class="next-button" 
+        type="button" 
+        [disabled]="mode === 'test' && score < passingScore"
+        [class.disabled]="mode === 'test' && score < passingScore"
+        (click)="onFinishChallenge()">
+        الخطوة التالية
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    }
+  </div>
+
+
+
+
+
+
+</div>

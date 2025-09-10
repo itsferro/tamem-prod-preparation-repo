@@ -1,0 +1,36 @@
+@import "aos/dist/aos.css";
+@import 'bs-stepper/dist/css/bs-stepper.min.css';
+
+ngb-rating {
+  i {
+    position: relative;
+    display: inline-block;
+    color: #d3d3d3;
+    font-size: 0.875em;
+  }
+}
+
+.filled {
+  color: rgba(var(--bs-warning-rgb)) !important;
+  font-size: 0.875em;
+  overflow: hidden;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.arrow-none {
+  &:after {
+    display: none !important;
+  }
+
+  &:before {
+    display: none !important;
+  }
+}
+
+ngb-pagination {
+  ul {
+    margin-bottom: 0px;
+  }
+}

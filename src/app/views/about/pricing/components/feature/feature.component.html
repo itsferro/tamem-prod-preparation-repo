@@ -1,0 +1,82 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 text-center mx-auto mb-4">
+        <h2>Full Features List</h2>
+        <p class="mb-0">
+          Perceived end knowledge certainly day sweetness why cordially
+        </p>
+      </div>
+    </div>
+
+    @for (item of featuresList; track $index) {
+      <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+          <div class="bg-light p-3 rounded-3">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start">
+                <h5 class="mb-2 mb-md-0">{{ item.section_title }}</h5>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-4 text-center py-2">
+                    <h6 class="mb-0">Basic</h6>
+                  </div>
+                  <div class="col-4 text-center py-2">
+                    <h6 class="mb-0">Professional</h6>
+                  </div>
+                  <div class="col-4 text-center py-2">
+                    <h6 class="mb-0">Premium</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @for (data of item.features; track data; let last = $last) {
+            <div class="row align-items-center p-3">
+              <div class="col-md-6 text-center text-md-start">
+                <h6 class="mb-3 mb-md-0">{{ data.feature_name }}</h6>
+              </div>
+
+              <div class="col-md-6 pt-2 pt-md-0">
+                <div class="row">
+                  <div class="col-4 d-flex justify-content-center">
+                    @if (data.available.includes('basic')) {
+                      <div
+                        class="icon-md bg-success bg-opacity-10 rounded-circle text-success"
+                      >
+                        <i class="fas fa-check"></i>
+                      </div>
+                    }
+                  </div>
+                  <div class="col-4 d-flex justify-content-center">
+                    @if (data.available.includes('professional')) {
+                      <div
+                        class="icon-md bg-success bg-opacity-10 rounded-circle text-success"
+                      >
+                        <i class="fas fa-check"></i>
+                      </div>
+                    }
+                  </div>
+                  <div class="col-4 d-flex justify-content-center">
+                    @if (data.available.includes('premium')) {
+                      <div
+                        class="icon-md bg-success bg-opacity-10 rounded-circle text-success"
+                      >
+                        <i class="fas fa-check"></i>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            @if (!last) {
+              <hr class="m-0" />
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

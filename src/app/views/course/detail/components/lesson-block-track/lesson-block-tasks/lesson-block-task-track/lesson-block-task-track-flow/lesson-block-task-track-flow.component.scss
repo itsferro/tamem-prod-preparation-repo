@@ -1,0 +1,195 @@
+// Status Flowchart Component Styles
+
+.status-flowchart {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e3e6f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    
+    h6 {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      
+      i {
+        color: #4facfe;
+      }
+    }
+  }
+  
+  .flowchart-container {
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  
+  .status-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 800px;
+    gap: 1rem;
+  }
+  
+  .status-item-wrapper {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .status-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    // Status States
+    &.status-current {
+      border-color: #4facfe;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+      
+      .status-icon i {
+        color: white;
+      }
+      
+      .status-label {
+        color: white;
+        font-weight: 600;
+      }
+    }
+    
+    &.status-completed {
+      border-color: #28a745;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      
+      .status-icon i {
+        color: white;
+      }
+      
+      .status-label {
+        color: white;
+      }
+    }
+    
+    &.status-future {
+      border-color: #dee2e6;
+      background: #f8f9fa;
+      opacity: 0.7;
+      
+      .status-icon i {
+        color: #6c757d;
+      }
+      
+      .status-label {
+        color: #6c757d;
+      }
+    }
+  }
+  
+  .status-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    
+    i {
+      font-size: 1.2rem;
+      color: #495057;
+    }
+  }
+  
+  .status-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+  }
+  
+  .current-indicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+    
+    i {
+      color: white;
+      font-size: 0.7rem;
+    }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .flow-arrow {
+    margin: 0 0.5rem;
+    color: #6c757d;
+    font-size: 1.2rem;
+    animation: flow 2s ease-in-out infinite;
+    
+    i {
+      opacity: 0.6;
+    }
+  }
+  
+  @keyframes flow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+  
+  // Loading and Error States
+  .spinner-border {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .alert {
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    
+    &.alert-danger {
+      background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+      color: #721c24;
+      
+      i {
+        color: #dc3545;
+      }
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 768px) {
+    .status-flow {
+      min-width: 600px;
+    }
+  }

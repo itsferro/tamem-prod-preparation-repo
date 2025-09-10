@@ -1,0 +1,35 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-center mb-4">Recommended Topics</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of recommended; track $index) {
+        <div class="col-md-6 col-xl-3">
+          <div class="card bg-light h-100">
+            <div class="card-header bg-light pb-0 border-0">
+              <i [class]="item.icon"></i>
+              <h5 class="card-title mb-0 mt-2">{{ item.title }}</h5>
+            </div>
+
+            <div class="card-body">
+              <ul class="nav flex-column">
+                @for (topic of item.topics; track topic) {
+                  <li class="nav-item">
+                    <a class="nav-link d-flex" routerLink="/help/center-detail"
+                      ><i class="fas fa-angle-right text-primary pt-1 me-2"></i
+                      >{{ topic }}</a
+                    >
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

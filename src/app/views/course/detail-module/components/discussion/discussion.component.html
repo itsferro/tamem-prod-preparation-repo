@@ -1,0 +1,187 @@
+<div class="card">
+  <div class="card-header border-bottom p-0 pb-3">
+    <h4 class="mb-3">Discussion</h4>
+    <form class="row g-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="position-relative">
+          <input
+            class="form-control pe-5 bg-transparent"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button
+            class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+            type="submit"
+          >
+            <i class="fas fa-search fs-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <select selectFormInput class="js-choice">
+          <option value="">Select item</option>
+          <option>Week 1</option>
+          <option>Week 2</option>
+          <option>Week 3</option>
+          <option>Week 4</option>
+          <option>Week 5</option>
+          <option>Week 6</option>
+        </select>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <select selectFormInput class="js-choice">
+          <option value="">Filter</option>
+          <option>All</option>
+          <option>Answered</option>
+          <option>Unanswered</option>
+        </select>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <a
+          href="javascript:void(0);"
+          class="btn btn-primary-soft mb-0 w-100"
+          (click)="openModal(modalCreatePost)"
+          >Create Post</a
+        >
+      </div>
+    </form>
+  </div>
+
+  <div class="card-body p-0 pt-3">
+    <div class="vstack gap-3">
+      <div class="border-bottom">
+        <div class="d-sm-flex justify-content-sm-between mb-3">
+          <div class="d-flex align-items-center">
+            <div class="avatar avatar-sm flex-shrink-0">
+              <img
+                class="avatar-img rounded-circle"
+                src="assets/images/avatar/03.jpg"
+                alt="avatar"
+              />
+            </div>
+
+            <div class="ms-2">
+              <h6 class="mb-0">
+                <a href="javascript:void(0);">Samuel Bishop</a>
+              </h6>
+              <small>posted 9 minutes ago</small>
+            </div>
+          </div>
+        </div>
+
+        <h5>How can you categorize Digital marketing?</h5>
+        <p class="mb-2">
+          As it so contrasted oh estimating instrument. Size like body someone
+          had. Are conduct viewing boy minutes warrant the expense? Tolerably
+          behavior may admit daughters offending her ask own. Praise effect
+          wishes change way and any wanted. Lively use looked latter regard had.
+          Do he it part more last in.
+        </p>
+
+        <ul class="nav nav-divider pb-3 small">
+          <li class="nav-item">
+            <a class="text-primary-hover" href="javascript:void(0);">
+              <i class="bi bi-hand-thumbs-up me-2"></i>Like (3)</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="text-primary-hover" href="javascript:void(0);">
+              <i class="bi bi-chat-left me-2"></i>Reply</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="d-sm-flex justify-content-sm-between mb-3">
+          <div class="d-flex align-items-center">
+            <div class="avatar avatar-sm flex-shrink-0">
+              <img
+                class="avatar-img rounded-circle"
+                src="assets/images/avatar/05.jpg"
+                alt="avatar"
+              />
+            </div>
+
+            <div class="ms-2">
+              <h6 class="mb-0">
+                <a href="javascript:void(0);">Carolyn Ortiz</a>
+              </h6>
+              <small>posted 50 minutes ago</small>
+            </div>
+          </div>
+        </div>
+
+        <h5>
+          What are the key areas where you can use keywords to optimize your
+          site ranking?
+        </h5>
+        <p class="mb-2">
+          As it so contrasted oh estimating instrument. Size like body someone
+          had. Are conduct viewing boy minutes warrant the expense? Tolerably
+          behavior may admit daughters offending her ask own. Praise effect
+          wishes change way and any wanted. Lively use looked latter regard had.
+          Do he it part more last in.
+        </p>
+
+        <ul class="nav nav-divider pb-0 small">
+          <li class="nav-item">
+            <a class="text-primary-hover" href="javascript:void(0);">
+              <i class="bi bi-hand-thumbs-up me-2"></i>Like (3)</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="text-primary-hover" href="javascript:void(0);">
+              <i class="bi bi-chat-left me-2"></i>Reply</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCreatePost let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modalLabelCreatePost">Create Post</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" placeholder="Add title here" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description </label>
+        <textarea
+          class="form-control"
+          rows="4"
+          placeholder="Description here"
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="form-label">Select Course Materials</label>
+        <select selectFormInput class="js-choice">
+          <option value="">Select item</option>
+          <option>Week 1</option>
+          <option>Week 2</option>
+          <option>Week 3</option>
+          <option>Week 4</option>
+          <option>Week 5</option>
+          <option>Week 6</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success-soft">Post</button>
+  </div>
+</ng-template>

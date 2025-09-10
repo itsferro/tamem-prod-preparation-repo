@@ -1,0 +1,29 @@
+<div class="card card-body p-4 shadow">
+  <h4 class="mb-3">Cart Total</h4>
+
+  <ul class="list-group list-group-borderless mb-2">
+    <li class="list-group-item px-0 d-flex justify-content-between">
+      <span class="h6 fw-light mb-0">Original Price</span>
+      <span class="h6 fw-light mb-0 fw-bold">${{ total }}</span>
+    </li>
+    <li class="list-group-item px-0 d-flex justify-content-between">
+      <span class="h6 fw-light mb-0">Coupon Discount</span>
+      <span class="text-danger">-${{ discount }}</span>
+    </li>
+    <li class="list-group-item px-0 d-flex justify-content-between">
+      <span class="h5 mb-0">Total</span>
+      <span class="h5 mb-0">${{ netAmount }}</span>
+    </li>
+  </ul>
+
+  <div class="d-grid">
+    <a routerLink="/shop/checkout" class="btn btn-lg btn-success"
+      >Proceed to Checkout</a
+    >
+  </div>
+
+  <p class="small mb-0 mt-2 text-center">
+    By completing your purchase, you agree to these
+    <a href="javascript:void(0);"><strong>Terms of Service</strong></a>
+  </p>
+</div>

@@ -1,0 +1,79 @@
+<div ngbDropdown>
+  <a
+    ngbDropdownToggle
+    class="{{ btnClass }} mb-0 arrow-none"
+    href="javascript:void(0);"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    data-bs-auto-close="outside"
+  >
+    <i [class]="icon"></i>
+  </a>
+
+  <span
+    class="position-absolute top-0 start-100 translate-middle badge rounded-circle {{
+      badgeClass
+    }}"
+    >2
+    <span class="visually-hidden">unread messages</span>
+  </span>
+
+  <div
+    ngbDropdownMenu
+    class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0"
+  >
+    <div class="card bg-transparent">
+      <div class="card-header bg-transparent border-bottom py-4">
+        <h5 class="m-0">Cart items</h5>
+      </div>
+      <div class="card-body p-0">
+        @for (item of CartList; track $index; let last = $last) {
+          <div class="row p-3 g-2">
+            <div class="col-3">
+              <img class="rounded-2" [src]="item.image" alt="avatar" />
+            </div>
+
+            <div class="col-9">
+              <div class="d-flex justify-content-between">
+                <h6 class="m-0">{{ item.title }}</h6>
+                <a href="javascript:void(0);" class="small text-primary-hover"
+                  ><i class="bi bi-x-lg"></i
+                ></a>
+              </div>
+
+              <form class="choices-sm pt-2 col-4">
+                <select
+                  selectFormInput
+                  class="form-select js-choice border-0 bg-transparent"
+                  data-search-enabled="false"
+                >
+                  <option>1</option>
+                  <option selected>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </form>
+            </div>
+          </div>
+
+          @if (!last) {
+            <hr class="m-0" />
+          }
+        }
+      </div>
+
+      <div
+        class="card-footer bg-transparent border-top py-3 text-center d-flex justify-content-between position-relative"
+      >
+        <a href="javascript:void(0);" class="btn btn-sm btn-light mb-0"
+          >View Cart</a
+        >
+        <a href="javascript:void(0);" class="btn btn-sm btn-success mb-0"
+          >Checkout</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [fullWidth]="false"
+  [showContact]="true"
+  [showsignin]="true"
+  [showExtraPages]="false"
+/>
+
+<main>
+  <!-- =======================
+  Main part START -->
+  <section>
+    <div class="container">
+      <div class="row g-5 justify-content-between">
+        <div class="col-md-8 mx-auto">
+          <h2 class="mb-3">Apply for Admission</h2>
+          <p>
+            You can apply online by filling up below form or
+            <a href="javascript:void(0);">Download a pdf</a> and submit. Any
+            question related admission process, please contact our admission
+            office at <a href="javascript:void(0);">+123 456 789</a> or
+            <a href="javascript:void(0);">example&#64;email.com</a>.
+          </p>
+          <p class="mb-1">
+            Before you proceed with the form please read below topics:
+          </p>
+          <ul class="ps-3">
+            <li>Application fee is {{ currency }}49</li>
+            <li>Fees are non-refundable</li>
+            <li>
+              Field required with <span class="text-danger">*</span> are
+              required to complete the admission form
+            </li>
+          </ul>
+
+          <form class="row g-3">
+            <h5 class="mb-0">Personal information</h5>
+
+            <admission-personal-info />
+
+            <hr class="my-5" />
+
+            <h5 class="mt-0">Parent detail</h5>
+            <admission-parent-detail />
+
+            <hr class="my-5" />
+
+            <h5 class="mt-0">Education</h5>
+
+            <admission-education />
+
+            <div class="col-12 text-sm-end">
+              <button class="btn btn-primary mb-0">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Main part END -->
+</main>
+
+<app-footer2 className="bg-light" />

@@ -1,0 +1,78 @@
+<section class="pt-5">
+  <div class="container">
+    <div class="d-sm-flex justify-content-sm-between align-items-center mb-4">
+      <h5 class="mb-2 mb-sm-0">
+        You have {{ wishlistData.length }} items in wishlist
+      </h5>
+      <div class="text-end">
+        <button class="btn btn-danger-soft mb-0">
+          <i class="fas fa-trash me-2"></i>Remove all
+        </button>
+      </div>
+    </div>
+    <div class="row g-4">
+      @for (item of wishlistData; track $index) {
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <div class="card shadow h-100">
+            <img [src]="item.image" class="card-img-top" alt="course image" />
+            <div class="card-body pb-0">
+              <div class="d-flex justify-content-between mb-2">
+                <a
+                  href="javascript:void(0);"
+                  class="badge {{ item.badgeColor }}"
+                  >{{ item.badge }}</a
+                >
+                <a href="javascript:void(0);" class="text-danger"
+                  ><i class="fas fa-heart"></i
+                ></a>
+              </div>
+
+              <h5 class="card-title fw-normal">
+                <a href="javascript:void(0);">{{ item.title }}</a>
+              </h5>
+              <p class="mb-2 text-truncate-2">{{ item.description }}</p>
+
+              <ul class="list-inline mb-0">
+                <ng-template #t let-fill="fill">
+                  <i class="far fa-star text-warning me-1">
+                    @if (fill > 0) {
+                      <i
+                        class="fas fa-star text-warning filled"
+                        [style.width.%]="fill"
+                      ></i>
+                    }
+                  </i>
+                </ng-template>
+
+                <ngb-rating
+                  [(rate)]="item.rating"
+                  [starTemplate]="t"
+                  [readonly]="true"
+                  [max]="5"
+                />
+
+                <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                  {{ item.rating }}/5.0
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-footer pt-0 pb-3">
+              <hr />
+              <div class="d-flex justify-content-between">
+                <span class="h6 fw-light mb-0"
+                  ><i class="far fa-clock text-danger me-2"></i
+                  >{{ item.duration }}</span
+                >
+                <span class="h6 fw-light mb-0"
+                  ><i class="fas fa-table text-orange me-2"></i
+                  >{{ item.lectures }} lectures</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

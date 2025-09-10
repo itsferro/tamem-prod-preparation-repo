@@ -1,0 +1,113 @@
+<div
+  id="step-2"
+  role="tabpanel"
+  class="content fade"
+  aria-labelledby="steppertrigger2"
+>
+  <h4>Course media</h4>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-12">
+      <div
+        class="text-center justify-content-center align-items-center p-4 p-sm-5 border border-2 border-dashed position-relative rounded-3"
+      >
+        <img src="assets/images/element/gallery.svg" class="h-50px" alt="" />
+        <div>
+          <h6 class="my-2">
+            Upload course image here, or<a
+              href="javascript:void();"
+              class="text-primary"
+            >
+              Browse</a
+            >
+          </h6>
+          <label style="cursor: pointer">
+            <span>
+              <input
+                class="form-control stretched-link"
+                type="file"
+                name="my-image"
+                id="image"
+                accept="image/gif, image/jpeg, image/png"
+              />
+            </span>
+          </label>
+          <p class="small mb-0 mt-2">
+            <b>Note:</b> Only JPG, JPEG and PNG. Our suggested dimensions are
+            600px * 450px. Larger image will be cropped to 4:3 to fit our
+            thumbnails/previews.
+          </p>
+        </div>
+      </div>
+
+      <div class="d-sm-flex justify-content-end mt-2">
+        <button type="button" class="btn btn-sm btn-danger-soft mb-3">
+          Remove image
+        </button>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <h5>Upload video</h5>
+
+      <div class="col-12 mt-4 mb-5">
+        <label class="form-label">Video URL</label>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Enter video url"
+          value="https://www.youtube.com/embed/tXHviS-4ygo"
+        />
+      </div>
+      <div class="position-relative my-4">
+        <hr />
+        <p
+          class="small position-absolute top-50 start-50 translate-middle bg-body px-3 mb-0"
+        >
+          Or
+        </p>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Upload video</label>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile01" />
+          <label class="input-group-text">.mp4</label>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile02" />
+          <label class="input-group-text">.WebM</label>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile03" />
+          <label class="input-group-text">.OGG</label>
+        </div>
+      </div>
+
+      <h5 class="mt-4">Video preview</h5>
+      <div class="position-relative">
+        <img src="assets/images/about/04.jpg" class="rounded-4" alt="" />
+        <lightgallery
+          [settings]="settings"
+          class="position-absolute top-50 start-50 translate-middle"
+        >
+          <a
+            href="https://www.youtube.com/embed/tXHviS-4ygo"
+            class="btn btn-lg text-danger btn-round btn-white-shadow mb-0"
+            data-glightbox=""
+            data-gallery="video-tour"
+          >
+            <i class="fas fa-play"></i>
+          </a>
+        </lightgallery>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-secondary prev-btn mb-0">Previous</button>
+      <button class="btn btn-primary next-btn mb-0">Next</button>
+    </div>
+  </div>
+</div>

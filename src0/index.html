@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+      
+    />
+
+    <!-- In your index.html -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+   <!-- Add to the <head> section of index.html -->
+ 
+
+    <style>
+      #splash-screen {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background: white;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: all 15s linear;
+        overflow: hidden;
+      }
+
+      #splash-screen.remove {
+        animation: fadeout 0.7s forwards;
+        z-index: 0;
+      }
+
+      @keyframes fadeout {
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <app-root></app-root>
+    <div id="splash-screen">
+      <img
+        alt="Logo"
+        class="light"
+        src="./assets/images/logo.svg"
+        style="height: 5%"
+      />
+    </div>
+    <script>
+      const splashScreen = document.querySelector('#splash-screen');
+      if (splashScreen) {
+        splashScreen.classList.add('remove');
+      }
+    </script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+  </body>
+</html>

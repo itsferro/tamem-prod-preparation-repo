@@ -1,0 +1,97 @@
+<h4 class="mt-5 mb-0">Event Schedule</h4>
+<p>
+  Understand that theory is important to build a solid foundation, we understand
+  that theory alone
+</p>
+
+<div
+  ngbAccordion
+  [closeOthers]="true"
+  class="accordion accordion-icon accordion-active-dark"
+  id="accordionExample2"
+>
+  @for (item of eventList; track $index) {
+    <div
+      ngbAccordionItem
+      [collapsed]="$index == 0 ? false : true"
+      class="accordion-item mb-3"
+    >
+      <h6 ngbAccordionHeader class="accordion-header font-base" id="heading-1">
+        <button
+          ngbAccordionButton
+          class="accordion-button fw-bold rounded d-sm-flex d-inline-block collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse-1"
+          aria-expanded="true"
+          aria-controls="collapse-1"
+        >
+          {{ item.day }}
+          <span class="fw-normal ms-0 ms-sm-2">({{ item.date }})</span>
+        </button>
+      </h6>
+      <div
+        ngbAccordionCollapse
+        id="collapse-1"
+        class="accordion-collapse collapse show"
+        aria-labelledby="heading-1"
+        data-bs-parent="#accordionExample2"
+      >
+        <div ngbAccordionBody class="accordion-body p-0">
+          <ng-template>
+            @for (event of item.events; track $index; let last = $last) {
+              @if (event.speakers) {
+                <div class="d-flex align-items-center p-3">
+                  <div class="avatar avatar-sm flex-shrink-0">
+                    <img
+                      class="avatar-img rounded-circle"
+                      [src]="event.avatar"
+                      alt="avatar"
+                    />
+                  </div>
+
+                  <div class="ms-2">
+                    <h6 class="mb-0 fw-normal">
+                      <a href="javascript:void(0);"
+                        >{{ event.title }} <span>({{ event.time }})</span></a
+                      >
+                    </h6>
+
+                    <p class="small mb-0">
+                      by
+                      @for (
+                        speaker of event.speakers;
+                        track speaker;
+                        let first = $first
+                      ) {
+                        @if (!first) {
+                          and
+                        }
+                        <a
+                          href="javascript:void(0);"
+                          class="fw-bold text-body text-primary-hover"
+                          >{{ speaker.name }}</a
+                        >
+                        {{ speaker.role }}
+                      }
+                    </p>
+                  </div>
+                </div>
+              } @else {
+                <div class="text-center p-3">
+                  <h6 class="mb-0 fw-normal">
+                    <i class="bi bi-clock"></i> {{ event.title }}
+                    <span>({{ event.time }})</span>
+                  </h6>
+                </div>
+              }
+              @if (!last) {
+                <hr class="my-0" />
+              }
+            }
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  }
+</div>

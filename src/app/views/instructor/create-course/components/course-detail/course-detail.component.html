@@ -1,0 +1,196 @@
+<div
+  id="step-1"
+  role="tabpanel"
+  class="content fade"
+  aria-labelledby="steppertrigger1"
+>
+  <h4>Course details</h4>
+
+  <hr />
+
+  <div class="row g-4">
+    <div class="col-12">
+      <label class="form-label">Course title</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Enter course title"
+        value="The Complete Digital Marketing Course - 12 Courses in 1"
+      />
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Short description</label>
+      <textarea class="form-control" rows="2" placeholder="Enter keywords">
+Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do.
+      </textarea>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Course category</label>
+      <select
+        selectFormInput
+        class="form-select js-choice border-0 z-index-9 bg-transparent"
+        aria-label=".form-select-sm"
+        data-search-enabled="true"
+      >
+        <option value="">Select category</option>
+        <option>Engineer</option>
+        <option>Medical</option>
+        <option>Information technology</option>
+        <option>Finance</option>
+        <option selected>Marketing</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Course level</label>
+      <select
+        selectFormInput
+        [options]="{ removeItems: true, removeItemButton: true }"
+        class="form-select js-choice border-0 z-index-9 bg-transparent"
+        aria-label=".form-select-sm"
+        data-search-enabled="false"
+        data-remove-item-button="true"
+      >
+        <option value="">Select course level</option>
+        <option selected>All level</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advance</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Language</label>
+      <select
+        selectFormInput
+        [options]="{ removeItems: true, removeItemButton: true }"
+        class="form-select js-choice border-0 z-index-9 bg-transparent"
+        multiple="multiple"
+        aria-label=".form-select-sm"
+        data-max-item-count="3"
+        data-remove-item-button="true"
+      >
+        <option value="">Select language</option>
+        <option selected>English</option>
+        <option>German</option>
+        <option>French</option>
+        <option selected>Hindi</option>
+      </select>
+    </div>
+
+    <div class="col-md-6 d-flex align-items-center justify-content-start mt-5">
+      <div class="form-check form-switch form-check-md">
+        <input class="form-check-input" type="checkbox" id="checkPrivacy1" />
+        <label class="form-check-label" for="checkPrivacy1"
+          >Check this for featured course</label
+        >
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Course time</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Enter course time"
+        value="12h 30m"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Total lecture</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Enter total lecture"
+        value="82"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Course price</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter course price"
+        value="{{ currency }}350"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Discount price</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Enter discount"
+        value="60%"
+      />
+      <div class="col-12 mt-1 mb-0">
+        <div class="form-check small mb-0">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="checkBox1"
+            checked
+          />
+          <label class="form-check-label" for="checkBox1">
+            Enable this Discount
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Add description</label>
+
+      <quill-editor
+        [(ngModel)]="content"
+        theme="snow"
+        class="h-400px"
+        id="quilleditor"
+      >
+        <div
+          class="bg-light border border-bottom-0 rounded-top py-3"
+          id="quilltoolbar"
+          quill-editor-toolbar
+        >
+          <span class="ql-formats">
+            <select class="ql-size"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-strike"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-code-block"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+            <button class="ql-indent" value="-1"></button>
+            <button class="ql-indent" value="+1"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-clean"></button>
+          </span>
+        </div>
+      </quill-editor>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+      <button class="btn btn-primary next-btn mb-0">Next</button>
+    </div>
+  </div>
+</div>

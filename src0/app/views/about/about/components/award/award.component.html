@@ -1,0 +1,77 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h2>Awards'N Stuff</h2>
+
+        <ul class="list-group list-group-borderless mt-4">
+          @for (item of awards; track $index) {
+            <li class="list-group-item d-flex align-items-center px-0">
+              <h6 class="mb-0">{{ item.year }}</h6>
+              <span class="fs-6 ms-3">{{ item.name }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="col-md-8">
+        <div class="d-sm-flex justify-content-sm-between">
+          <h2 class="mb-0">Meet Our Team</h2>
+          <a href="javascript:void(0);" class="btn btn-light mt-2">Join Team</a>
+        </div>
+
+        <div
+          class="tiny-slider arrow-round arrow-creative arrow-blur arrow-hover mt-2 mt-sm-5"
+        >
+          <ng-tiny-slider
+            [config]="sliderConfig"
+            class="tiny-slider-inner"
+            data-autoplay="true"
+            data-arrow="true"
+            data-dots="false"
+            data-items="4"
+            data-items-lg="3"
+            data-items-md="2"
+          >
+            @for (item of teamData; track $index) {
+              <div class="text-center">
+                <div class="avatar avatar-xxl mb-3">
+                  <img
+                    class="avatar-img rounded-circle"
+                    [src]="item.image"
+                    alt="avatar"
+                  />
+                </div>
+
+                <h6 class="mb-0">
+                  <a href="javascript:void(0);">{{ item.name }}</a>
+                </h6>
+                <p class="mb-0 small">{{ item.role }}</p>
+
+                <ul class="list-inline mb-0">
+                  <ng-template #t let-fill="fill">
+                    <i class="far fa-star text-warning me-1">
+                      @if (fill > 0) {
+                        <i
+                          class="fas fa-star text-warning filled"
+                          [style.width.%]="fill"
+                        ></i>
+                      }
+                    </i>
+                  </ng-template>
+
+                  <ngb-rating
+                    [(rate)]="item.rating"
+                    [starTemplate]="t"
+                    [readonly]="true"
+                    [max]="5"
+                  />
+                </ul>
+              </div>
+            }
+          </ng-tiny-slider>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

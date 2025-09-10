@@ -1,0 +1,48 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 text-center mx-auto">
+        <h2>What people say about us</h2>
+        <p>
+          Happiness prosperous impression had conviction For every delay in they
+          Extremity now strangers contained breakfast him discourse additions
+          Sincerity collected contented led now perpetual extremely forfeited
+        </p>
+      </div>
+    </div>
+
+    <div class="row mt-4 mt-lg-5">
+      <div class="col-10 mx-auto">
+        <div class="row g-4">
+          <div class="tiny-slider arrow-round arrow-dark arrow-hover">
+            <ng-tiny-slider
+              [config]="sliderConfig"
+              class="tiny-slider-inner pb-1"
+            >
+              @for (item of testimonialsList; track $index) {
+                <div class="col-6">
+                  <p class="fs-5">"{{ item.content }}"</p>
+
+                  <div class="d-flex align-items-center">
+                    <div class="avatar avatar-md">
+                      <img
+                        class="avatar-img rounded-circle"
+                        [src]="item.avatar"
+                        alt="avatar"
+                      />
+                    </div>
+
+                    <div class="ms-2">
+                      <h6 class="mb-0">{{ item.name }}</h6>
+                      <p class="mb-0 small">{{ item.position }}</p>
+                    </div>
+                  </div>
+                </div>
+              }
+            </ng-tiny-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

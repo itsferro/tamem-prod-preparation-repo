@@ -1,0 +1,20 @@
+<div class="card shadow h-100">
+  <div class="card-header p-4 border-bottom">
+    <h5 class="card-header-title">Earnings</h5>
+  </div>
+
+  <div class="card-body">
+    <div id="ChartPayout">
+      <apx-chart
+        [chart]="payoutChart.chart!"
+        [series]="payoutChart.series!"
+        [dataLabels]="payoutChart.dataLabels!"
+        [stroke]="payoutChart.stroke!"
+        [colors]="payoutChart.colors!"
+        [xaxis]="payoutChart.xaxis!"
+        [yaxis]="payoutChart.yaxis!"
+        [tooltip]="payoutChart.tooltip!"
+      ></apx-chart>
+    </div>
+  </div>
+</div>

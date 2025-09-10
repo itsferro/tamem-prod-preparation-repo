@@ -1,0 +1,349 @@
+<div class="image-prompt-container">
+  <div class="prompt-header">
+    <h5 class="prompt-title">توليد وصف الصورة</h5>
+    <button type="button" class="close-btn" aria-label="Close" (click)="closeModal()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  
+  <div class="prompt-body">
+    <!-- Frame Information - Always visible -->
+    <div class="card frame-info mb-3">
+      <div class="card-body p-3">
+        <div class="visual-content-wrapper">
+          <h6 class="mb-2">وصف المحتوى المرئي:</h6>
+          <textarea  style="direction:ltr;text-align:left;"
+            class="visual-content form-control"
+            [(ngModel)]="frameData.sceneImagePrompt"
+            (input)="onVisualContentChanged($event)"
+            placeholder="صف المشهد بالتفصيل...">
+          </textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Generate Button - Always visible -->
+    <div class="generate-section text-center mb-3">
+      <button class="btn btn-primary generate-btn" (click)="generateImagePrompts()" [disabled]="isGenerating">
+        <i class="fas fa-magic me-2"></i>
+        توليد وصف الصورة
+        @if (isGenerating) {
+          <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+        }
+      </button>
+    </div>
+    
+    <!-- Tabs Navigation -->
+     <ul class="nav nav-tabs mb-3" role="tablist">
+      <!-- <li class="nav-item" role="presentation">
+        <button 
+          class="nav-link" 
+          [class.active]="activeTab === 'settings'"
+          id="settings-tab" 
+          (click)="setActiveTab('settings')" 
+          type="button" 
+          role="tab" 
+          aria-controls="settings" 
+          aria-selected="true">
+          <i class="fas fa-sliders-h me-2"></i>إعدادات الصورة
+        </button>
+      </li> -->
+      <li class="nav-item" role="presentation">
+        <button 
+          class="nav-link" 
+          [class.active]="activeTab === 'prompts'"
+          id="prompts-tab" 
+          (click)="setActiveTab('prompts')" 
+          type="button" 
+          role="tab" 
+          aria-controls="prompts" 
+          aria-selected="false"
+          [class.has-results]="generatedPrompts.length > 0">
+          <i class="fas fa-image me-2"></i>الوصف المولّد
+          @if (generatedPrompts.length > 0) {
+            <span class="badge bg-primary ms-2">{{ generatedPrompts.length }}</span>
+          }
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button 
+          class="nav-link" 
+          [class.active]="activeTab === 'gallery'"
+          id="gallery-tab" 
+          (click)="setActiveTab('gallery')" 
+          type="button" 
+          role="tab" 
+          aria-controls="gallery" 
+          aria-selected="false">
+          <i class="fas fa-images me-2"></i>معرض الصور
+          @if (uploadedImages.length > 0) {
+            <span class="badge bg-primary ms-2">{{ uploadedImages.length }}</span>
+          }
+        </button>
+      </li>
+    </ul>  
+    
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- Settings Tab Panel -->
+      <div 
+        class="tab-pane fade" 
+        [class.show]="activeTab === 'settings'"
+        [class.active]="activeTab === 'settings'"
+        id="settings" 
+        role="tabpanel" 
+        aria-labelledby="settings-tab">
+        
+        <!-- <div class="card settings-card">
+          <div class="card-header d-flex justify-content-between align-items-center py-2">
+            <h6 class="mb-0">خصائص الصورة</h6>
+            <div>
+              <button class="btn btn-sm btn-outline-primary" (click)="toggleAllSettings(true)" style="margin-left: 6px;">تفعيل الكل</button>
+              <button class="btn btn-sm btn-outline-secondary ms-2" (click)="toggleAllSettings(false)">تعطيل الكل</button>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            <div class="settings-grid">
+              @for (setting of imageSettings; track setting.key) {
+                <div class="setting-item" [class.inactive]="!setting.active">
+                  <div class="setting-header d-flex justify-content-between align-items-center">
+                    <label class="form-check-label">{{ setting.name }}</label>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" [checked]="setting.active" (change)="toggleSetting(setting)">
+                    </div>
+                  </div>
+                  
+                  @if (setting.type === 'select') {
+                    <select class="form-select form-select-sm" [(ngModel)]="setting.value" [disabled]="!setting.active">
+                      @for (option of setting.options; track option) {
+                        <option [value]="option">{{ option }}</option>
+                      }
+                    </select>
+                  } @else if (setting.type === 'text') {
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="setting.value" [disabled]="!setting.active">
+                  } @else if (setting.type === 'color') {
+                    <input type="color" class="form-control form-control-sm form-control-color" [(ngModel)]="setting.value" [disabled]="!setting.active">
+                  } @else if (setting.type === 'range') {
+                    <input type="range" class="form-range" [(ngModel)]="setting.value" [disabled]="!setting.active">
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div> -->
+        
+        <!-- Note: Generate button moved outside tabs -->
+      </div>
+      
+      <!-- Prompts Tab Panel -->
+      <div 
+        class="tab-pane fade" 
+        [class.show]="activeTab === 'prompts'"
+        [class.active]="activeTab === 'prompts'"
+        id="prompts" 
+        role="tabpanel" 
+        aria-labelledby="prompts-tab">
+        
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+        
+        @if (generatedPrompts.length >=0 ) {
+          <div class="generated-prompts-wrapper">
+            <div class="prompts-carousel-header">
+              <h6>اقتراحات وصف الصورة</h6>
+              <div class="prompt-counter">{{ selectedPromptIndex + 1 }} / {{ generatedPrompts.length }}</div>
+            </div>
+            
+            <div class="carousel-container">
+              <!-- Carousel Navigation -->
+              <button 
+                class="carousel-nav carousel-prev" 
+                [disabled]="selectedPromptIndex <= 0"
+                (click)="navigateCarousel(-1)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              
+              <!-- Carousel Item -->
+              <div class="carousel-item-container">
+                @if (generatedPrompts.length > 0 && selectedPromptIndex >= 0) {
+                  <div class="prompt-item">
+                    <div class="prompt-header">
+                      <span class="prompt-tag">اقتراح {{ selectedPromptIndex + 1 }}</span>
+                      <button 
+                        class="copy-btn" 
+                        title="نسخ إلى الحافظة"
+                        (click)="copyToClipboard($event, generatedPrompts[selectedPromptIndex])">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                    <div class="prompt-content">
+                      <p class="prompt-text">{{ generatedPrompts[selectedPromptIndex] }}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+              
+              <!-- Carousel Navigation -->
+              <button 
+                class="carousel-nav carousel-next" 
+                [disabled]="selectedPromptIndex >= generatedPrompts.length - 1"
+                (click)="navigateCarousel(1)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+            
+            <!-- Apply Button -->
+            <div class="apply-button-wrapper mt-3">
+              <button 
+                class="btn btn-success apply-btn" 
+                [disabled]="selectedPromptIndex < 0" 
+                (click)="applySelectedPrompt()">
+                <i class="fas fa-check me-2"></i>
+                تطبيق الوصف المحدد
+              </button>
+
+              <button 
+                class="btn btn-success apply-btn" 
+                [disabled]="selectedPromptIndex < 0" 
+                (click)="resetAllPrompts()"
+                style="margin:5px;">
+                <i class="fas fa-check me-2"></i>
+                   Reset All Prompts   
+              </button>
+            </div>
+          </div>
+        } @else if (activeTab === 'prompts' && !isGenerating) {
+          <!-- Empty state when no prompts generated yet -->
+          <div class="empty-prompts-state">
+            <div class="empty-icon">
+              <i class="fas fa-image"></i>
+            </div>
+            <h6>لم يتم توليد أي وصف بعد</h6>
+            <p>اضبط الإعدادات ثم اضغط على زر "توليد وصف الصورة" لإنشاء اقتراحات الوصف.</p>
+            <button class="btn btn-outline-primary" (click)="setActiveTab('settings')">
+              <i class="fas fa-sliders-h me-2"></i>الانتقال إلى الإعدادات
+            </button>
+          </div>
+        } @else if (isGenerating) {
+          <!-- Loading state -->
+          <div class="loading-state">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">جارٍ التحميل...</span>
+            </div>
+            <p>جارٍ توليد وصف الصورة...</p>
+          </div>
+        }
+      </div>
+      
+      <!-- Gallery Tab Panel -->
+      <div 
+        class="tab-pane fade" 
+        [class.show]="activeTab === 'gallery'"
+        [class.active]="activeTab === 'gallery'"
+        id="gallery" 
+        role="tabpanel" 
+        aria-labelledby="gallery-tab">
+        
+        <div class="gallery-container">
+          @if (!isUploading && uploadedImages.length > 0) {
+            <div class="gallery-carousel-header">
+              <h6>الصور المرفوعة</h6>
+              <span class="image-counter">{{currentImageIndex + 1}} / {{uploadedImages.length}}</span>
+            </div>
+            
+            <div class="gallery-carousel">
+              <button class="carousel-nav" 
+                      (click)="previousImage()" 
+                      [disabled]="currentImageIndex === 0">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              
+              <div class="carousel-item-container">
+                <div class="gallery-item">
+                  <div class="image-container">
+                    <img [src]="uploadedImages[currentImageIndex].url" 
+                         [alt]="'صورة ' + (currentImageIndex + 1)"
+                         (error)="handleImageError($event)">
+                    
+                    <div class="image-overlay">
+                      <button class="btn btn-light" (click)="previewImage(uploadedImages[currentImageIndex].url)">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <button class="btn btn-light" (click)="downloadImage(uploadedImages[currentImageIndex].url)">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn btn-light" (click)="deleteImage(currentImageIndex)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <button class="carousel-nav" 
+                      (click)="nextImage()" 
+                      [disabled]="currentImageIndex === uploadedImages.length - 1">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+            
+            <!-- Save All Images Button -->
+            <div class="save-all-images-wrapper text-center mt-3">
+              <button class="btn btn-success save-all-btn" (click)="saveAllImages()">
+                <i class="fas fa-save me-2"></i>
+                حفظ جميع الصور
+              </button>
+            </div>
+          }
+          
+          @if (isUploading) {
+            <div class="uploading-overlay">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">جاري التحميل...</span>
+              </div>
+              <p>جاري رفع الصور...</p>
+            </div>
+          }
+          
+          @if (!isUploading && uploadedImages.length === 0) {
+            <div class="empty-gallery">
+              <i class="fas fa-images fa-3x mb-3"></i>
+              <p>لا توجد صور مرفوعة</p>
+              <p class="text-muted">قم برفع الصور لعرضها هنا</p>
+            </div>
+          }
+          
+          <div class="upload-section">
+            <div class="upload-area" (click)="triggerFileInput()">
+              <input type="file" 
+                     #fileInput 
+                     multiple 
+                     accept="image/*" 
+                     (change)="onFileSelected($event)" 
+                     style="display: none">
+              <div class="upload-content">
+                <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                <p>اضغط لرفع الصور</p>
+                <small class="text-muted">أو اسحب وأفلت الصور هنا</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (previewImageUrl) {
+  <div class="image-preview-modal" (click)="closePreview()">
+    <div class="preview-content">
+      <button class="close-preview" (click)="closePreview()">
+        <i class="fas fa-times"></i>
+      </button>
+      <img [src]="previewImageUrl" [alt]="'معاينة الصورة'">
+    </div>
+  </div>
+}

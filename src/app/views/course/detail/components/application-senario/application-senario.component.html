@@ -1,0 +1,105 @@
+<!-- application-scenario.component.html -->
+<div class="application-scenario" dir="rtl" lang="ar">
+    <div class="challenge-header">
+      <h2>تطبيق المفاهيم: حل مشكلات التمثيل الضوئي</h2>
+      <div class="progress-info">
+        <div class="step-indicator">
+          الخطوة <span>{{currentStepIndex + 1}}</span> من <span>{{scenarioSteps.length}}</span>
+        </div>
+        <div class="score">
+          النتيجة: <span>{{currentScore}}/{{maxScore}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scenario-container">
+      <div class="scenario-content">
+        <div class="scenario-header">
+          <h3>{{currentStep.title}}</h3>
+        </div>
+        
+        @if (currentStep.image) {
+          <div class="scenario-image">
+            <img [src]="currentStep.image" [alt]="currentStep.title">
+          </div>
+        }
+        
+        <div class="scenario-description">
+          <p>{{currentStep.description}}</p>
+        </div>
+        
+        <div class="scenario-question">
+          <h4>{{currentStep.question}}</h4>
+        </div>
+        
+        <div class="answer-options">
+          @for (answer of currentStep.answers; track answer.id) {
+            <div 
+              class="answer-option" 
+              [class.selected]="answer.selected"
+              [class.correct]="showFeedback && answer.correct"
+              [class.incorrect]="showFeedback && answer.selected && !answer.correct"
+              (click)="!showFeedback && selectAnswer(answer)">
+              <div class="option-text">{{answer.text}}</div>
+            </div>
+          }
+        </div>
+        
+        @if (showFeedback) {
+          <div class="feedback-panel" [class.correct-feedback]="isCorrect" [class.incorrect-feedback]="!isCorrect">
+            <div class="feedback-icon">
+              @if (isCorrect) {
+                <i class="fa fa-check-circle"></i>
+              } @else {
+                <i class="fa fa-times-circle"></i>
+              }
+            </div>
+            <div class="feedback-content">
+              <div class="feedback-header">
+                @if (isCorrect) {
+                  <h4>إجابة صحيحة!</h4>
+                } @else {
+                  <h4>ليست الإجابة الصحيحة</h4>
+                }
+              </div>
+              <p>{{feedbackText}}</p>
+            </div>
+          </div>
+        }
+      </div>
+      
+      <div class="scenario-navigation">
+        <button 
+          class="nav-btn prev-btn" 
+          [disabled]="currentStepIndex === 0"
+          (click)="prevStep()">
+          <i class="fa fa-chevron-right"></i> السابق
+        </button>
+        
+        @if (showFeedback) {
+          <button 
+            class="nav-btn next-btn" 
+            (click)="nextStep()">
+            @if (currentStepIndex < scenarioSteps.length - 1) {
+              التالي <i class="fa fa-chevron-left"></i>
+            } @else {
+              إنهاء <i class="fa fa-check"></i>
+            }
+          </button>
+        }
+      </div>
+    </div>
+    
+    @if (isCompleted) {
+      <div class="completion-overlay">
+        <div class="completion-message">
+          <h3>أحسنت! لقد أكملت تحدي تطبيق المفاهيم</h3>
+          <p>لقد حصلت على {{currentScore}} من {{maxScore}} نقطة</p>
+          <button class="continue-btn" (click)="challengeCompleted.emit(5)">
+            متابعة
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+  

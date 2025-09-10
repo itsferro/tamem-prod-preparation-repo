@@ -1,0 +1,98 @@
+<div class="row mt-4">
+  <div class="col-md-7">
+    <h3>3 comments</h3>
+    <!-- Comment level 1-->
+    @for (item of comments; track $index) {
+      <ng-container
+        *ngTemplateOutlet="commentItem; context: { item: item }"
+      ></ng-container>
+      @if (item.replies) {
+        @for (reply of item.replies; track $index) {
+          <ng-container
+            *ngTemplateOutlet="
+              commentItem;
+              context: { item: reply, replyClass: 'ps-2 ps-md-4' }
+            "
+          ></ng-container>
+          @if (reply.replies) {
+            @for (reply of reply.replies; track $index) {
+              <ng-container
+                *ngTemplateOutlet="
+                  commentItem;
+                  context: { item: reply, replyClass: 'ps-3 ps-md-5' }
+                "
+              ></ng-container>
+            }
+          }
+        }
+      }
+    }
+  </div>
+
+  <div class="col-md-5">
+    <h3 class="mt-3 mt-sm-0">Your Views Please!</h3>
+    <small
+      >Your email address will not be published. Required fields are marked
+      *</small
+    >
+
+    <form
+      [formGroup]="viewForm"
+      (ngSubmit)="onSubmit()"
+      class="row g-3 mt-2 mb-5"
+    >
+      <div class="col-lg-6">
+        <label class="form-label">Name *</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+          aria-label="First name"
+        />
+      </div>
+
+      <div class="col-lg-6">
+        <label class="form-label">Email *</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+        />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Your Comment *</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          formControlName="comment"
+          [ngClass]="{ 'is-invalid': submitted && form['comment'].errors }"
+        ></textarea>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary mb-0">Post comment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #commentItem let-item="item" let-className="replyClass">
+  <div class="my-4 d-flex {{ className }}">
+    <img
+      class="avatar avatar-md rounded-circle me-3"
+      [src]="item.avatar"
+      alt="avatar"
+    />
+    <div>
+      <div class="mb-2">
+        <h5 class="m-0">{{ item.name }}</h5>
+        <span class="me-3 small">{{ item.date }}</span>
+      </div>
+      <p>{{ item.comment }}</p>
+      <a href="javascript:void(0);" class="btn btn-sm btn-light mb-0">Reply</a>
+    </div>
+  </div>
+</ng-template>

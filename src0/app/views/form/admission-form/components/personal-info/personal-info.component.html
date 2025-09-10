@@ -1,0 +1,292 @@
+<div class="row g-3">
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">
+          Student first name <span class="text-danger">*</span>
+        </h6>
+      </div>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="firstName" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">
+          Student middle name <span class="text-danger">*</span>
+        </h6>
+      </div>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="middleName" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">
+          Student last name <span class="text-danger">*</span>
+        </h6>
+      </div>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="lastName" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Gender <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <div class="d-flex">
+          <div class="form-check radio-bg-light me-4">
+            <input
+              class="form-check-input"
+              type="radio"
+              id="flexRadioDefault1"
+              checked
+            />
+            <label class="form-check-label" for="flexRadioDefault1">
+              Male
+            </label>
+          </div>
+          <div class="form-check radio-bg-light">
+            <input
+              class="form-check-input"
+              type="radio"
+              id="flexRadioDefault2"
+            />
+            <label class="form-check-label" for="flexRadioDefault2">
+              Female
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Date of birth</h6>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="row g-2 g-sm-4">
+          <div class="col-4">
+            <select
+              selectFormInput
+              class="form-select js-choice z-index-9 border-0 bg-light"
+              formControlName="date"
+              aria-label=".form-select-sm"
+            >
+              <option value="">Date</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+              <option>13</option>
+              <option>14</option>
+              <option>15</option>
+              <option>16</option>
+              <option>17</option>
+              <option>18</option>
+              <option>19</option>
+              <option>20</option>
+              <option>21</option>
+              <option>22</option>
+              <option>23</option>
+              <option>24</option>
+              <option>25</option>
+              <option>26</option>
+              <option>27</option>
+              <option>28</option>
+              <option>29</option>
+              <option>30</option>
+              <option>31</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <select
+              selectFormInput
+              class="form-select js-choice z-index-9 border-0 bg-light"
+              formControlName="month"
+              aria-label=".form-select-sm"
+            >
+              <option value="">Month</option>
+              <option>Jan</option>
+              <option>Feb</option>
+              <option>Mar</option>
+              <option>Apr</option>
+              <option>Jun</option>
+              <option>Jul</option>
+              <option>Aug</option>
+              <option>Sep</option>
+              <option>Oct</option>
+              <option>Nov</option>
+              <option>Dec</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <select
+              selectFormInput
+              class="form-select js-choice z-index-9 border-0 bg-light"
+              formControlName="year"
+              aria-label=".form-select-sm"
+            >
+              <option value="">Year</option>
+              <option>1990</option>
+              <option>1991</option>
+              <option>1992</option>
+              <option>1993</option>
+              <option>1994</option>
+              <option>1995</option>
+              <option>1996</option>
+              <option>1997</option>
+              <option>1998</option>
+              <option>1999</option>
+              <option>2000</option>
+              <option>2001</option>
+              <option>2002</option>
+              <option>2003</option>
+              <option>2004</option>
+              <option>2005</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Email <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <input type="email" class="form-control" id="email" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Phone number <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="phoneNumber" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Your address <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <textarea class="form-control" rows="3" placeholder=""></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Select city <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <select
+          selectFormInput
+          class="form-select js-choice z-index-9 rounded-3 border-0 bg-light"
+          aria-label=".form-select-sm"
+        >
+          <option value="">Select city</option>
+          <option>New york</option>
+          <option>Mumbai</option>
+          <option>Delhi</option>
+          <option>London</option>
+          <option>Los angeles</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Select state <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <select
+          selectFormInput
+          class="form-select js-choice z-index-9 rounded-3 border-0 bg-light"
+          aria-label=".form-select-sm"
+        >
+          <option value="">Select state</option>
+          <option>Maharashtra</option>
+          <option>California</option>
+          <option>Florida</option>
+          <option>Alaska</option>
+          <option>Ohio</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">
+          Select country <span class="text-danger">*</span>
+        </h6>
+      </div>
+      <div class="col-lg-8">
+        <select
+          selectFormInput
+          class="form-select js-choice z-index-9 rounded-3 border-0 bg-light"
+          aria-label=".form-select-sm"
+        >
+          <option value="">Select country</option>
+          <option>India</option>
+          <option>Canada</option>
+          <option>Japan</option>
+          <option>America</option>
+          <option>Dubai</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zip code-->
+  <div class="col-12">
+    <div class="row g-xl-0 align-items-center">
+      <div class="col-lg-4">
+        <h6 class="mb-lg-0">Zip code <span class="text-danger">*</span></h6>
+      </div>
+      <div class="col-lg-8">
+        <input
+          type="text"
+          formControlName="zip"
+          class="form-control"
+          id="zipCode"
+        />
+      </div>
+    </div>
+  </div>
+</div>

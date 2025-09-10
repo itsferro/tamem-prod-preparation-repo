@@ -1,0 +1,98 @@
+<div class="storyboard-frame">
+    <!-- Top image area -->
+    <div class="frame-image-container">
+      @if (frameData.imageUrl) {
+        <img [src]="frameData.imageUrl" [alt]="frameData.title || 'صورة اللقطة'" class="frame-image">
+      } @else {
+        <div class="empty-image" (click)="onSelectImage($event)">
+          <i class="fas fa-image"></i>
+        </div>
+      }
+    </div>
+    
+    <!-- Controls section directly below image -->
+    <div class="frame-controls">
+      <button class="control-btn" (click)="onMoveFrame(-1)" title="Move backward">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <button class="control-btn" (click)="onDeleteFrame()" title="Delete frame">
+        <i class="fas fa-trash"></i>
+      </button>
+      <button class="control-btn" (click)="onDuplicateFrame()" title="Duplicate frame">
+        <i class="fas fa-copy"></i>
+      </button>
+      <button class="control-btn"   title="Edit image">
+        <i class="fas fa-camera"></i>
+      </button>
+      <button class="control-btn" (click)="onMoveFrame(1)" title="Move forward">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+  
+    <!-- Frame details section -->
+    <div class="frame-details">
+      <!-- Frame number and label - now using the same pattern as other fields -->
+      <div class="content-field">
+        <div class="field-icon">
+          <div class="frame-number">{{ frameNumber }}</div>
+        </div>
+        <input type="text" [(ngModel)]="frameData.title" 
+               placeholder="Label"
+               (blur)="onContentChanged('title')">
+      </div>
+  
+      <!-- Visual Content section -->
+      <div class="content-field">
+        <div class="field-icon">
+          <i class="fas fa-image"></i>
+        </div>
+        <textarea [(ngModel)]="frameData.visualContentNotes" 
+                  placeholder="Visual Content"
+                  (blur)="onContentChanged('visualContentNotes')"
+                  (input)="autoGrow($event)" class="visualContentNotes-expand-field"></textarea>
+      </div>
+  
+      <!-- Voiceover Text section -->
+      <div class="content-field">
+        <div class="field-icon">
+          <i class="fas fa-microphone"></i>
+        </div>
+        <textarea [(ngModel)]="frameData.voiceoverText" 
+                  placeholder="Voiceover"
+                  (blur)="onContentChanged('voiceoverText')"
+                  (input)="autoGrow($event)" class="voiceoverText-expand-field"></textarea>
+      </div>
+  
+      <!-- On-Screen Text section -->
+      <div class="content-field">
+        <div class="field-icon">
+          <i class="fas fa-align-left"></i>
+        </div>
+        <textarea [(ngModel)]="frameData.onScreenText" 
+                  placeholder="On-Screen Text"
+                  (blur)="onContentChanged('onScreenText')"
+                  (input)="autoGrow($event)" class="onScreenText-expand-field"></textarea>
+      </div>
+  
+      <!-- Notes section -->
+      <div class="content-field">
+        <div class="field-icon">
+          <i class="fas fa-sticky-note"></i>
+        </div>
+        <textarea [(ngModel)]="frameData.notes" 
+                  placeholder="Notes"
+                  (blur)="onContentChanged('notes')"
+                  (input)="autoGrow($event)" class="notes-expand-field"></textarea>
+      </div>
+  
+      <!-- Resources section -->
+      <div class="content-field">
+        <div class="field-icon">
+          <i class="fas fa-link"></i>
+        </div>
+        <input type="text" [(ngModel)]="newResourceUrl" 
+               placeholder="Resources"
+               (keyup.enter)="addResource()">
+      </div>
+    </div>
+  </div>

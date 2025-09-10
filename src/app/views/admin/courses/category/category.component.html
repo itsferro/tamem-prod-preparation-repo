@@ -1,0 +1,156 @@
+<div class="row mb-3">
+  <div class="col-12 d-sm-flex justify-content-between align-items-center">
+    <h1 class="h3 mb-2 mb-sm-0">
+      Web design
+      <span class="badge bg-orange bg-opacity-10 text-orange">245</span>
+    </h1>
+    <a
+      routerLink="/instructor/create-course"
+      class="btn btn-sm btn-primary mb-0"
+      >Create a Course</a
+    >
+  </div>
+</div>
+
+<div class="card bg-transparent border">
+  <div class="card-header bg-light border-bottom">
+    <div class="row g-3 align-items-center justify-content-between">
+      <div class="col-md-8">
+        <form class="rounded position-relative">
+          <input
+            class="form-control bg-body"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button
+            class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+            type="submit"
+          >
+            <i class="fas fa-search fs-6"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="col-md-3">
+        <form>
+          <select
+            selectFormInput
+            class="form-select js-choice border-0 z-index-9"
+            aria-label=".form-select-sm"
+          >
+            <option value="">Sort by</option>
+            <option>Newest</option>
+            <option>Oldest</option>
+            <option>Accepted</option>
+            <option>Rejected</option>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive border-0 rounded-3">
+      <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="border-0 rounded-start">Course Name</th>
+            <th scope="col" class="border-0">Instructor</th>
+            <th scope="col" class="border-0">Rating</th>
+            <th scope="col" class="border-0">Enrolled</th>
+            <th scope="col" class="border-0 rounded-end">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of categoryList; track $index) {
+            <tr>
+              <td>
+                <div class="d-flex align-items-center position-relative">
+                  <div class="w-60px">
+                    <img [src]="item.image" class="rounded" alt="" />
+                  </div>
+                  <h6 class="table-responsive-title mb-0 ms-2">
+                    <a href="javascript:void(0);" class="stretched-link">{{
+                      item.title
+                    }}</a>
+                  </h6>
+                </div>
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar avatar-xs flex-shrink-0">
+                    <img
+                      class="avatar-img rounded-circle"
+                      [src]="item.instructor.avatar"
+                      alt="avatar"
+                    />
+                  </div>
+                  <div class="ms-2">
+                    <h6 class="mb-0 fw-light">{{ item.instructor.name }}</h6>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <ul class="list-inline mb-0">
+                  <ng-template #t let-fill="fill">
+                    <i class="far fa-star text-warning me-1">
+                      @if (fill > 0) {
+                        <i
+                          class="fas fa-star text-warning filled"
+                          [style.width.%]="fill"
+                        ></i>
+                      }
+                    </i>
+                  </ng-template>
+
+                  <ngb-rating
+                    [(rate)]="item.rating"
+                    [starTemplate]="t"
+                    [readonly]="true"
+                    [max]="5"
+                  />
+                </ul>
+              </td>
+
+              <td>{{ item.students | number }}</td>
+
+              <td>
+                <a
+                  href="javascript:void(0);"
+                  class="btn btn-sm btn-success me-1 mb-1 mb-md-0"
+                  >Edit</a
+                >
+                <button class="btn btn-sm btn-danger mb-0 ms-1">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-footer bg-transparent pt-0">
+    <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+      <p class="mb-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
+      <nav class="d-flex justify-content-center mb-0" aria-label="navigation">
+        <ngb-pagination
+          [collectionSize]="30"
+          [page]="2"
+          size="sm"
+          class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+        >
+          <ng-template ngbPaginationPrevious
+            ><i class="fas fa-angle-left"></i>
+          </ng-template>
+          <ng-template ngbPaginationNext
+            ><i class="fas fa-angle-right"></i>
+          </ng-template>
+        </ngb-pagination>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<li ngbDropdown class="nav-item dropdown dropdown-fullwidth">
+  <a ngbDropdownToggle class="nav-link dropdown-toggle" aria-expanded="false"
+    >Megamenu</a>
+  <div
+    ngbDropdownMenu
+    class="dropdown-menu dropdown-menu-end"
+    data-bs-popper="none"
+    style="top: 75px;"
+  >
+    <div class="row p-4">
+      @for (item of megaMenu; track $index) {
+        <div class="col-xl-6 col-xxl-3 mb-3">
+          <mega-menu-item [item]="item" />
+        </div>
+      }
+
+      <div class="col-xl-6 col-xxl-3 mb-3">
+        <h6 class="mb-0">Download Eduport</h6>
+        <hr />
+
+        <img src="assets/images/element/14.svg" alt="" />
+
+        <div class="row g-2 justify-content-center mt-3">
+          <div class="col-6 col-sm-4 col-xxl-6">
+            <a href="javascript:void(0);">
+              <img
+                src="assets/images/client/google-play.svg"
+                class="btn-transition"
+                alt="google-store"
+              />
+            </a>
+          </div>
+
+          <div class="col-6 col-sm-4 col-xxl-6">
+            <a href="javascript:void(0);">
+              <img
+                src="assets/images/client/app-store.svg"
+                class="btn-transition"
+                alt="app-store"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div
+          class="alert alert-success alert-dismissible fade show mt-2 mb-0 rounded-3"
+          role="alert"
+        >
+          <div class="avatar avatar-xs me-2">
+            <img
+              class="avatar-img rounded-circle"
+              src="assets/images/avatar/09.jpg"
+              alt="avatar"
+            />
+          </div>
+
+          The personality development class starts at 2:00 pm, click to
+          <a href="javascript:void(0);" class="alert-link">Join Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

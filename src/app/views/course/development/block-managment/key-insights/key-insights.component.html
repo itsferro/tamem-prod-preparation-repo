@@ -1,0 +1,92 @@
+ 
+
+<!-- Key Insights - Compact Carousel Design -->
+<div class="insights-container" dir="rtl" style="padding:10px 0px 0px;">
+
+ 
+      <!-- Key Insights Section -->
+      <div >
+        <div class="carousel-header">
+            <h2>
+                <i class="fas fa-lightbulb"></i>
+                Key Insights
+            </h2>
+            <div class="carousel-controls">
+                <button class="carousel-btn next" (click)="scrollCarousel('right')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="carousel-btn prev" (click)="scrollCarousel('left')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="carousel-container">
+            <div class="insights-carousel" #insightsCarousel>
+                @for (insight of currentInsights; track insight.id) {
+                <div class="insight-card-horizontal" [class.selected]="selectedInsightId === insight.id"
+                    [class]="'card-' + insight.type" (click)="selectInsight(insight.id)">
+
+                    <div class="card-header-horizontal">
+                        <div class="type-badge-small" [class]="'badge-' + insight.insight_type">
+                            <i [class]="getInsightTypeIcon(insight.insight_type)"></i>
+                        </div>
+                        <div class="card-menu-horizontal">
+                            <button class="menu-btn-small"
+                                (click)="editInsight(insight.id); $event.stopPropagation()">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-content-horizontal">
+                        <h3 class="insight-title-horizontal">{{ insight.learning_objective }}</h3>
+                        <p class="insight-desc-horizontal">{{ insight.insight_text }}</p>
+
+                        <div class="insight-meta-horizontal">
+                            <div class="priority-indicator" [class]="'priority-' + insight.priority">
+                                <div class="priority-dot-small" [class]="'dot-' + insight.priority"></div>
+                                <span>{{ insight.priority | titlecase }}</span>
+                            </div>
+
+                            <div class="duration-indicator">
+                                <i class="fas fa-clock"></i>
+                                <span>{{ insight.estimatedDuration }}</span>
+                            </div>
+
+                            @if (insight.hasStoryboard) {
+                            <div class="storyboard-indicator">
+                                <i class="fas fa-film"></i>
+                                <span>{{ insight.storyboardScenes }} scenes</span>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+ 
+
+    <!-- Empty State when no insight selected -->
+    <section class="empty-state" *ngIf="!selectedInsightId && activeTab === 'insights'">
+        <div class="empty-content">
+            <div class="empty-icon">
+                <i class="fas fa-mouse-pointer"></i>
+            </div>
+            <h3>Select an Insight</h3>
+            <p>Choose a key insight from the carousel above to view its storyboard</p>
+        </div>
+    </section>
+
+    <div *ngIf="selectedInsightId && activeTab === 'insights'">
+        <block-managment-insight-scenes />
+    </div>
+
+ 
+</div>
+
+ 

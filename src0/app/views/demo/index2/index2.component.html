@@ -1,0 +1,106 @@
+<index2-top-header />
+
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchIcon]="true"
+/>
+
+<main>
+  <!-- =======================
+  Main Banner START -->
+  <index2-banner />
+  <!-- =======================
+  Main Banner END -->
+
+  <!-- =======================
+  Client START -->
+  <section class="pb-0 pb-md-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div class="tiny-slider">
+            <app-client-slider imageClass="grayscale" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Client END -->
+
+  <!-- =======================
+  About START -->
+  <index2-about />
+  <!-- =======================
+  About END -->
+
+  <!-- =======================
+  Trending courses START -->
+  <index2-trending-course />
+  <!-- =======================
+  Trending courses END -->
+
+  <!-- =======================
+  Video divider START -->
+  <index2-video />
+  <!-- =======================
+  Video divider END -->
+
+  <!-- =======================
+  Event START -->
+  <index2-event />
+  <!-- =======================
+  Event END -->
+
+  <!-- =======================
+  Newsletter START -->
+  <index2-newsletter />
+  <!-- =======================
+  Newsletter END -->
+</main>
+
+<index2-footer />
+
+@if (showAlert) {
+  <ngb-alert
+    type="light"
+    [dismissible]="false"
+    class="position-fixed start-0 bottom-0 z-index-99 rounded-3 shadow p-4 ms-3 mb-3 col-10 col-md-4 col-lg-3 col-xxl-2"
+  >
+    <div class="text-dark text-center">
+      <img
+        src="assets/images/element/27.svg"
+        class="h-50px mb-3"
+        alt="cookie"
+      />
+
+      <p class="mb-0">
+        This website stores cookies on your computer. To find out more about the
+        cookies we use, see our
+        <a class="text-dark" href="javascript:void(0);"
+          ><u> Privacy Policy</u></a
+        >
+      </p>
+
+      <div class="mt-3">
+        <button
+          type="button"
+          class="btn btn-success-soft btn-sm mb-0"
+          (click)="showAlert = false"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Accept</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger-soft btn-sm mb-0 ms-1"
+          (click)="showAlert = false"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">Decline</span>
+        </button>
+      </div>
+    </div>
+  </ngb-alert>
+}

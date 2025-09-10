@@ -1,0 +1,53 @@
+<div class="task-log">
+    <h6>
+      <i class="fas fa-history me-2"></i>
+      Action History
+    </h6>
+    
+    <!-- No logs message -->
+    @if (logEntries.length === 0) {
+      <div class="no-logs">
+        <i class="fas fa-info-circle fa-2x text-muted mb-2"></i>
+        <p class="mb-0 text-muted">No action history available</p>
+      </div>
+    }
+    
+    <!-- Log Timeline -->
+    @else {
+      <div class="log-timeline">
+        @for (logEntry of logEntries; track logEntry.id) {
+          <div class="log-entry">
+            <div class="log-icon">
+              <i [class]="getLogIconClass(logEntry)"></i>
+            </div>
+            <div class="log-content">
+              <div class="log-header">
+                <span class="log-action">{{ logEntry.action  | uppercase }}</span>
+                <span class="log-time">{{ formatLogTime(logEntry.createdAt) }}</span>
+              </div>
+              <div class="log-details">
+                <span class="log-user">Action By:  <span style="font-weight: bold;color: #007bff; padding:0px 5px;text-transform: uppercase;" >  {{ logEntry.changedByUserName }}  </span></span>
+               <span> | </span>
+                @if (hasStatusChange(logEntry)) {
+                  <span class="log-status-change">
+                    <span class="old-status">{{ logEntry.oldStatus | uppercase }}</span>
+                    <i class="fas fa-arrow-right mx-1"></i>
+                    <span class="new-status">{{ logEntry.newStatus | uppercase }}</span>
+                  </span>
+
+                  <span class="log-user">Assigned To:  <span style="font-weight: bold;color: #007bff; padding:0px 5px;text-transform: uppercase;" >  {{ logEntry.assignedToUserName }}  </span></span>
+
+                }
+              </div>
+              @if (logEntry.comment) {
+                <div class="log-comment">
+                  <i class="fas fa-comment me-1"></i>
+                  {{ logEntry.comment }}
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>

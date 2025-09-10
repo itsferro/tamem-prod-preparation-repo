@@ -1,0 +1,169 @@
+<!-- Block Header Section -->
+<div class="block-header">
+    <div class="header-background">
+      <div class="header-pattern"></div>
+      <div class="header-glow"></div>
+    </div>
+    
+    <div class="header-content">
+      <!-- Block Icon and Basic Info -->
+      <div class="block-info-section">
+        <div class="block-icon">
+          <i class="fas fa-cube"></i>
+        </div>
+        
+        <div class="block-details">
+          <div class="breadcrumb">
+            <span class="breadcrumb-item">
+              <i class="fas fa-graduation-cap"></i>
+              {{ blockInfo?.courseName || 'Course Name' }}
+            </span>
+            <i class="fas fa-chevron-right breadcrumb-separator"></i>
+            <span class="breadcrumb-item">
+              <i class="fas fa-book-open"></i>
+              {{ blockInfo?.lessonName || 'Lesson Name' }}
+            </span>
+          </div>
+          
+          <h1 class="block-title">{{ blockInfo?.title || 'Block Title' }}</h1>
+          
+          <p class="block-description" *ngIf="blockInfo?.description">
+            <!-- {{ blockInfo.description }} -->
+          </p>
+          
+          <div class="block-meta">
+            <div class="meta-item">
+              <i class="fas fa-clock"></i>
+              <span>{{ blockInfo?.duration || '30 min' }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-signal"></i>
+              <span class="difficulty-badge" [class]="'difficulty-' + (blockInfo?.difficulty || 'beginner')">
+                {{ (blockInfo?.difficulty || 'beginner') | titlecase }}
+              </span>
+            </div>
+            <div class="meta-item" *ngIf="blockInfo?.lastUpdated">
+              <i class="fas fa-calendar-alt"></i>
+              <!-- <span>Updated {{ formatDate(blockInfo.lastUpdated) }}</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stats Section -->
+      <div class="block-stats">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-images"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-number">{{ getTotalImages() }}</span>
+            <span class="stat-label">Images</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="action-btn secondary" (click)="onEditBlock()">
+          <i class="fas fa-edit"></i>
+          Edit Block
+        </button>
+        <button class="action-btn primary" (click)="onPreviewBlock()">
+          <i class="fas fa-play"></i>
+          Preview
+        </button>
+      </div>
+    </div>
+</div>
+
+<!-- Single Page Content Layout -->
+<div class="single-page-content">
+  
+  <!-- Section 1: Images -->
+  <div class="content-section images-section">
+    <div class="section-header" (click)="toggleSection('images')">
+      <div class="section-header-content">
+        <h2 class="section-title">
+          <i class="fas fa-images"></i>
+          Block Images
+          <span class="section-count">({{ getTotalImages() }})</span>
+        </h2>
+        <div class="section-description">
+          Upload and organize images from textbooks to provide visual context for your content
+        </div>
+      </div>
+      <div class="section-toggle">
+        <i class="fas fa-chevron-down" [class.rotated]="!sectionStates.images"></i>
+      </div>
+    </div>
+    <div class="section-content" [class.collapsed]="!sectionStates.images">
+      <block-managment-content-images [blockId]="blockId" />
+    </div>
+  </div>
+
+  <!-- Section 2: Content/Explainer -->
+  <div class="content-section explainer-section">
+    <div class="section-header" (click)="toggleSection('explainer')">
+      <div class="section-header-content">
+        <h2 class="section-title">
+          <i class="fas fa-file-alt"></i>
+          Block Content
+        </h2>
+        <div class="section-description">
+          Create engaging educational content that aligns with your uploaded images
+        </div>
+      </div>
+      <div class="section-toggle">
+        <i class="fas fa-chevron-down" [class.rotated]="!sectionStates.explainer"></i>
+      </div>
+    </div>
+    <div class="section-content" [class.collapsed]="!sectionStates.explainer">
+      <block-managment-content-explainer [blockId]="blockId"/>
+    </div>
+  </div>
+
+  <!-- Section 3: Insights -->
+  <div class="content-section insights-section">
+    <div class="section-header" (click)="toggleSection('insights')">
+      <div class="section-header-content">
+        <h2 class="section-title">
+          <i class="fas fa-lightbulb"></i>
+          Learning Insights
+        </h2>
+        <div class="section-description">
+          Generate AI-powered insights to enhance the learning experience
+        </div>
+      </div>
+      <div class="section-toggle">
+        <i class="fas fa-chevron-down" [class.rotated]="!sectionStates.insights"></i>
+      </div>
+    </div>
+    <div class="section-content" [class.collapsed]="!sectionStates.insights">
+      <block-managment-content-insights [blockId]="blockId"/>
+    </div>
+  </div>
+
+    <!-- Section 4: Insight Frames -->
+  <div class="content-section frames-section">
+    <div class="section-header" (click)="toggleSection('frames')">
+      <div class="section-header-content">
+        <h2 class="section-title">
+          <i class="fas fa-film"></i>
+          Insight Frames
+        </h2>
+        <div class="section-description">
+          Manage and edit storyboard frames for each learning insight
+        </div>
+      </div>
+      <div class="section-toggle">
+        <i class="fas fa-chevron-down" [class.rotated]="!sectionStates.frames"></i>
+      </div>
+    </div>
+    <div class="section-content" [class.collapsed]="!sectionStates.frames">
+      <all-insights-frames [blockId]="blockId"/>
+    </div>
+  </div>
+
+
+</div>

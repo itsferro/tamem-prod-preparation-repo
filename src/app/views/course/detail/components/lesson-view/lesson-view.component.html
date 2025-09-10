@@ -1,0 +1,184 @@
+<!-- Enhanced Lesson View Component with Hybrid Approach -->
+<div class="lesson-view-container" style="direction: rtl;">
+  <!-- Compact Statistics Overview -->
+
+
+
+  <!-- <div class="lesson-overview-card">
+    <div class="overview-header">
+      <div class="lesson-info">
+        <h2 class="lesson-title">{{ lesson?.title }}</h2>
+        <div class="lesson-meta">
+          <span><i class="fas fa-folder"></i> {{ lesson?.category }}</span>
+          <span><i class="fas fa-clock"></i> {{ lesson?.duration }}</span>
+          <span><i class="fas fa-calendar-check"></i>
+            {{ userProgress?.lastAccessed || 'لم يتم الوصول بعد' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="lesson-progress">
+        <div class="progress-circle" style="--progress: {{ userProgress?.completionPercentage || 0 }}%">
+          <span class="progress-value">
+            {{ userProgress?.completionPercentage || 0 }}%
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overview-stats">
+      <div class="quick-stat">
+        <i class="fas fa-stopwatch"></i>
+        <div class="stat-details">
+          <span class="stat-value">{{ userProgress?.timeSpent || '00:00' }}</span>
+          <span class="stat-label">وقت الدراسة</span>
+        </div>
+      </div>
+
+      <div class="quick-stat">
+        <i class="fas fa-check-circle"></i>
+        <div class="stat-details">
+          <span class="stat-value">
+            {{ userProgress?.completedBlocks || 0 }}/{{ lesson?.totalBlocks || 0 }}
+          </span>
+          <span class="stat-label">وحدات مكتملة</span>
+        </div>
+      </div>
+
+      <div class="quick-stat">
+        <i class="fas fa-chart-line"></i>
+        <div class="stat-details">
+          <span class="stat-value">
+            {{ userProgress?.correctAnswers || 0 }}%
+          </span>
+          <span class="stat-label">معدل النجاح</span>
+        </div>
+      </div>
+
+      <button class="btn-view-stats" (click)="viewFullStatistics()">
+        <i class="fas fa-chart-bar"></i>
+        عرض الإحصائيات الكاملة
+      </button>
+    </div>
+  </div> -->
+
+
+
+
+  <!-- Lesson Blocks Section -->
+  <div class="lesson-blocks-section">
+    <div class="section-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h3>وحدات الدرس</h3>
+          <p>اختر إحدى الوحدات لبدء الدراسة أو استكمال تقدمك</p>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <!-- View toggle buttons -->
+          <div class="view-toggle btn-group me-3">
+            <button class="btn btn-sm" [class.btn-primary]="viewMode === 'grid'"
+              [class.btn-outline-primary]="viewMode !== 'grid'" (click)="toggleViewMode('grid')" title="عرض شبكي">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-sm" [class.btn-primary]="viewMode === 'list'"
+              [class.btn-outline-primary]="viewMode !== 'list'" (click)="toggleViewMode('list')" title="عرض قائمة">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-sm" [class.btn-primary]="viewMode === 'track'"
+              [class.btn-outline-primary]="viewMode !== 'track'" (click)="toggleViewMode('track')" title="عرض قائمة">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+
+          <!-- Add button for creating new lesson block - only visible in edit mode -->
+          @if (isEditMode) {
+          <button class="btn btn-add-block" (click)="openAddBlockModal()">
+            <i class="fas fa-plus me-1"></i> إضافة وحدة جديدة
+          </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-blocks-container">
+      <!-- Loading state -->
+      @if (isLoadingBlocks) {
+      <div class="loading-blocks text-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">جاري التحميل...</span>
+        </div>
+        <p class="mt-3">جاري تحميل وحدات الدرس...</p>
+      </div>
+      } @else if (errorMessage) {
+      <!-- Error state -->
+      <div class="error-message p-4 text-center">
+        <i class="fas fa-exclamation-triangle text-danger fa-2x mb-3"></i>
+        <p>{{ errorMessage }}</p>
+        <button class="btn btn-outline-primary mt-2" (click)="loadLessonBlocks(lesson.id)">
+          <i class="fas fa-redo me-1"></i> إعادة المحاولة
+        </button>
+      </div>
+      } @else if (!lesson?.lessonBlocks || lesson.lessonBlocks.length === 0) {
+      <!-- Empty state - no blocks available -->
+      <div class="no-blocks p-5 text-center">
+        <i class="fas fa-cubes fa-3x text-muted mb-3"></i>
+        <h4>لا توجد وحدات دراسية بعد</h4>
+        @if (isEditMode) {
+        <p>يمكنك إضافة وحدات جديدة باستخدام زر "إضافة وحدة جديدة"</p>
+        <!-- <button class="btn btn-primary mt-3" (click)="openAddBlockModal()">
+          <i class="fas fa-plus me-1"></i> إضافة وحدة جديدة
+        </button> -->
+        } @else {
+        <p>لم يتم إضافة أي وحدات دراسية لهذا الدرس بعد.</p>
+        }
+      </div>
+      } @else {
+      <!-- Continue Learning Card (if they have started but not completed) -->
+      @if (userProgress?.lastBlockId && userProgress?.completionPercentage < 100) { <div class="continue-learning-card">
+        <div class="continue-card-content">
+          <div class="continue-icon">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <div class="continue-info">
+            <h4>استكمل من حيث توقفت</h4>
+            <p>أنت في وحدة <strong>{{ getBlockName(userProgress?.lastBlockId!) }}</strong></p>
+          </div>
+        </div>
+        <button class="btn-primary" (click)="continueBlock(userProgress?.lastBlockId!)">
+          <i class="fas fa-play me-2"></i> استكمل التعلم
+        </button>
+    </div>
+    }
+
+    <!-- Toggle between grid and list views -->
+    @if (viewMode === 'grid') {
+    <!-- Lesson Blocks Grid -->
+    <div class="blocks-grid">
+      @for (block of lesson?.lessonBlocks; track block.id) {
+      <detail-lesson-block [block]="block" [userProgress]="userProgress" [isOverrideEnabled]="isOverrideEnabled"
+        [lesson]="lesson" [isEditMode]="isEditMode" (editBlockEvent)="openEditBlockModal($event)"
+        (deleteBlockEvent)="confirmDeleteBlock($event)" (startBlockEvent)="startBlockJourney($event)">
+      </detail-lesson-block>
+      }
+    </div>
+    }
+    @else if (viewMode === 'track') {
+    <!-- Lesson Blocks track -->
+      <detail-lesson-block-track [lesson]="lesson" [userProgress]="userProgress" [isEditMode]="isEditMode"
+        (editBlockEvent)="openEditBlockModal($event)" (viewBlockEvent)="startBlock($event.id)"
+        (deleteBlockEvent)="confirmDeleteBlock($event)">
+      </detail-lesson-block-track>
+    }
+    @else {
+    <!-- Lesson Blocks List -->
+    <detail-lesson-block-list [lesson]="lesson" [userProgress]="userProgress" [isEditMode]="isEditMode"
+      (editBlockEvent)="openEditBlockModal($event)" (viewBlockEvent)="startBlock($event.id)"
+      (deleteBlockEvent)="confirmDeleteBlock($event)">
+    </detail-lesson-block-list>
+    }
+
+    }
+  </div>
+</div>
+</div>

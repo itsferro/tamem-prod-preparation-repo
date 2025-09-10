@@ -1,0 +1,34 @@
+<section>
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8 text-center mx-auto">
+        <h2 class="fs-1">Top Courses for IT</h2>
+        <p class="mb-0">
+          Information Technology Courses to expand your skills and boost your
+          career & salary
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of courseList; track $index) {
+        <div class="col-sm-6 col-lg-4 col-xl-3">
+          <div class="card card-metro overflow-hidden rounded-3">
+            <img [src]="item.image" alt="" />
+
+            <div class="card-img-overlay d-flex">
+              <div class="mt-auto card-text">
+                <a
+                  href="javascript:void(0);"
+                  class="text-white mt-auto h5 stretched-link"
+                  >{{ item.title }}</a
+                >
+                <div class="text-white">{{ item.courses }} Courses</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

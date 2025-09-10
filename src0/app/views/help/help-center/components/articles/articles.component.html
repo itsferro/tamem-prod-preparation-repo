@@ -1,0 +1,58 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-center mb-4">Popular Articles</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of articles; track $index) {
+        <div class="col-xl-6">
+          <div class="card card-body border p-4 h-100">
+            <h4 class="card-title mb-4">
+              <a href="javascript:void(0);" class="stretched-link">{{
+                item.title
+              }}</a>
+            </h4>
+
+            <div class="d-sm-flex align-items-center">
+              <ul class="avatar-group mb-2 mb-sm-0">
+                @for (img of item.images; track $index) {
+                  <li class="avatar avatar-md">
+                    <img
+                      class="avatar-img rounded-circle border-white"
+                      [src]="img"
+                      alt="avatar"
+                    />
+                  </li>
+                }
+              </ul>
+
+              <div class="ms-sm-2">
+                <h6 class="mb-1">
+                  {{ item.articles }} articles in this collection
+                </h6>
+                <p class="mb-0">
+                  Written by
+                  @for (
+                    author of item.authors;
+                    track author;
+                    let first = $first;
+                    let last = $last;
+                    let i = $index
+                  ) {
+                    @if (!first) {
+                      {{ last ? 'and' : ',' }}
+                    }
+                    <b>{{ author }} </b>
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

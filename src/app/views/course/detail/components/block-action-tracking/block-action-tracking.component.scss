@@ -1,0 +1,223 @@
+:host {
+  display: block;
+  text-align: left;
+  --primary-color: #0057A6;
+  --primary-dark: #004080;
+  --primary-light: #E6F0FA;
+  --secondary-color: #6c757d;
+  --success-color: #4caf50;
+  --danger-color: #dc3545;
+  --warning-color: #ff9800;
+  --gray-lightest: #f8f9fa;
+  --gray-light: #e9ecef;
+  --gray-medium: #dee2e6;
+  --text-color: #333;
+  --text-muted: #6c757d;
+}
+
+.action-tracking-page {
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+.header-section {
+  h2 {
+    color: var(--primary-dark);
+    font-weight: 600;
+  }
+  
+  hr {
+    margin-top: 1rem;
+    opacity: 0.15;
+  }
+}
+
+// Action tracking styles
+.action-tracking {
+  // Card styling
+  .card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    
+    .card-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      
+      h5 {
+        font-weight: 600;
+        color: var(--primary-dark);
+      }
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+  
+  // Table styling
+  .action-history-table {
+    font-size: 0.9rem;
+    
+    th {
+      font-weight: 600;
+      background-color: #f0f4f8;
+    }
+    
+    td {
+      vertical-align: middle;
+    }
+    
+    // Status indicators
+    .status-ongoing {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      background-color: #e6f4ff;
+      color: #0057a3;
+      font-weight: 600;
+    }
+    
+    .status-issues {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      background-color: #fff1e6;
+      color: #d46b08;
+      font-weight: 600;
+    }
+    
+    .status-help {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      background-color: #f0f0ff;
+      color: #5B5FC7;
+      font-weight: 600;
+    }
+    
+    .status-stuck {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      background-color: #ffe6e6;
+      color: #cf1322;
+      font-weight: 600;
+    }
+    
+    .status-done {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      background-color: #e6f7e6;
+      color: #2a8a2a;
+      font-weight: 600;
+    }
+  }
+  
+  // Help section
+  .dev-stages {
+    padding-left: 15px;
+    list-style-type: none;
+
+    li {
+      margin-bottom: 12px;
+      position: relative;
+      
+      &:before {
+        content: "•";
+        position: absolute;
+        left: -15px;
+        color: var(--primary-color);
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Status colors in the help section
+  .status-ongoing {
+    color: #0057a3;
+  }
+  
+  .status-issues {
+    color: #d46b08;
+  }
+  
+  .status-help {
+    color: #5B5FC7;
+  }
+  
+  .status-stuck {
+    color: #cf1322;
+  }
+  
+  .status-done {
+    color: #2a8a2a;
+  }
+}
+
+// Form elements
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+  border-radius: 4px;
+  border: 1px solid var(--gray-medium);
+  padding: 0.5rem 0.75rem;
+  
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 87, 166, 0.25);
+    border-color: var(--primary-color);
+  }
+}
+
+// Button styles
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  
+  &:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 87, 166, 0.25);
+  }
+}
+
+.btn-outline-secondary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  
+  &:hover {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 767.98px) {
+  .header-section {
+    .d-flex {
+      flex-direction: column;
+      gap: 1rem;
+      
+      button {
+        align-self: flex-start;
+      }
+    }
+  }
+} 

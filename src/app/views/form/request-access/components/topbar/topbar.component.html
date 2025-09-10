@@ -1,0 +1,53 @@
+<header
+  class="navbar-light navbar-transparent navbar-sticky header-static"
+  [class.navbar-sticky-on]="scrollY >= 300"
+>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <app-logo-box />
+
+      <button
+        class="navbar-toggler ms-auto"
+        (click)="collapse.toggle()"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-animation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="isCollapsed"
+        class="navbar-collapse collapse"
+        id="navbarCollapse"
+      >
+        <ul class="navbar-nav navbar-nav-scroll mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">About Eduport</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">Careers</a>
+          </li>
+
+          <!-- Nav item 3 link-->
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">Help center</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="navbar-nav ms-2">
+        <button class="btn btn-sm btn-primary mb-0">Get access</button>
+      </div>
+    </div>
+  </nav>
+</header>

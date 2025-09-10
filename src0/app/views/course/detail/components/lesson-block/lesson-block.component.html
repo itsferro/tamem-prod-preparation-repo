@@ -1,0 +1,180 @@
+
+
+<div class="study-block-card" [class.completed]="isBlockCompleted(block)" [class.active]="isBlockActive(block)"
+
+    [class.needs-review]="needsReview(block)">
+    <!-- Video Cover Image -->
+    <div class="video-cover-container">
+        @if (block.cover_image) {
+          <img [src]="getImageUrl(block.cover_image)"
+              class="video-cover-image" 
+              (error)="handleImageError($event)"
+              alt="صورة غلاف {{ block.title }}">
+        } @else {
+          <img src="/assets/images/courses/blocks/placeholder-video.jpg"
+              class="video-cover-image" 
+              alt="صورة غلاف {{ block.title }}">
+        }
+        <div class="video-duration">{{ block.duration }}</div>
+        <div class="play-button-overlay">
+          <i class="fas fa-play-circle"></i>
+        </div>
+      
+        <!-- Add delete button next to edit button -->
+        @if (isEditMode) {
+          <div class="edit-block-actions">
+              <div class="edit-block-button" (click)="editBlock(); $event.stopPropagation();">
+                  <i class="fas fa-edit"></i>
+              </div>
+              <div class="delete-block-button" (click)="deleteBlock(); $event.stopPropagation();">
+                  <i class="fas fa-trash"></i>
+              </div>
+              <div class="storyboard-button" (click)="navigateToStoryboard(block); $event.stopPropagation();">
+                  <i class="fas fa-film"></i>
+              </div>
+          </div>
+        }
+      
+        <!-- Status badge at top corner of cover image -->
+        <div class="status-badge" [class.completed]="isBlockCompleted(block)"
+            [class.active]="isBlockActive(block)" [class.locked]="isBlockLocked(block)"
+            [class.needs-review]="needsReview(block) && !isBlockLocked(block)">
+            @if (needsReview(block) && !isBlockLocked(block)) {
+            <i class="fas fa-sync-alt"></i> وقت المراجعة
+            } @else if (isBlockCompleted(block)) {
+            <i class="fas fa-check-circle"></i> مكتمل
+            } @else if (isBlockActive(block)) {
+            <i class="fas fa-play-circle"></i> قيد التقدم
+            } @else if (isBlockLocked(block)) {
+            <i class="fas fa-lock"></i> مغلق
+            } @else {
+            <i class="fas fa-book"></i> جديد
+            }
+        </div>
+      
+        <!-- Prerequisite badge if applicable -->
+        @if (block.prerequisiteId && !hasCompletedPrerequisite(block.prerequisiteId)) {
+        <div class="prerequisite-badge">
+            <i class="fas fa-exclamation-circle"></i> يتطلب إكمال الوحدة {{ getBlockOrder(block.prerequisiteId) }}
+        </div>
+        }
+      </div>
+
+
+    <div class="block-content">
+        <div class="block-header">
+            <!-- <span class="block-number">الوحدة {{ block.order }}</span> -->
+            <h4 class="block-title">{{ block.title }}</h4>
+        </div>
+
+        <!-- Ratings and completion time -->
+        <div class="block-ratings">
+            <!-- Star rating -->
+            <div class="star-rating" [attr.title]="block.rating + ' من 5 نجوم'">
+                @for (star of getStarArray(block.rating || 4.5); track $index) {
+                @if (star === 1) {
+                <i class="fas fa-star"></i>
+                } @else if (star === 0.5) {
+                <i class="fas fa-star-half-alt"></i>
+                } @else {
+                <i class="far fa-star"></i>
+                }
+                }
+                <span class="rating-count">({{ block.ratingCount || 120 }})</span>
+            </div>
+
+            <!-- Difficulty level -->
+            <div class="difficulty-level" [attr.title]="'مستوى الصعوبة: ' + getDifficultyLabel(block.difficulty || 3)">
+                <span class="difficulty-label">الصعوبة:</span>
+                <div class="difficulty-dots">
+                    @for (dot of getArrayOfLength(5); track $index) {
+                    <span class="difficulty-dot" [class.active]="$index < (block.difficulty || 3)"></span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- <p class="block-description">{{ block.description }}</p> -->
+
+        <!-- Last viewed and completion time -->
+        <div class="time-indicators">
+            <!-- Average completion time -->
+            <div class="completion-time">
+                <i class="fas fa-stopwatch"></i>
+                <span>متوسط وقت الإكمال {{ block.avgCompletionTime || '10 دقائق' }}</span>
+            </div>
+
+            <!-- Last viewed time -->
+            @if (getLastViewedTime(block)) {
+            <div class="last-viewed" [class.needs-review]="needsReview(block)">
+                <i class="fas fa-history"></i>
+                <span>
+                    @if (needsReview(block)) {
+                    <span class="review-reminder">حان وقت المراجعة!</span>
+                    }
+                    آخر دراسة: {{ getLastViewedTime(block) }}
+                </span>
+            </div>
+            }
+        </div>
+
+        <!-- Knowledge retention indicator -->
+        @if (getKnowledgeRetention(block) && isBlockCompleted(block)) {
+        <div class="knowledge-retention">
+            <span class="retention-label">معدل الاحتفاظ بالمعلومات:</span>
+            <div class="retention-bar-container">
+                <div class="retention-bar" [style.width.%]="getKnowledgeRetention(block)">
+                    <span class="retention-value">{{ getKnowledgeRetention(block) }}%</span>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="block-meta">
+            <span><i class="fas fa-tasks"></i> {{ block.activities_count }} نشاط</span>
+            <span><i class="fas fa-users"></i> {{ block.students_count || 0 }} طالب</span>
+        </div>
+
+        <!-- Study streak indicator if applicable -->
+        @if (getStudyStreak(block) > 0) {
+        <div class="study-streak">
+            <i class="fas fa-fire"></i>
+            <span>تعلمت هذه الوحدة لمدة {{ getStudyStreak(block) }} أيام متتالية!</span>
+        </div>
+        }
+
+        <div class="block-progress">
+            @if (isBlockCompleted(block)) {
+            <div class="block-progress-bar completed">
+                <span>مكتمل</span>
+            </div>
+            } @else if (getBlockProgress(block) > 0) {
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar" 
+                         role="progressbar" 
+                         [style.width.%]="getBlockProgress(block)"
+                         [attr.aria-valuenow]="getBlockProgress(block)" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
+                </div>
+            <span class="progress-text">{{ getBlockProgress(block) }}% مكتمل</span>
+            } @else {
+            <span class="not-started">لم يبدأ بعد</span>
+            }
+        </div>
+
+        <button class="btn-start-block" [class.review-needed]="needsReview(block)" (click)="startBlock(block)"
+            [disabled]="isBlockLocked(block) && !isOverrideEnabled">
+            @if (needsReview(block)) {
+            <i class="fas fa-sync-alt"></i> مراجعة الآن
+            } @else if (isBlockCompleted(block)) {
+            <i class="fas fa-redo"></i> إعادة الدراسة
+            } @else if (getBlockProgress(block) > 0) {
+            <i class="fas fa-play"></i> استكمل
+            } @else {
+            <i class="fas fa-play"></i> ابدأ
+            }
+        </button>
+    </div>
+</div>

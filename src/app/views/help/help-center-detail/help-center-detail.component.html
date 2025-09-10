@@ -1,0 +1,89 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [fullWidth]="false"
+  [showContact]="true"
+  [showsignin]="true"
+  [showExtraPages]="false"
+/>
+
+<main>
+  <help-detail-banner />
+
+  <section>
+    <div class="container" data-sticky-container>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div
+            ng-sticky
+            class="sticky-container"
+            data-sticky
+            data-margin-top="80"
+            data-sticky-for="768"
+          >
+            <div id="nav-scroll" class="navbar">
+              <nav class="nav nav-pills nav-pill-soft flex-column">
+                <a
+                  class="nav-link"
+                  scrollTo
+                  target="#items-1"
+                  [class.active]="scrolledToElement1.focus"
+                  ><i class="bi bi-emoji-smile fa-fw me-2"></i>Get Started</a
+                >
+                <a
+                  class="nav-link"
+                  scrollTo
+                  target="#items-2"
+                  [class.active]="scrolledToElement2.focus"
+                  ><i class="bi bi-layers fa-fw me-2"></i>Account Setup</a
+                >
+                <a
+                  class="nav-link"
+                  scrollTo
+                  target="#items-3"
+                  [class.active]="scrolledToElement3.focus"
+                  ><i class="bi bi-info-circle fa-fw me-2"></i>Other Topics</a
+                >
+                <a
+                  class="nav-link"
+                  scrollTo
+                  target="#items-4"
+                  [class.active]="scrolledToElement4.focus"
+                  ><i class="bi bi-house fa-fw me-2"></i>Advance Usage</a
+                >
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <div class="nav-scroll">
+            <div scrolledTo #scrolledToElement1="scrolledTo" id="items-1">
+              <help-detail-get-started />
+            </div>
+
+            <div class="text-center h5 my-5">. . .</div>
+
+            <div scrolledTo #scrolledToElement2="scrolledTo" id="items-2">
+              <help-detail-account-setup />
+            </div>
+
+            <div class="text-center h5 my-5">. . .</div>
+
+            <div scrolledTo #scrolledToElement3="scrolledTo" id="items-3">
+              <help-detail-other-topics />
+            </div>
+
+            <div class="text-center h5 my-5">. . .</div>
+
+            <div scrolledTo #scrolledToElement4="scrolledTo" id="items-4">
+              <help-detail-advance />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer className="bg-light" />

@@ -1,0 +1,32 @@
+<main>
+  <nav
+    class="navbar sidebar navbar-expand-xl navbar-dark bg-dark"
+    id="sidenavbar"
+  >
+    <div class="d-flex align-items-center">
+      <a class="navbar-brand" routerLink="/">
+        <img
+          class="navbar-brand-item"
+          src="assets/images/logo-light.svg"
+          alt=""
+        />
+      </a>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-start flex-row custom-scrollbar h-100"
+      data-bs-backdrop="true"
+      tabindex="-1"
+      id="offcanvasSidebar"
+    >
+      <app-sidebar />
+    </div>
+  </nav>
+  <div class="page-content">
+    <app-topbar />
+
+    <div class="page-content-wrapper border">
+      <router-outlet />
+    </div>
+  </div>
+</main>

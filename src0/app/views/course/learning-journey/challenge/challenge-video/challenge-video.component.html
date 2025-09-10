@@ -1,0 +1,111 @@
+<div class="video-challenge-container" dir="rtl">
+  <!-- Use shared intro component -->
+  @if (currentState === 'intro') {
+    <challenge-intro
+    [currentStep]="currentStep"
+    [isLoading]="isLoading"
+    (startChallenge)="startChallenge($event)"
+    (exitChallenge)="onExitChallenge()">
+  </challenge-intro>
+  }
+
+  <!-- Video player section -->
+  @if (currentState === 'watching') {
+    <div class="video-player-container">
+      <h3 class="video-title">{{ currentStep?.title }}</h3>
+      
+      <div class="video-wrapper">
+        <video #videoPlayer 
+          [src]="currentStep?.resourceData?.resourceUrl" 
+          controls
+          (play)="onVideoPlay()"
+          (pause)="onVideoPause()"
+          (ended)="onVideoEnded()">
+        </video>
+      </div>
+      
+      <div class="video-info">
+        <div class="duration-info">
+          <span class="info-label">مدة الفيديو:</span>
+          <span class="info-value">{{ formatDuration(currentStep?.resourceData?.duration || 0) }}</span>
+        </div>
+        
+        @if (currentStep?.resourceData?.applyWatchingRules) {
+          <div class="requirement-info">
+            @if (currentStep?.resourceData?.requireFullView) {
+              <div class="requirement-badge full-view">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                مطلوب مشاهدة الفيديو بالكامل
+              </div>
+            } @else if (currentStep?.resourceData?.minimumViewTime) {
+              <div class="requirement-badge min-time">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                مطلوب مشاهدة {{ formatDuration(currentStep?.resourceData?.minimumViewTime) }} على الأقل
+              </div>
+            }
+          </div>
+        }
+      </div>
+      
+      <button class="complete-button" (click)="markAsComplete()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        اضغط عند الانتهاء من المشاهدة
+      </button>
+    </div>
+  }
+
+  <!-- Use shared result component for completion -->
+  @if (currentState === 'complete') {
+    <!-- Use custom video result component -->
+    @if (!viewRequirementsMet) {
+      <div class="video-result-container">
+        <div class="warning-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        
+        <h2>تنبيه!</h2>
+        <p>لم تكتمل مشاهدة الفيديو وفقًا للمتطلبات</p>
+        
+        @if (currentStep?.resourceData?.requireFullView) {
+          <p class="warning-text">يجب مشاهدة الفيديو بالكامل</p>
+        } @else {
+          <p class="warning-text">يجب مشاهدة {{ formatDuration(currentStep?.resourceData?.minimumViewTime) }} على الأقل</p>
+          <p class="watch-time">شاهدت حتى الآن: {{ formatDuration(watchTime) }}</p>
+          <p class="watch-time">متبقي: {{ formatDuration(remainingWatchTime) }}</p>
+        }
+        
+        <div class="action-buttons">
+          <button class="resume-button" (click)="resumeWatching()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            استئناف المشاهدة
+          </button>
+        </div>
+      </div>
+    } @else {
+      <challenge-result
+        [currentStep]="currentStep"
+        [score]="100"
+        [totalCorrect]="1"
+        [totalQuestions]="1"
+        [mode]="'view'"
+        (retryChallenge)="onRetryChallenge()"
+        (finishChallenge)="onFinishChallenge()">
+      </challenge-result>
+    }
+  }
+</div>

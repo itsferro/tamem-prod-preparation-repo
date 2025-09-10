@@ -1,0 +1,478 @@
+<div class="sprint-management">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Daily Sprint Management</h1>
+        <div class="date-selector">
+          <label for="date">Sprint Date:</label>
+          <input 
+            type="date" 
+            id="date" 
+            [(ngModel)]="selectedDate"
+            (change)="onDateChange()"
+            class="date-input">
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <!-- Role Toggle (Demo purposes) -->
+        <!-- <button 
+          class="role-toggle-btn"
+          (click)="toggleUserRole()">
+          Switch to {{ currentUserRole === 'admin' ? 'Member' : 'Admin' }} View
+        </button> -->
+        
+        <!-- Admin only buttons -->
+        <div *ngIf="currentUserRole === 'admin'" class="admin-buttons">
+          <button 
+            class="create-task-btn"
+            [disabled]="isCreatingCustomAssignment"
+            (click)="openCustomAssignmentModal()">
+            {{ isCreatingCustomAssignment ? 'Creating...' : '+ Create Custom Assignment' }}
+          </button>
+          <button 
+            class="add-assignment-btn"
+            [disabled]="isCreatingAssignment"
+            (click)="openAssignmentModal()">
+            {{ isCreatingAssignment ? 'Assigning...' : '+ Assign Block' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-banner">
+      <span>{{ error }}</span>
+      <button class="close-error-btn" (click)="clearError()">×</button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoadingTeamMembers || isLoadingBlocks || isLoadingAssignments" class="loading-banner">
+      <span>Loading data...</span>
+    </div>
+  
+    <!-- Admin View -->
+    <div *ngIf="currentUserRole === 'admin'" class="admin-view">
+      <h2>Team Assignments - {{ selectedDate }}</h2>
+      
+      <div *ngIf="getTodayAssignments().length === 0" class="no-assignments">
+        <p>No assignments for this date. Click "Assign Block" or "Create Custom Assignment" to create new assignments.</p>
+      </div>
+  
+      <div class="assignments-grid">
+        <div 
+          *ngFor="let assignment of getTodayAssignments()" 
+          class="assignment-card">
+          
+          <!-- Assignment Header -->
+          <div class="assignment-header">
+            <div class="member-info">
+              <h3>{{ assignment.memberName }}</h3>
+              <span class="assignment-type" [ngClass]="{
+                'block-assignment': assignment.assignmentType === 'block',
+                'custom-assignment': assignment.assignmentType === 'custom'
+              }">
+                {{ assignment.assignmentType === 'block' ? 'Block Task' : 'Custom Task' }}
+              </span>
+            </div>
+            <div class="assignment-details">
+              <span class="lesson-name">{{ assignment.taskName }}</span>
+              <span class="block-name">{{ assignment.taskDescription }}</span>
+            </div>
+            <button (click)="deleteAssignmentGroup(assignment.id)">Delete Task</button>
+          </div>
+  
+          <!-- Progress Bar -->
+          <div class="progress-container">
+            <div class="progress-info">
+              <span>Progress: {{ getAssignmentProgress(assignment).completed }}/{{ getAssignmentProgress(assignment).total }} items</span>
+              <span class="progress-percentage">{{ getAssignmentProgress(assignment).percentage }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="getAssignmentProgress(assignment).percentage">
+              </div>
+            </div>
+          </div>
+  
+          <!-- Assignment Table -->
+          <div class="assignment-table-container">
+            <table class="assignment-table">
+              <thead>
+                <tr>
+                  <th class="insight-header">
+                    {{ assignment.assignmentType === 'block' ? 'Key Insights' : 'Task Phases' }}
+                  </th>
+                  <th 
+                    *ngFor="let groupName of getGroupNames(assignment)" 
+                    class="insight-column">
+                    {{ groupName }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemIndex of createArray(getMaxItemsCount(assignment)); let i = index">
+                  <td class="frame-index">{{ assignment.assignmentType === 'block' ? 'Frame' : 'Step' }} {{ i + 1 }}</td>
+                  <td 
+                    *ngFor="let groupName of getGroupNames(assignment)"
+                    class="frame-cell"
+                    [ngClass]="{
+                      'empty-cell': !getItemAtIndex(assignment, groupName, i),
+                      'pending-cell': getItemAtIndex(assignment, groupName, i) && !isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0),
+                      'completed-cell': getItemAtIndex(assignment, groupName, i) && isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0)
+                    }">
+                    <div 
+                      *ngIf="getItemAtIndex(assignment, groupName, i)"
+                      class="frame-info">
+                      <span class="frame-name">{{ getItemAtIndex(assignment, groupName, i)?.name }}</span>
+                      <div 
+                        class="completion-time"
+                        [class.completed]="isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0)">
+                        {{ getItemCompletionTime(getItemAtIndex(assignment, groupName, i)?.id || 0) || 'Pending' }}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Member View -->
+    <div *ngIf="currentUserRole === 'member'" class="member-view">
+      <h2>My Assignments - {{ selectedDate }}</h2>
+      
+      <div *ngIf="getMyAssignments().length === 0" class="no-assignments">
+        <p>No assignments for today.</p>
+      </div>
+  
+      <div class="my-assignments">
+        <div 
+          *ngFor="let assignment of getMyAssignments()" 
+          class="my-assignment-card">
+          
+          <!-- Assignment Header -->
+          <div class="assignment-header">
+            <div class="assignment-info">
+              <h3>{{ assignment.taskName }}</h3>
+              <span class="block-name">{{ assignment.taskDescription }}</span>
+              <span class="assignment-type" [ngClass]="{
+                'block-assignment': assignment.assignmentType === 'block',
+                'custom-assignment': assignment.assignmentType === 'custom'
+              }">
+                {{ assignment.assignmentType === 'block' ? 'Block Task' : 'Custom Task' }}
+              </span>
+            </div>
+          </div>
+  
+          <!-- Progress -->
+          <div class="progress-container">
+            <div class="progress-info">
+              <span>Progress: {{ getAssignmentProgress(assignment).completed }}/{{ getAssignmentProgress(assignment).total }} items</span>
+              <span class="progress-percentage">{{ getAssignmentProgress(assignment).percentage }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="getAssignmentProgress(assignment).percentage">
+              </div>
+            </div>
+          </div>
+  
+          <!-- Work Table -->
+          <div class="work-table-container">
+            <table class="work-table">
+              <thead>
+                <tr>
+                  <th class="insight-header">
+                    {{ assignment.assignmentType === 'block' ? 'Key Insights' : 'Task Phases' }}
+                  </th>
+                  <th 
+                    *ngFor="let groupName of getGroupNames(assignment)" 
+                    class="insight-column">
+                    {{ groupName }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemIndex of createArray(getMaxItemsCount(assignment)); let i = index">
+                  <td class="frame-index">{{ assignment.assignmentType === 'block' ? 'Frame' : 'Step' }} {{ i + 1 }}</td>
+                  <td 
+                    *ngFor="let groupName of getGroupNames(assignment)"
+                    class="frame-work-cell"
+                    [ngClass]="{
+                      'empty-cell': !getItemAtIndex(assignment, groupName, i),
+                      'pending-cell': getItemAtIndex(assignment, groupName, i) && !isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0),
+                      'completed-cell': getItemAtIndex(assignment, groupName, i) && isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0)
+                    }">
+                    <div 
+                      *ngIf="getItemAtIndex(assignment, groupName, i)"
+                      class="frame-work-info">
+                      <span class="frame-name">{{ getItemAtIndex(assignment, groupName, i)?.name }}</span>
+                      <button 
+                        *ngIf="!isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0)"
+                        class="complete-btn"
+                        (click)="logItemCompletion(getItemAtIndex(assignment, groupName, i)?.id || 0)">
+                        Mark Complete
+                      </button>
+                      <div 
+                        *ngIf="isItemCompleted(getItemAtIndex(assignment, groupName, i)?.id || 0)"
+                        class="completed-time">
+                        ✅ {{ getItemCompletionTime(getItemAtIndex(assignment, groupName, i)?.id || 0) }}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Custom Assignment Creation Modal -->
+    <div *ngIf="showCustomAssignmentModal" class="modal-backdrop" (click)="closeCustomAssignmentModal()">
+      <div class="modal-content custom-task-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Create Custom Assignment</h2>
+          <button class="close-btn" (click)="closeCustomAssignmentModal()">×</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Task Basic Info -->
+          <div class="form-group">
+            <label>Task Name:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="customTaskName"
+              class="form-input"
+              placeholder="Enter task name">
+          </div>
+  
+          <div class="form-group">
+            <label>Task Description:</label>
+            <textarea 
+              [(ngModel)]="customTaskDescription"
+              class="form-textarea"
+              rows="3"
+              placeholder="Enter task description">
+            </textarea>
+          </div>
+  
+          <!-- Assignment Field -->
+          <div class="form-group">
+            <label>Assign to Team Member:</label>
+            <select 
+              [(ngModel)]="customAssignmentMember" 
+              class="form-select">
+              <option value="">Select Team Member</option>
+              <option 
+                *ngFor="let member of teamMembers" 
+                [value]="member.id">
+                {{ member.name }}
+              </option>
+            </select>
+          </div>
+  
+          <!-- Phases and Steps Builder -->
+          <div class="form-group">
+            <label>Task Phases & Steps:</label>
+            <div class="phases-builder">
+              <div *ngFor="let phase of customTaskPhases; let phaseIndex = index" class="phase-builder">
+                <div class="phase-header">
+                  <input 
+                    type="text" 
+                    [(ngModel)]="phase.name"
+                    class="phase-name-input"
+                    placeholder="Phase name">
+                  <button 
+                    *ngIf="customTaskPhases.length > 1"
+                    class="remove-phase-btn"
+                    (click)="removePhase(phaseIndex)">
+                    Remove Phase
+                  </button>
+                </div>
+                
+                <div class="steps-container">
+                  <div *ngFor="let step of phase.steps; let stepIndex = index" class="step-row">
+                    <input 
+                      type="text" 
+                      [(ngModel)]="step.name"
+                      class="step-name-input"
+                      placeholder="Step name">
+                    <button 
+                      *ngIf="phase.steps.length > 1"
+                      class="remove-step-btn"
+                      (click)="removeStep(phaseIndex, stepIndex)">
+                      ×
+                    </button>
+                  </div>
+                  <button class="add-step-btn" (click)="addStep(phaseIndex)">+ Add Step</button>
+                </div>
+              </div>
+              
+              <button class="add-phase-btn" (click)="addPhase()">+ Add Phase</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="cancel-btn" (click)="closeCustomAssignmentModal()">Cancel</button>
+          <button 
+            class="create-btn"
+            [disabled]="!customTaskName.trim() || !customAssignmentMember"
+            (click)="createCustomAssignment()">
+            Create Assignment
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Block Assignment Modal -->
+    <div *ngIf="showAssignmentModal" class="modal-backdrop" (click)="closeAssignmentModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Assign Block to Team Member</h2>
+          <button class="close-btn" (click)="closeAssignmentModal()">×</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Date -->
+          <div class="form-group">
+            <label>Assignment Date:</label>
+            <input 
+              type="date" 
+              [(ngModel)]="selectedDate"
+              class="form-input">
+          </div>
+  
+          <!-- Team Member Selection -->
+          <div class="form-group">
+            <label>Assign to:</label>
+            <select [(ngModel)]="selectedMember" class="form-select">
+              <option value="">Select Team Member</option>
+              <option 
+                *ngFor="let member of teamMembers" 
+                [value]="member.id">
+                {{ member.name }}
+              </option>
+            </select>
+          </div>
+  
+          <!-- Block Selection -->
+          <div class="form-group">
+            <label>Block:</label>
+            <select [(ngModel)]="selectedBlock" (change)="onBlockSelectionChange()" class="form-select">
+              <option value="">Select Block</option>
+              <option 
+                *ngFor="let block of blocks" 
+                [value]="block.id">
+                {{ block.lessonName }} - {{ block.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Task Prefix -->
+          <div class="form-group" *ngIf="selectedBlock">
+            <label>Task Prefix (optional):</label>
+            <input 
+              type="text" 
+              [(ngModel)]="taskPrefix"
+              class="form-input"
+              list="taskPrefixOptions"
+              placeholder="Enter or select task prefix...">
+            <datalist id="taskPrefixOptions">
+              <option 
+                *ngFor="let shortName of taskShortNames" 
+                [value]="shortName">
+              </option>
+            </datalist>
+            <small *ngIf="taskPrefix.trim()" class="prefix-preview">
+              Preview: <strong>{{ getTaskNamePreview() }}</strong>
+            </small>
+          </div>
+  
+          <!-- Block Assignment Type -->
+          <div class="form-group" *ngIf="selectedBlock">
+            <label>Block Assignment Type:</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input 
+                  type="radio" 
+                  name="blockAssignmentType" 
+                  value="full_block"
+                  [(ngModel)]="blockAssignmentType">
+                Full Block
+              </label>
+              <label class="radio-label">
+                <input 
+                  type="radio" 
+                  name="blockAssignmentType" 
+                  value="insights"
+                  [(ngModel)]="blockAssignmentType">
+                Specific Insights
+              </label>
+              <label class="radio-label">
+                <input 
+                  type="radio" 
+                  name="blockAssignmentType" 
+                  value="frames"
+                  [(ngModel)]="blockAssignmentType">
+                Specific Frames
+              </label>
+            </div>
+          </div>
+  
+          <!-- Insights Selection -->
+          <div class="form-group" *ngIf="blockAssignmentType === 'insights' && selectedBlock">
+            <label>Select Key Insights:</label>
+            <div class="checkbox-group">
+              <label 
+                *ngFor="let insight of getSelectedBlockInsights()" 
+                class="checkbox-label">
+                <input 
+                  type="checkbox" 
+                  [checked]="selectedInsights.includes(insight.id)"
+                  (change)="toggleInsightSelection(insight.id)">
+                {{ insight.name }} ({{ insight.frames.length }} frames)
+              </label>
+            </div>
+          </div>
+  
+          <!-- Frames Selection -->
+          <div class="form-group" *ngIf="blockAssignmentType === 'frames' && selectedBlock">
+            <label>Select Specific Frames:</label>
+            <div class="frames-selection">
+              <div *ngFor="let insight of getSelectedBlockInsights()" class="insight-frames">
+                <h4>{{ insight.name }}</h4>
+                <div class="checkbox-group">
+                  <label 
+                    *ngFor="let frame of insight.frames" 
+                    class="checkbox-label">
+                    <input 
+                      type="checkbox" 
+                      [checked]="selectedFrames.includes(frame.id)"
+                      (change)="toggleFrameSelection(frame.id)">
+                    {{ frame.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="cancel-btn" (click)="closeAssignmentModal()">Cancel</button>
+          <button 
+            class="create-btn"
+            [disabled]="!selectedMember || !selectedBlock"
+            (click)="createAssignment()">
+            Create Assignment
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

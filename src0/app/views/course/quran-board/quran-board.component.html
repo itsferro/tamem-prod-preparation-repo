@@ -1,0 +1,170 @@
+<div class="quran-board-container">
+    <!-- Main Board View - Shows when view === 'board' -->
+    <div *ngIf="view === 'board'" class="board-view">
+        <div class="header">
+            <div class="title-section">
+                <h1 class="main-title">القرآن الكريم</h1>
+                <p class="subtitle">رحلة الحفظ</p>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-item">
+                    <!-- <div class="stats-value">{{ getTotalMemorizedPages() }}</div> -->
+                    <div class="stats-label">الصفحات المحفوظة</div>
+                </div>
+
+                <div class="stats-item">
+                    <!-- <div class="stats-value">{{ getOverallMasteryPercentage() }}%</div> -->
+                    <div class="stats-label">نسبة الحفظ</div>
+                </div>
+
+                <div class="stats-item">
+                    <!-- <div class="stats-value">{{ getAverageScore() }}</div> -->
+                    <div class="stats-label">المستوى العام</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="البحث في السور..." [(ngModel)]="searchText" (input)="filterSurahs()">
+        </div>
+
+        <div class="surahs-grid">
+            <quran-board-surah *ngFor="let surah of surahs" [surah]="surah"
+                (selected)="onSurahSelected($event)">
+            </quran-board-surah>
+        </div>
+    </div>
+
+    <!-- Surah Pages Panel - Shows when view === 'pages' -->
+    <div *ngIf="view === 'pages'" class="pages-view">
+        <div class="panel-header">
+            <h2>{{ selectedSurah?.name_ar }}</h2>
+            <button class="close-button" (click)="closePanel()">×</button>
+        </div>
+
+        <div class="panel-content">
+            <div class="surah-info">
+                <div class="info-item">
+                    <span class="label">عدد الآيات:</span>
+                    <span class="value">{{ selectedSurah?.numberOfAyahs }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">النوع:</span>
+                    <span class="value">{{ selectedSurah?.revelationType === 'Meccan' ? 'مكية' : 'مدنية' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">الصفحات:</span>
+                    <span class="value">{{ selectedSurah?.pages?.length }}</span>
+                </div>
+            </div>
+
+            <h3 class="pages-heading">
+                الصفحات
+                <div class="sort-controls">
+                    <!-- <button class="sort-button" [class.active]="sortBy === 'page'" (click)="sortPages('page')">
+                      <i class="sort-icon">1-9</i>
+                      ترتيب بالصفحة
+                    </button> -->
+                    <!-- <button class="sort-button" [class.active]="sortBy === 'score'" (click)="sortPages('score')">
+                      <i class="sort-icon">↓</i>
+                      ترتيب بالمستوى
+                    </button> -->
+                </div>
+            </h3>
+
+            <div class="pages-grid">
+                <div class="page-card" *ngFor="let page of surahPages" (click)="onPageSelected(page)">
+                    <!-- Page number circle with conditional coloring -->
+                    <div class="page-number" 
+                         [ngClass]="{
+                            'score-high': page.score >= 80, 
+                            'score-medium': page.score >= 50 && page.score < 80,
+                            'score-low': page.score > 0 && page.score < 50,
+                            'score-none': !page.score
+                         }">
+                        {{ page.page }}
+                    </div>
+                    
+                    <!-- Ayah preview text -->
+                    <div class="page-content">
+                        <span>{{ (page.first_aya_text || '').split(' ').slice(0, 5).join(' ') }}...</span>
+                    </div>
+                    
+                    <!-- Score visualization -->
+                    <div class="score-indicator">
+                        <div class="score-bar-bg">
+                            <div class="score-bar-fill"
+                                 [style.width.%]="page.score || 0"
+                                 [ngClass]="{
+                                    'score-high': page.score >= 80, 
+                                    'score-medium': page.score >= 50 && page.score < 80,
+                                    'score-low': page.score > 0 && page.score < 50
+                                 }">
+                            </div>
+                        </div>
+                        
+                        <!-- Score percentage and mastery label -->
+                        <div class="score-details" *ngIf="page.score">
+                            <span class="score-value">{{ page.score }}%</span>
+                            
+                            <!-- Mastery level with inline text -->
+                            <span class="mastery-label"
+                                 [ngClass]="{
+                                    'mastery-4': page.mastery_level === 4,
+                                    'mastery-3': page.mastery_level === 3,
+                                    'mastery-2': page.mastery_level === 2,
+                                    'mastery-1': page.mastery_level === 1
+                                 }">
+                                {{ page.mastery_level === 4 ? 'متقن' : 
+                                   page.mastery_level === 3 ? 'جيد' :
+                                   page.mastery_level === 2 ? 'قيد الحفظ' :
+                                   page.mastery_level === 1 ? 'مبتدئ' : 'جديد' }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Juz info -->
+                    <div class="page-info">
+                        <div class="page-detail2">
+                            <span class="label">الجزء:</span>
+                            <span class="label" style="padding:0px 10px;color:dimgray;">{{ page.jozz }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Viewer Component - Shows when view === 'viewer' -->
+    <div *ngIf="view === 'viewer'" class="viewer-container">
+        <quran-board-viewer [currentPageNO]="currentPageNO" [surahName]="selectedSurah?.name_ar || ''"
+            (close)="closeViewer()" (backToPages)="backToPages()" (refreshRequired)="refreshPageData()"  (wordNoteAdded)="onWordNoteAdded($event)">
+        </quran-board-viewer>
+    </div>
+</div>
+
+
+<!-- Add this to your panel-content div in quran-board.component.html -->
+<div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">جاري تحديث البيانات...</div>
+  </div>
+  
+
+
+  <div class="panel-content">
+    <!-- Loading overlay -->
+    <div class="loading-overlay" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">جاري تحديث الصفحات...</div>
+    </div>
+    
+    <!-- Rest of your panel content -->
+    <div class="surah-info">
+        <!-- ... -->
+    </div>
+    
+    <!-- ... rest of your content ... -->
+</div>
+

@@ -1,0 +1,131 @@
+<div class="offcanvas-header bg-dark">
+  <h5 class="offcanvas-title text-white" id="offcanvasSidebarLabel">
+    Course playlist
+  </h5>
+  <button
+    type="button"
+    class="btn btn-sm btn-light mb-0"
+    (click)="activeOffcanvas.close()"
+    aria-label="Close"
+  >
+    <i class="bi bi-x-lg"></i>
+  </button>
+</div>
+<div class="offcanvas-body p-3 p-lg-0">
+  <div class="col-12">
+    <div
+      ngbAccordion
+      [closeOthers]="true"
+      class="accordion accordion-icon accordion-bg-light"
+      id="accordionExample2"
+    >
+      @for (item of programs; track $index) {
+        <div
+          ngbAccordionItem
+          [collapsed]="$index == 0 ? false : true"
+          class="accordion-item mb-3"
+        >
+          <h6
+            ngbAccordionHeader
+            class="accordion-header font-base"
+            id="heading-1"
+          >
+            <a
+              ngbAccordionToggle
+              class="accordion-button fw-bold rounded collapsed d-block"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse-1"
+              aria-expanded="true"
+              aria-controls="collapse-1"
+            >
+              <span class="mb-0">{{ item.title }}</span>
+              <span class="small d-block mt-1"
+                >({{ item.lectures_count }} Lectures)</span
+              >
+            </a>
+          </h6>
+          <div
+            ngbAccordionCollapse
+            id="collapse-1"
+            class="accordion-collapse collapse show"
+            aria-labelledby="heading-1"
+            data-bs-parent="#accordionExample2"
+          >
+            <div ngbAccordionBody class="accordion-body mt-3">
+              <ng-template>
+                <div class="vstack gap-3">
+                  <div class="overflow-hidden">
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-1 h6">
+                        {{ item.complete }}/{{ item.lectures_count }} Completed
+                      </p>
+                      <h6 class="mb-1 text-end">
+                        {{ item.completion_percentage }}%
+                      </h6>
+                    </div>
+                    <ngb-progressbar
+                      type="primary"
+                      [value]="item.completion_percentage"
+                      class="progress-sm aos"
+                      data-aos="slide-right"
+                      data-aos-delay="200"
+                      data-aos-duration="1000"
+                      data-aos-easing="ease-in-out"
+                    ></ngb-progressbar>
+                  </div>
+
+                  @for (lecture of item.lectures; track lecture) {
+                    <div
+                      [ngClass]="{
+                        'p-2 bg-success bg-opacity-10 rounded-3':
+                          lecture.status == 'playing',
+                      }"
+                    >
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <div
+                          class="position-relative d-flex align-items-center"
+                        >
+                          <a
+                            href="javascript:void(0);"
+                            class="btn btn-round btn-sm mb-0 stretched-link position-static"
+                            [ngClass]="{
+                              'btn-light': lecture.status == 'locked',
+                              'btn-success': lecture.status == 'playing',
+                              'btn-danger-soft':
+                                lecture.status == 'not_completed',
+                            }"
+                          >
+                            <i
+                              [ngClass]="
+                                lecture.status == 'locked'
+                                  ? 'bi bi-lock-fill'
+                                  : 'fas fa-play me-0'
+                              "
+                            ></i>
+                          </a>
+                          <span
+                            class="d-inline-block text-truncate ms-2 mb-0 h6 fw-light w-200px"
+                            >{{ lecture.title }}</span
+                          >
+                        </div>
+                        @if (lecture.status == 'playing') {
+                          <p class="mb-0 text-truncate">Playing</p>
+                        } @else {
+                          <p class="mb-0 text-truncate">
+                            {{ lecture.duration }}
+                          </p>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

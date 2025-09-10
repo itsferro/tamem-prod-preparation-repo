@@ -1,0 +1,33 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <!-- =======================
+  Page Banner START -->
+  <cart-banner />
+  <!-- =======================
+  Page Banner END -->
+
+  <!-- =======================
+  Page content START -->
+  <section class="pt-5">
+    <div class="container">
+      <div class="row g-4 g-sm-5">
+        <div class="col-lg-8 mb-4 mb-sm-0">
+          <cart-items (totalEvent)="getTotal($event)" />
+        </div>
+
+        <div class="col-lg-4">
+          <cart-total [total]="total" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Page content END -->
+</main>
+
+<app-footer className="bg-light" />

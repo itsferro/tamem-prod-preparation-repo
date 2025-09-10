@@ -1,0 +1,57 @@
+<section class="pt-0">
+  <div class="container">
+    <div class="row mb-4">
+      <h2 class="mb-0">Upcoming Events</h2>
+    </div>
+
+    <div class="row">
+      <div class="tiny-slider arrow-round arrow-creative arrow-blur">
+        <ng-tiny-slider [config]="sliderConfig" class="tiny-slider-inner">
+          @for (item of events; track $index) {
+            <div class="card bg-transparent">
+              <div class="position-relative">
+                <img [src]="item.image" class="card-img" alt="course image" />
+
+                <div
+                  class="card-img-overlay d-flex align-items-start flex-column p-3"
+                >
+                  <div class="w-100 mb-auto d-flex justify-content-end">
+                    <a
+                      href="javascript:void(0);"
+                      class="icon-sm bg-white rounded-2"
+                      ><i class="fas fa-heart text-danger"></i
+                    ></a>
+                  </div>
+
+                  <div class="w-100 mt-auto">
+                    @if (item.date == 'Live') {
+                      <a
+                        href="javascript:void(0);"
+                        class="badge text-success bg-white fs-6 rounded-1"
+                        ><i class="fas fa-circle text-success me-2"></i>Live</a
+                      >
+                    } @else {
+                      <a
+                        href="javascript:void(0);"
+                        class="badge text-bg-white fs-6 rounded-1"
+                        ><i class="far fa-calendar-alt text-orange me-2"></i
+                        >{{ item.date }}</a
+                      >
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body px-2">
+                <h5 class="card-title">
+                  <a href="javascript:void(0);">{{ item.title }}</a>
+                </h5>
+                <p class="mb-0 text-truncate-2">{{ item.description }}</p>
+              </div>
+            </div>
+          }
+        </ng-tiny-slider>
+      </div>
+    </div>
+  </div>
+</section>

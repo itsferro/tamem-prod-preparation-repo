@@ -1,0 +1,106 @@
+<section class="bg-primary bg-opacity-10">
+  <div class="container">
+    <div class="row g-4 g-sm-5 align-items-center py-4">
+      <div class="col-lg-6 col-xl-5">
+        <h1>Access to Free Online Courses</h1>
+
+        <form class="row align-items-center justify-content-center my-4">
+          <div class="col-12">
+            <p class="mb-2 h6 fw-light">
+              Enter your email address to get access
+            </p>
+            <div class="bg-body shadow rounded-3 p-2">
+              <div class="input-group">
+                <input
+                  class="form-control border-0 me-1"
+                  type="email"
+                  placeholder="Enter your email"
+                />
+                <button type="button" class="btn btn-blue mb-0 rounded-3">
+                  Request access!
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="d-sm-flex justify-content-sm-between align-items-center">
+          <div>
+            <ul class="avatar-group mb-3 mb-sm-0">
+              <li class="avatar avatar-sm">
+                <img
+                  class="avatar-img rounded-circle"
+                  src="assets/images/avatar/01.jpg"
+                  alt="avatar"
+                />
+              </li>
+              <li class="avatar avatar-sm">
+                <img
+                  class="avatar-img rounded-circle"
+                  src="assets/images/avatar/02.jpg"
+                  alt="avatar"
+                />
+              </li>
+              <li class="avatar avatar-sm">
+                <img
+                  class="avatar-img rounded-circle"
+                  src="assets/images/avatar/03.jpg"
+                  alt="avatar"
+                />
+              </li>
+              <li class="avatar avatar-sm">
+                <img
+                  class="avatar-img rounded-circle"
+                  src="assets/images/avatar/04.jpg"
+                  alt="avatar"
+                />
+              </li>
+              <li class="avatar avatar-sm">
+                <img
+                  class="avatar-img rounded-circle"
+                  src="assets/images/avatar/05.jpg"
+                  alt="avatar"
+                />
+              </li>
+              <li class="avatar avatar-sm">
+                <div class="avatar-img rounded-circle bg-primary">
+                  <span
+                    class="text-white position-absolute top-50 start-50 translate-middle small"
+                    >1K+</span
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0 me-2">4.5/5.0</h5>
+            <ul class="list-inline mb-1">
+              <ng-template #t let-fill="fill">
+                <i class="far fa-star text-warning me-1">
+                  @if (fill > 0) {
+                    <i
+                      class="fas fa-star text-warning filled"
+                      [style.width.%]="fill"
+                    ></i>
+                  }
+                </i>
+              </ng-template>
+
+              <ngb-rating
+                [rate]="4.5"
+                [starTemplate]="t"
+                [readonly]="true"
+                [max]="5"
+              />
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-xl-7 text-center">
+        <img src="assets/images/element/16.svg" alt="" />
+      </div>
+    </div>
+  </div>
+</section>

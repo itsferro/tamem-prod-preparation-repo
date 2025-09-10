@@ -1,0 +1,33 @@
+<section class="position-relative pb-0 pb-sm-5">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+        <h2>Top Listed Subjects</h2>
+        <p class="mb-0">
+          Perceived end knowledge certainly day sweetness why cordially
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of subjects; track $index) {
+        <div class="col-sm-6 col-md-4 col-xl-3">
+          <div
+            class="bg-primary bg-opacity-10 rounded-3 text-center p-3 position-relative btn-transition"
+          >
+            <div class="icon-xl bg-body mx-auto rounded-circle mb-3">
+              <img [src]="item.image" alt="" />
+            </div>
+
+            <h5 class="mb-1">
+              <a href="javascript:void(0);" class="stretched-link">{{
+                item.title
+              }}</a>
+            </h5>
+            <span class="mb-0">{{ item.courses }} Course</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

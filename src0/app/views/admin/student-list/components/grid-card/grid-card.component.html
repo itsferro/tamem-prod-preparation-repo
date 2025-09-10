@@ -1,0 +1,129 @@
+<div class="row g-4">
+  @for (item of students; track $index) {
+    <div class="col-md-6 col-xxl-4">
+      <div class="card bg-transparent border h-100">
+        <div
+          class="card-header bg-transparent border-bottom d-flex justify-content-between"
+        >
+          <div class="d-sm-flex align-items-center">
+            <div class="avatar avatar-md flex-shrink-0">
+              <img
+                class="avatar-img rounded-circle"
+                [src]="item.avatar"
+                alt="avatar"
+              />
+            </div>
+
+            <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+              <h5 class="mb-0">
+                <a href="javascript:void(0);">{{ item.name }}</a>
+              </h5>
+              <span class="text-body small"
+                ><i class="fas fa-fw fa-map-marker-alt me-1 mt-1"></i
+                >{{ item.location }}</span
+              >
+            </div>
+          </div>
+
+          <div ngbDropdown placement="bottom-right" class="dropdown text-end">
+            <a
+              ngbDropdownToggle
+              href="javascript:void(0);"
+              class="btn btn-sm btn-light btn-round small mb-0 arrow-none"
+              role="button"
+              id="dropdownShare2"
+            >
+              <i class="bi bi-three-dots fa-fw"></i>
+            </a>
+
+            <ul
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded"
+              aria-labelledby="dropdownShare2"
+            >
+              <li>
+                <a class="dropdown-item" href="javascript:void(0);"
+                  ><i class="bi bi-pencil-square fa-fw me-2"></i>Edit</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="javascript:void(0);"
+                  ><i class="bi bi-trash fa-fw me-2"></i>Remove</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center">
+              <div
+                class="icon-md bg-success bg-opacity-10 text-success rounded-circle flex-shrink-0"
+              >
+                <i class="bi bi-currency-dollar fa-fw"></i>
+              </div>
+              <h6 class="mb-0 ms-2 fw-light">Payments</h6>
+            </div>
+            <span class="mb-0 fw-bold">${{ item.payments | number }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center">
+              <div
+                class="icon-md bg-purple bg-opacity-10 text-purple rounded-circle flex-shrink-0"
+              >
+                <i class="fas fa-book fa-fw"></i>
+              </div>
+              <h6 class="mb-0 ms-2 fw-light">Total Course</h6>
+            </div>
+            <span class="mb-0 fw-bold">{{ item.total_courses }}</span>
+          </div>
+
+          <div class="overflow-hidden">
+            <h6 class="mb-0">{{ item.progress }}%</h6>
+            <ngb-progressbar
+              type="primary"
+              [value]="item.progress"
+              class="progress-sm aos"
+              data-aos="slide-right"
+              data-aos-delay="200"
+              data-aos-duration="1000"
+              data-aos-easing="ease-in-out"
+            ></ngb-progressbar>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent border-top">
+          <div class="d-sm-flex justify-content-between align-items-center">
+            <h6 class="mb-2 mb-sm-0">
+              <i class="bi bi-calendar fa-fw text-orange me-2"></i
+              ><span class="text-body">Join at:</span> {{ item.join_date }}
+            </h6>
+
+            <div class="text-end text-primary-hover">
+              <a
+                href="javascript:void(0);"
+                class="btn btn-link text-body p-0 mb-0 me-2"
+                placement="top"
+                ngbTooltip="Message"
+                aria-label="Message"
+              >
+                <i class="bi bi-envelope-fill"></i>
+              </a>
+              <a
+                href="javascript:void(0);"
+                class="btn btn-link text-body p-0 mb-0 ms-1"
+                placement="top"
+                ngbTooltip="Block"
+                aria-label="Block"
+              >
+                <i class="fas fa-ban"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,240 @@
+ <!-- Lesson Statistics Component HTML -->
+<div class="lesson-statistics-container" style="direction: rtl;">
+    <div class="statistics-header">
+      <div class="lesson-basic-info">
+        <h3 class="lesson-title">{{ lesson?.title || 'العمليات الأساسية' }}</h3>
+        <div class="lesson-meta">
+          <span class="lesson-category"><i class="fas fa-folder"></i> {{ lesson?.category || 'أساسيات الجبر' }}</span>
+          <span class="lesson-duration"><i class="fas fa-clock"></i> {{ lesson?.duration || '20 دقيقة' }}</span>
+        </div>
+      </div>
+      
+      <div class="overall-progress">
+        <div class="progress-circle" style="--progress: {{ userProgress?.completionPercentage || 65 }}%">
+          <span class="progress-value">{{ userProgress?.completionPercentage || 65 }}%</span>
+          <span class="progress-label">الإنجاز</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="statistics-body">
+      <div class="statistics-row">
+        <!-- Personal Stats -->
+        <div class="statistics-card personal-stats">
+          <div class="card-header">
+            <i class="fas fa-user-graduate"></i>
+            <h4>إحصائيات شخصية</h4>
+          </div>
+          
+          <div class="card-body">
+            <div class="stat-group">
+              <div class="time-stats">
+                <div class="stat-item">
+                  <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value">{{ userProgress?.timeSpent || '45:20' }}</span>
+                    <span class="stat-label">وقت الدراسة الإجمالي</span>
+                  </div>
+                </div>
+                
+                <div class="stat-item">
+                  <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value">{{ userProgress?.visits || 3 }}</span>
+                    <span class="stat-label">عدد الزيارات</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-group">
+              <h5 class="stat-group-title">أداؤك</h5>
+              <div class="progress-stats">
+                <div class="stat-progress-item">
+                  <div class="progress-label">
+                    <span>الإجابات الصحيحة</span>
+                    <span>{{ userProgress?.correctAnswers || 75 }}%</span>
+                  </div>
+                  <div class="progress stat-progress">
+                    <div class="progress-bar bg-success" role="progressbar" 
+                         style="width: {{ userProgress?.correctAnswers || 75 }}%" 
+                         [attr.aria-valuenow]="userProgress?.correctAnswers || 75" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100"></div>
+                  </div>
+                </div>
+                
+                <div class="stat-progress-item">
+                  <div class="progress-label">
+                    <span>التحديات المنجزة</span>
+                    <span>{{ userProgress?.completedChallenges || 4 }}/{{ userProgress?.totalChallenges || 6 }}</span>
+                  </div>
+                  <div class="progress stat-progress">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                         style="width: {{ (userProgress?.completedChallenges / userProgress?.totalChallenges) * 100 || 67 }}%" 
+                         [attr.aria-valuenow]="(userProgress?.completedChallenges / userProgress?.totalChallenges) * 100 || 67" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="strengths-weaknesses">
+              <div class="strength-area">
+                <h5><i class="fas fa-medal"></i> نقاط القوة</h5>
+                <ul>
+                  @for (strength of userProgress?.strengths || ['التعامل مع المتغيرات', 'حل المعادلات البسيطة']; track $index) {
+                    <li>{{ strength }}</li>
+                  }
+                </ul>
+              </div>
+              
+              <div class="weakness-area">
+                <h5><i class="fas fa-exclamation-triangle"></i> فرص التحسين</h5>
+                <ul>
+                  @for (weakness of userProgress?.weaknesses || ['ترتيب العمليات الحسابية', 'التعامل مع المعادلات المركبة']; track $index) {
+                    <li>{{ weakness }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Platform Stats -->
+        <div class="statistics-card platform-stats">
+          <div class="card-header">
+            <i class="fas fa-users"></i>
+            <h4>إحصائيات المنصة</h4>
+          </div>
+          
+          <div class="card-body">
+            <div class="platform-stat-row">
+              <div class="platform-stat-item">
+                <div class="platform-stat-value">
+                  <i class="fas fa-user-friends"></i>
+                  <span>{{ platformStats?.totalStudents || 1245 }}</span>
+                </div>
+                <div class="platform-stat-label">عدد الطلاب</div>
+              </div>
+              
+              <div class="platform-stat-item">
+                <div class="platform-stat-value">
+                  <i class="fas fa-chart-line"></i>
+                  <span>{{ platformStats?.completionRate || 85 }}%</span>
+                </div>
+                <div class="platform-stat-label">نسبة الإكمال</div>
+              </div>
+              
+              <div class="platform-stat-item">
+                <div class="platform-stat-value">
+                  <div class="difficulty-indicator">
+                    @for (dot of getDifficultyDots(platformStats?.difficulty || 2); track $index) {
+                      <span class="difficulty-dot" [class.active]="dot"></span>
+                    }
+                  </div>
+                </div>
+                <div class="platform-stat-label">مستوى الصعوبة</div>
+              </div>
+            </div>
+            
+            <div class="comparison-stats">
+              <h5 class="stat-group-title">مقارنة بالطلاب الآخرين</h5>
+              <div class="comparison-graph">
+                <div class="comparison-bar-container">
+                  <div class="comparison-marker your-position" 
+                       style="left: {{ platformStats?.yourPercentile || 65 }}%;">
+                    <span class="marker-dot"></span>
+                    <span class="marker-label">أنت</span>
+                  </div>
+                  <div class="comparison-bar">
+                    <div class="average-marker" 
+                         style="left: {{ platformStats?.averagePercentile || 50 }}%;">
+                      <span class="marker-line"></span>
+                      <span class="marker-label">المتوسط</span>
+                    </div>
+                    <div class="top-marker" 
+                         style="left: {{ platformStats?.topPercentile || 85 }}%;">
+                      <span class="marker-line"></span>
+                      <span class="marker-label">الأفضل</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="comparison-legend">
+                  <div class="legend-item">
+                    <span class="legend-color your-color"></span>
+                    <span class="legend-text">موقعك: النسبة المئوية {{ platformStats?.yourPercentile || 65 }}</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-color average-color"></span>
+                    <span class="legend-text">المتوسط: النسبة المئوية {{ platformStats?.averagePercentile || 50 }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="common-challenges">
+              <h5 class="stat-group-title">نقاط التحدي الشائعة</h5>
+              <div class="challenge-items">
+                @for (challenge of platformStats?.challengePoints || [
+                  { name: 'التعامل مع الكسور الجبرية', difficulty: 'صعوبة عالية', successRate: 35 },
+                  { name: 'حل المعادلات متعددة المتغيرات', difficulty: 'صعوبة متوسطة', successRate: 62 }
+                ]; track $index) {
+                  <div class="challenge-item">
+                    <div class="challenge-info">
+                      <span class="challenge-name">{{ challenge.name }}</span>
+                      <span class="challenge-difficulty">{{ challenge.difficulty }}</span>
+                    </div>
+                    <div class="challenge-success-rate">
+                      <span>معدل النجاح</span>
+                      <div class="progress challenge-progress">
+                        <div class="progress-bar {{ challenge.successRate < 50 ? 'bg-warning' : 'bg-info' }}" 
+                             role="progressbar" 
+                             style="width: {{ challenge.successRate }}%" 
+                             [attr.aria-valuenow]="challenge.successRate" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">{{ challenge.successRate }}%</div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recommendations Section -->
+      <div class="recommendations-section">
+        <div class="section-header">
+          <i class="fas fa-lightbulb"></i>
+          <h4>توصيات مخصصة</h4>
+        </div>
+        
+        <div class="recommendations-content">
+          <div class="recommendation-cards">
+            @for (recommendation of platformStats?.recommendations || [
+              { type: 'exercise', title: 'تمارين مقترحة', description: 'تدرب على "ترتيب العمليات الحسابية" لتحسين فهمك للموضوع', icon: 'tasks', linkText: 'ابدأ التمرين', linkUrl: '#' },
+              { type: 'lesson', title: 'درس متعلق', description: 'راجع درس "العمليات الأساسية في الجبر" لتعزيز المفاهيم', icon: 'book-reader', linkText: 'فتح الدرس', linkUrl: '#' },
+              { type: 'challenge', title: 'التحدي التالي', description: 'جرب حل مسائل معقدة أكثر لاختبار استيعابك', icon: 'trophy', linkText: 'بدء التحدي', linkUrl: '#' }
+            ]; track $index) {
+              <div class="recommendation-card">
+                <div class="recommendation-icon">
+                  <i class="fas fa-{{ recommendation.icon }}"></i>
+                </div>
+                <div class="recommendation-content">
+                  <h5>{{ recommendation.title }}</h5>
+                  <p>{{ recommendation.description }}</p>
+                  <a href="{{ recommendation.linkUrl }}" class="recommendation-link" 
+                     (click)="$event.preventDefault(); onRecommendationClick(recommendation)">
+                    {{ recommendation.linkText }} <i class="fas fa-chevron-left"></i>
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

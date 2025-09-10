@@ -1,0 +1,710 @@
+// Enhanced styles for Block Development Tracking Modal
+// Applying tasks table design to lesson-block-track-form
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --warning-gradient: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+  --danger-gradient: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+  --info-gradient: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+  --dark-gradient: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+}
+
+// Custom modal positioning for wide modals
+:host ::ng-deep .block-tracking-modal {
+  .modal-dialog {
+    max-width: 1200px;
+    width: 95vw;
+    margin: 1.75rem auto;
+    
+    @media (min-width: 1400px) {
+      max-width: 1400px;
+    }
+    
+    @media (max-width: 768px) {
+      max-width: 95%;
+      width: 95%;
+      margin: 1rem auto;
+    }
+  }
+}
+
+.modal-content {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: 100%;
+}
+
+.modal-header {
+  background: var(--primary-gradient);
+  color: white;
+  border-bottom: none;
+  padding: 1.5rem 2rem;
+  
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0;
+    
+    i {
+      opacity: 0.9;
+    }
+  }
+  
+  .btn-close {
+    // filter: brightness(0) invert(1);
+    opacity: 0.8;
+    color:black !important; 
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.modal-body {
+  padding: 2rem;
+  background-color: #f8f9fc;
+  background-color: white !important;
+}
+
+.modal-footer {
+  background-color: #fff;
+  border-top: 1px solid #e3e6f0;
+  padding: 1.5rem 2rem;
+}
+
+// Block Info Header
+.block-info-header {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid #e3e6f0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+  
+  .block-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-gradient);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+      color: white;
+    }
+  }
+  
+  h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .text-muted {
+    font-size: 0.9rem;
+    
+    i {
+      color: #667eea;
+    }
+  }
+}
+
+// Phases Container
+.phases-container {
+  background: white;
+  border-radius: 16px;
+  padding: 0;
+  border: 1px solid #e3e6f0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+  
+  h6 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    padding: 1.5rem 2rem;
+    background: var(--primary-gradient);
+    border-bottom: none;
+    
+    i {
+      opacity: 0.9;
+    }
+  }
+  
+  // Ensure table doesn't break layout
+  .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+    border-radius: 0;
+  }
+}
+
+// Enhanced Table Styles (matching tasks component)
+.table {
+  border-radius: 0;
+  overflow: hidden;
+  border: none;
+  margin-bottom: 0;
+  
+  thead {
+    th {
+      background-color: #f8f9fc;
+      color: #495057;
+      font-weight: 600;
+      border: none;
+      padding: 1rem 0.75rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      text-align: center;
+    }
+  }
+  
+  tbody {
+    tr {
+      border: none;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      
+      // Status-based row colors with icons and better styling
+      &.row-backlog {
+        background-color: #f8f9fa;
+        border-left-color: #6c757d;
+        
+        &:hover {
+          background-color: #e9ecef;
+        }
+      }
+      
+      &.row-to-do {
+        background-color: #fff3cd;
+        border-left-color: #ffc107;
+        
+        &:hover {
+          background-color: #ffeaa7;
+        }
+      }
+      
+      &.row-in-progress {
+        background-color: #d1ecf1;
+        border-left-color: #17a2b8;
+        
+        &:hover {
+          background-color: #bee5eb;
+        }
+      }
+      
+      &.row-done {
+        background-color: #d4edda;
+        border-left-color: #28a745;
+        
+        &:hover {
+          background-color: #c3e6cb;
+        }
+      }
+      
+      &.row-review {
+        background-color: #ffcda7;
+        border-left-color: #fd7114;
+        
+        &:hover {
+          background-color: #ff8e3d;
+        }
+      }
+      
+      &.row-approved {
+        background-color: #d1f2d7;
+        border-left-color: #00b82b;
+        
+        &:hover {
+          background-color: #a2f5e0;
+        }
+      }
+      
+      &.row-rejected {
+        background-color: #f8d7da;
+        border-left-color: #dc3545;
+        
+        &:hover {
+          background-color: #f5c6cb;
+        }
+      }
+      
+      &.table-warning {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        
+        &:hover {
+          background-color: #ffeaa7;
+        }
+      }
+      
+      td {
+        border: none;
+        padding: 1rem 0.75rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f2f6;
+        
+        &:first-child {
+          border-left: 1px solid #f1f2f6;
+        }
+        
+        &:last-child {
+          border-right: 1px solid #f1f2f6;
+        }
+      }
+    }
+  }
+}
+
+// Phase Info Styling (matching tasks component)
+.phase-info {
+  .fw-medium {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  small {
+    color: #6c757d;
+    font-size: 0.75rem;
+  }
+  
+  i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+    color: #667eea;
+  }
+}
+
+// Phase clickable styling
+.phase-clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  
+  &:hover {
+    background-color: #667eea;
+    color: white !important;
+    transform: translateX(2px);
+  }
+}
+
+// Status Badges with Icons (matching tasks component)
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  gap: 0.25rem;
+
+  i {
+    font-size: 0.7rem;
+  }
+
+  &.status-backlog {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    
+    i {
+      color: #6c757d;
+    }
+  }
+
+  &.status-to-do {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+    
+    i {
+      color: #ffc107;
+    }
+  }
+
+  &.status-in-progress {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+    
+    i {
+      color: #17a2b8;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  &.status-done {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    
+    i {
+      color: #28a745;
+    }
+  }
+
+  &.status-review {
+    background-color: #ffd2a7;
+    color: #795548;
+    border: 1px solid #ffc53d;
+    
+    i {
+      color: #fd7e14;
+    }
+  }
+
+  &.status-approved {
+    background-color: #d1f2d8;
+    color: #02584e;
+    border: 1px solid #a2f5ad;
+    
+    i {
+      color: #00b894;
+    }
+  }
+
+  &.status-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    
+    i {
+      color: #dc3545;
+    }
+  }
+}
+
+// Pulse animation for in-progress status
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// User Avatar Styling (matching tasks component)
+.user-avatar,
+.update-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.update-avatar {
+  background: var(--success-gradient);
+  width: 28px;
+  height: 28px;
+  font-size: 0.7rem;
+}
+
+// Assigned User Info (matching tasks component)
+.assigned-user-info {
+  .user-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.2;
+  }
+  
+  small {
+    font-size: 0.7rem;
+    color: #6c757d;
+  }
+}
+
+// Last Updated Info (matching tasks component)
+.last-updated-info {
+  .update-user {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.2;
+  }
+  
+  small {
+    font-size: 0.65rem;
+    color: #6c757d;
+    white-space: nowrap;
+  }
+}
+
+// Summary Cards (matching tasks component design)
+.summary-cards {
+  .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    .card-body {
+      padding: 1.5rem 1rem;
+      background: linear-gradient(135deg, #fff 0%, #f8f9fc 100%);
+      
+      i {
+        opacity: 0.8;
+        margin-bottom: 0.75rem;
+      }
+      
+      h6 {
+        color: #6c757d;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+      }
+      
+      h4 {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 2rem;
+        margin: 0;
+      }
+    }
+    
+    // Individual card colors (matching tasks component)
+    &:nth-child(1) .card-body {
+      border-top: 3px solid #667eea;
+      
+      i {
+        color: #667eea;
+      }
+    }
+    
+    &:nth-child(2) .card-body {
+      border-top: 3px solid #28a745;
+      
+      i {
+        color: #28a745;
+      }
+    }
+    
+    &:nth-child(3) .card-body {
+      border-top: 3px solid #ffc107;
+      
+      i {
+        color: #ffc107;
+      }
+    }
+    
+    &:nth-child(4) .card-body {
+      border-top: 3px solid #dc3545;
+      
+      i {
+        color: #dc3545;
+      }
+    }
+  }
+}
+
+// Alert Styling
+.alert {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  
+  &.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    
+    i {
+      color: #dc3545;
+    }
+  }
+}
+
+// Loading States
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Footer Styling (matching tasks component)
+.modal-footer {
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &.btn-primary {
+      background: var(--primary-gradient);
+      border: none;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    &.btn-secondary {
+      background-color: #6c757d;
+      border: none;
+      
+      &:hover {
+        background-color: #5a6268;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+      }
+    }
+    
+    &.btn-outline-primary {
+      border-color: #667eea;
+      color: #667eea;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: var(--primary-gradient);
+        border-color: transparent;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+    }
+  }
+  
+  small {
+    color: #6c757d;
+    font-style: italic;
+    
+    i {
+      color: #667eea;
+    }
+  }
+}
+
+// Responsive Design (matching tasks component)
+@media (max-width: 768px) {
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .block-info-header {
+    padding: 1rem;
+    text-align: center;
+    
+    .d-flex {
+      flex-direction: column;
+      align-items: center;
+      
+      .block-icon {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  
+  .phases-container {
+    h6 {
+      padding: 1rem;
+    }
+  }
+  
+  .table-responsive {
+    font-size: 0.85rem;
+  }
+  
+  .table {
+    th, td {
+      padding: 0.5rem 0.375rem;
+    }
+    
+    .phase-info .fw-medium {
+      font-size: 0.9rem;
+    }
+    
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+    }
+  }
+  
+  .summary-cards .card .card-body {
+    padding: 1rem 0.75rem;
+    
+    h4 {
+      font-size: 1.5rem;
+    }
+    
+    i {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .table {
+    // Hide less important columns on mobile
+    th:nth-child(5),
+    th:nth-child(6),
+    th:nth-child(7) {
+      display: none;
+    }
+    
+    td:nth-child(5),
+    td:nth-child(6),
+    td:nth-child(7) {
+      display: none;
+    }
+  }
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    color: #ecf0f1;
+  }
+  
+  .block-info-header,
+  .phases-container {
+    border-color: #495057;
+  }
+  
+  .table tbody tr:hover {
+    // background-color: #495057;
+  }
+}

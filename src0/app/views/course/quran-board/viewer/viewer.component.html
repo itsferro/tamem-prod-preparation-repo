@@ -1,0 +1,190 @@
+<div class="quran-container">
+    <!-- Empty container as base -->
+</div>
+
+<!-- Auto-popup panel that shows on component init -->
+<div class="quran-panel-overlay">
+    <div class="quran-panel">
+        <div class="quran-panel-header">
+            <button class="back-button" (click)="goBackToPages()">
+                <span class="button-icon">&#8592;</span>
+                <span class="button-text">العودة للصفحات</span>
+            </button>
+            
+            <h3>{{ surahName }}</h3>
+            
+            <div class="view-controls">
+                <!-- Toggle button for switching between modes -->
+                <button class="view-mode-toggle" (click)="toggleViewMode()">
+                    <span *ngIf="viewMode === 'word'">عرض كامل</span>
+                    <span *ngIf="viewMode === 'full'">عرض كلمة بكلمة</span>
+                </button>
+                
+                <div class="font-controls">
+                    <button class="font-size-button" (click)="increaseFontSize()">
+                        <span class="font-icon">A+</span>
+                    </button>
+                    <button class="font-size-button" (click)="decreaseFontSize()">
+                        <span class="font-icon">A-</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div #quranTextContainer class="quran-text">
+            <span *ngFor="let word of visibleWords; let i = index" class="word visible"
+                [class.highlighted]="selectedWordIndex === i" [ngClass]="getWordIssueClass(i)" (click)="selectWord(i)">
+                {{ word }}
+            </span>
+        </div>
+
+        <div class="quran-controls">
+            <div class="progress-container">
+                <div class="progress-bar" [style.width.%]="(currentWordIndex / words.length) * 100"></div>
+            </div>
+        
+            <!-- Page completion message - shown briefly when all words are displayed -->
+            <div class="page-complete-message" *ngIf="showCompletionMessage">
+                <div class="complete-icon">✓</div>
+                <div class="complete-text">تم إكمال الصفحة</div>
+            </div>
+        
+            <!-- Page navigation section - shown after completion message -->
+            <div class="page-navigation" [class.visible]="showPageNavigation">
+                <button class="nav-button prev-page" (click)="loadPreviousPage()" [disabled]="currentPageNO <= 1">
+                    <span class="button-icon">&#8592;</span>
+                    <span class="button-text">الصفحة السابقة</span>
+                </button>
+                
+                <!-- Floating retry button that appears above -->
+                <div class="floating-retry-container">
+                    <button class="nav-button retry-page floating" (click)="retryCurrentPage()">
+                        <span class="button-icon">&#8635;</span>
+                        <span class="button-text">إعادة الصفحة</span>
+                    </button>
+                </div>
+                
+                <!-- Empty decoy button in the middle that does nothing -->
+                <div class="nav-button empty-button">
+                    <!-- Empty but visually similar to maintain layout -->
+                </div>
+                
+                <button class="nav-button next-page" (click)="loadNextPage()">
+                    <span class="button-text">الصفحة التالية</span>
+                    <span class="button-icon">&#8594;</span>
+                </button>
+            </div>
+        
+ 
+<!-- <div class="next-word-hint-overlay" *ngIf="nextWordFlag && currentWordIndex < words.length">
+    <div class="next-word-hint-card" [ngClass]="'hint-bg-' + nextWordFlag">
+        <div class="hint-flash-effect"></div>
+        <div class="hint-icon">⚠️</div>
+        <div class="hint-title">تنبيه!</div>
+        <div class="hint-message">
+            الكلمة التالية تحتوي على إشارة <strong>{{ getFlagLabel(nextWordFlag) }}</strong>
+        </div>
+    </div>
+</div> -->
+
+<!-- Add this just before the next-button in viewer.component.html -->
+<div class="background-flash" *ngIf="nextWordFlag && currentWordIndex < words.length" [ngClass]="'flash-' + nextWordFlag"></div>
+
+
+
+            <button class="next-button" (click)="nextWord()" *ngIf="currentWordIndex < words.length">
+                <span class="button-text">الكلمة التالية</span>
+                <span class="button-icon">&#8594;</span>
+            </button>
+        
+            <div class="quran-page-info">
+      
+                <div class="issue-stats">
+                    <div class="stat-item forget" (click)="toggleFlaggedWords('forget')" [class.active-filter]="activeFilter === 'forget'">
+                        <span class="stat-dot"></span>
+                        <span class="stat-count">{{ getIssueCount('forget') }}</span>
+                        <span class="stat-label">نسيان</span>
+                    </div>
+                    
+                    <div class="stat-item similarity" (click)="toggleFlaggedWords('similarity')" [class.active-filter]="activeFilter === 'similarity'">
+                        <span class="stat-dot"></span>
+                        <span class="stat-count">{{ getIssueCount('similarity') }}</span>
+                        <span class="stat-label">تشابه</span>
+                    </div>
+                    
+                    <div class="stat-item doubt" (click)="toggleFlaggedWords('doubt')" [class.active-filter]="activeFilter === 'doubt'">
+                        <span class="stat-dot"></span>
+                        <span class="stat-count">{{ getIssueCount('doubt') }}</span>
+                        <span class="stat-label">شك</span>
+                    </div>
+                    
+                    <div class="stat-item connection" (click)="toggleFlaggedWords('connection')" [class.active-filter]="activeFilter === 'connection'">
+                        <span class="stat-dot"></span>
+                        <span class="stat-count">{{ getIssueCount('connection') }}</span>
+                        <span class="stat-label">رابط</span>
+                    </div>
+                    
+                    <div class="stat-item none" (click)="toggleFlaggedWords('none')" [class.active-filter]="activeFilter === 'none'">
+                        <span class="stat-dot"></span>
+                        <span class="stat-count">{{ getIssueCount('none') }}</span>
+                        <span class="stat-label">بدون مشكلة</span>
+                    </div>
+                </div>
+
+                
+                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Word selection panel (appears when a word is clicked) -->
+<!-- Word selection panel (appears when a word is clicked) -->
+<div *ngIf="showPanel" class="word-panel-overlay">
+    <div class="word-panel">
+        <div class="context-words">
+            <span *ngFor="let contextWord of contextWords; let i = index"
+                [class.selected-word]="i === contextSelectedIndex">
+                {{ contextWord }}
+            </span>
+        </div>
+
+        <div class="notes-section">
+            <textarea [(ngModel)]="wordNotes" placeholder="أدخل ملاحظاتك هنا..."></textarea>
+
+            <div class="issue-buttons">
+                <button (click)="markWordIssue('forget')" class="issue-button forget-button">
+                    نسيان
+                </button>
+
+                <button (click)="markWordIssue('similarity')" class="issue-button similarity-button">
+                    تشابه
+                </button>
+
+                <button (click)="markWordIssue('doubt')" class="issue-button doubt-button">
+                    شك
+                </button>
+
+                <button (click)="markWordIssue('none')" class="issue-button none-button">
+                    بدون مشكلة
+                </button>
+                
+                <!-- New Connection button -->
+                <button (click)="markWordIssue('connection')" class="issue-button connection-button">
+                    رابط
+                </button>
+                
+                <!-- New Reset button -->
+                <button (click)="resetWordIssue()" class="issue-button reset-button">
+                    إعادة ضبط
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">جاري تحميل الصفحة...</div>
+  </div>

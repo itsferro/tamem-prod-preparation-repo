@@ -1,0 +1,121 @@
+<div class="card-body">
+  <div class="table-responsive border-0 rounded-3">
+    <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="border-0 rounded-start">Course Name</th>
+          <th scope="col" class="border-0">Instructor</th>
+          <th scope="col" class="border-0">Added Date</th>
+          <th scope="col" class="border-0">Type</th>
+          <th scope="col" class="border-0">Price</th>
+          <th scope="col" class="border-0">Status</th>
+          <th scope="col" class="border-0 rounded-end">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of courses; track $index) {
+          <tr>
+            <td>
+              <div class="d-flex align-items-center position-relative">
+                <div class="w-60px">
+                  <img [src]="item.image" class="rounded" alt="" />
+                </div>
+
+                <h6 class="table-responsive-title mb-0 ms-2">
+                  <a href="javascript:void(0);" class="stretched-link">{{
+                    item.title
+                  }}</a>
+                </h6>
+              </div>
+            </td>
+
+            <td>
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar avatar-xs flex-shrink-0">
+                  <img
+                    class="avatar-img rounded-circle"
+                    [src]="item.instructor.avatar"
+                    alt="avatar"
+                  />
+                </div>
+
+                <div class="ms-2">
+                  <h6 class="mb-0 fw-light">{{ item.instructor.name }}</h6>
+                </div>
+              </div>
+            </td>
+
+            <td>{{ item.date }}</td>
+
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'text-bg-primary': item.type == 'Beginner',
+                  'text-bg-purple': item.type == 'Intermediate',
+                  'text-bg-orange': item.type == 'All level',
+                }"
+                >{{ item.type }}</span
+              >
+            </td>
+
+            <td>${{ item.price }}</td>
+
+            <td>
+              <span
+                class="badge bg-opacity-15"
+                [ngClass]="{
+                  'bg-warning text-warning': item.status == 'Pending',
+                  'bg-success text-success': item.status == 'Live',
+                }"
+                >{{ item.status }}</span
+              >
+            </td>
+
+            <td>
+              @if (item.status == 'Pending') {
+                <a
+                  href="javascript:void(0);"
+                  class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0"
+                  >Approve</a
+                >
+                <button class="btn btn-sm btn-secondary-soft mb-0 ms-1">
+                  Reject
+                </button>
+              } @else {
+                <a
+                  href="javascript:void(0);"
+                  class="btn btn-sm btn-dark me-1 mb-1 mb-md-0"
+                  >Edit</a
+                >
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card-footer bg-transparent pt-0">
+  <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+    <p class="mb-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
+
+    <nav class="d-flex justify-content-center mb-0" aria-label="navigation">
+      <ngb-pagination
+        [collectionSize]="30"
+        [page]="2"
+        size="sm"
+        class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+      >
+        <ng-template ngbPaginationPrevious
+          ><i class="fas fa-angle-left"></i>
+        </ng-template>
+        <ng-template ngbPaginationNext
+          ><i class="fas fa-angle-right"></i>
+        </ng-template>
+      </ngb-pagination>
+    </nav>
+  </div>
+</div>

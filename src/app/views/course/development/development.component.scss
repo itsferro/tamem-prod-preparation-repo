@@ -1,0 +1,304 @@
+// Admin Dashboard Styles
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --admin-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+  }
+  
+  // Admin Dashboard Header
+  .admin-dashboard-header {
+    background: var(--admin-gradient);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  
+    h1 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+  
+    p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+  
+    .admin-controls {
+      .course-selector {
+        margin-bottom: 1rem;
+  
+        .form-label {
+          font-weight: 600;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+  
+        .course-select {
+          background: rgba(255, 255, 255, 0.95);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          border-radius: 8px;
+          color: #2c3e50;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          cursor: pointer;
+  
+          &:focus {
+            background: white;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            outline: none;
+          }
+  
+          &:hover {
+            background: white;
+            border-color: rgba(255, 255, 255, 0.4);
+          }
+  
+          option {
+            color: #2c3e50;
+            background: white;
+            font-weight: 500;
+          }
+        }
+      }
+  
+      .action-buttons {
+        .btn {
+          border-radius: 25px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+  
+          &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+          }
+  
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+  
+  // Admin Navigation Tabs
+  .admin-nav-tabs {
+    background: white;
+    border-radius: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  
+    .nav-tabs {
+      border-bottom: none;
+      padding: 0 2rem;
+  
+      .nav-item {
+        margin-bottom: 0;
+  
+        .nav-link {
+          background: none;
+          border: none;
+          color: #6c757d;
+          font-weight: 600;
+          padding: 1.5rem 2rem;
+          margin-right: 0.5rem;
+          border-radius: 0;
+          transition: all 0.3s ease;
+          position: relative;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: 0.9rem;
+  
+          i {
+            font-size: 1.1rem;
+          }
+  
+          &:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+          }
+  
+          &.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 3px;
+              background: var(--primary-gradient);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Tab Content
+  .tab-content {
+    min-height: 500px;
+  }
+  
+  .tab-pane-content {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // Overview Card (for other tabs)
+  .overview-card {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-bottom: 2rem;
+  
+    h4 {
+      color: #2c3e50;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+  
+    p {
+      color: #6c757d;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+  
+    i {
+      color: #667eea;
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 768px) {
+    .admin-dashboard-header {
+      padding: 1.5rem 0;
+  
+      h1 {
+        font-size: 2rem;
+      }
+  
+      .admin-controls {
+        margin-top: 1rem;
+        text-align: start !important;
+  
+        .course-selector {
+          margin-bottom: 1.5rem;
+  
+          .course-select {
+            width: 100%;
+          }
+        }
+  
+        .action-buttons {
+          text-align: start !important;
+  
+          .btn {
+            margin-bottom: 0.5rem;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  
+    .admin-nav-tabs {
+      .nav-tabs {
+        padding: 0 1rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+  
+        .nav-item {
+          white-space: nowrap;
+          flex-shrink: 0;
+  
+          .nav-link {
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  
+    .overview-card {
+      padding: 2rem;
+  
+      h4 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .admin-dashboard-header {
+      h1 {
+        font-size: 1.8rem;
+      }
+  
+      p {
+        font-size: 1rem;
+      }
+    }
+  
+    .admin-nav-tabs {
+      .nav-tabs {
+        .nav-item {
+          .nav-link {
+            padding: 0.8rem 1rem;
+            font-size: 0.75rem;
+  
+            i {
+              display: none; // Hide icons on very small screens
+            }
+          }
+        }
+      }
+    }
+  
+    .overview-card {
+      padding: 1.5rem;
+  
+      h4 {
+        font-size: 1.3rem;
+      }
+  
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  // No Course Selected State
+  .no-course-selected {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin: 2rem 0;
+  
+    i {
+      opacity: 0.3;
+    }
+  }
+  :host {
+    development-blocks {
+      display: block;
+      width: 100%;
+    }
+  }

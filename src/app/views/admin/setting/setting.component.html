@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12 mb-3">
+    <h1 class="h3 mb-2 mb-sm-0">Admin Settings</h1>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-xl-3">
+    <ul ngbNav #nav="ngbNav" class="nav nav-pills nav-tabs-bg-dark flex-column">
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link" data-bs-toggle="tab"
+          ><i class="fas fa-globe fa-fw me-2"></i>Website Settings</a
+        >
+        <ng-template ngbNavContent>
+          <website-setting />
+        </ng-template>
+      </li>
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link" data-bs-toggle="tab"
+          ><i class="fas fa-cog fa-fw me-2"></i>General Settings</a
+        >
+        <ng-template ngbNavContent>
+          <general-setting />
+        </ng-template>
+      </li>
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link" data-bs-toggle="tab"
+          ><i class="fas fa-bell fa-fw me-2"></i>Notification Settings</a
+        >
+        <ng-template ngbNavContent>
+          <notification-setting />
+        </ng-template>
+      </li>
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link" data-bs-toggle="tab"
+          ><i class="fas fa-user-circle fa-fw me-2"></i>Account Settings</a
+        >
+        <ng-template ngbNavContent>
+          <account-setting />
+        </ng-template>
+      </li>
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link" data-bs-toggle="tab"
+          ><i class="fas fa-sliders-h fa-fw me-2"></i>Social Settings</a
+        >
+        <ng-template ngbNavContent>
+          <social-setting />
+        </ng-template>
+      </li>
+      <li ngbNavItem class="nav-item">
+        <a ngbNavLink class="nav-link mb-0" data-bs-toggle="tab"
+          ><i class="fas fa-envelope-open-text fa-fw me-2"></i>Email Settings</a
+        >
+        <ng-template ngbNavContent>
+          <email-setting />
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-xl-9">
+    <div class="tab-content" [ngbNavOutlet]="nav"></div>
+  </div>
+</div>

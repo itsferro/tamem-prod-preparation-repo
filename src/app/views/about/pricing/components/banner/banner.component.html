@@ -1,0 +1,131 @@
+<section class="py-5 price-wrap">
+  <div class="container">
+    <div class="row g-4 position-relative mb-4">
+      <figure class="position-absolute top-0 start-0 d-none d-sm-block">
+        <svg width="22px" height="22px" viewBox="0 0 22 22">
+          <polygon
+            class="fill-purple"
+            points="22,8.3 13.7,8.3 13.7,0 8.3,0 8.3,8.3 0,8.3 0,13.7 8.3,13.7 8.3,22 13.7,22 13.7,13.7 22,13.7 "
+          ></polygon>
+        </svg>
+      </figure>
+
+      <div class="col-lg-10 mx-auto text-center position-relative">
+        <figure
+          class="position-absolute top-50 end-0 translate-middle-y d-none d-md-block"
+        >
+          <svg width="27px" height="27px">
+            <path
+              class="fill-orange"
+              d="M13.122,5.946 L17.679,-0.001 L17.404,7.528 L24.661,5.946 L19.683,11.533 L26.244,15.056 L18.891,16.089 L21.686,23.068 L15.400,19.062 L13.122,26.232 L10.843,19.062 L4.557,23.068 L7.352,16.089 L-0.000,15.056 L6.561,11.533 L1.582,5.946 L8.839,7.528 L8.565,-0.001 L13.122,5.946 Z"
+            ></path>
+          </svg>
+        </figure>
+
+        <h1>Affordable Pricing Packages</h1>
+        <p class="mb-4 pb-1">
+          Perceived end knowledge certainly day sweetness why cordially
+        </p>
+
+        <form class="d-flex align-items-center justify-content-center">
+          <span class="h6 mb-0 fw-bold">Monthly</span>
+
+          <div class="form-check form-switch form-check-lg mx-3 mb-0">
+            <input
+              class="form-check-input mt-0 price-toggle"
+              (change)="changePrice($event)"
+              type="checkbox"
+              id="flexSwitchCheckDefault"
+            />
+          </div>
+
+          <div class="position-relative">
+            <span class="h6 mb-0 fw-bold">Yearly</span>
+            <span
+              class="badge bg-danger bg-opacity-10 text-danger ms-1 position-absolute top-0 start-100 translate-middle mt-n2 ms-2 ms-md-5"
+              >10% discount</span
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of planList; track $index) {
+        <div class="col-md-6 col-xl-4">
+          <div class="card border rounded-3 p-2 p-sm-4 h-100">
+            <div class="card-header p-0">
+              <div
+                class="d-flex justify-content-between align-items-center p-3 bg-light rounded-2"
+              >
+                <div>
+                  <h5 class="mb-0">{{ item.plan }}</h5>
+                  <div
+                    class="badge mb-0 rounded-pill"
+                    [ngClass]="
+                      item.tag == 'Recommended' ? 'bg-grad' : 'text-bg-dark'
+                    "
+                  >
+                    {{ item.tag }}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="text-success mb-0 plan-price">
+                    @if (planType) {
+                      ${{ item.annual_price }}
+                    } @else {
+                      ${{ item.monthly_price }}
+                    }
+                  </h4>
+                  <p class="small mb-0">/ per user</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="position-relative my-3 text-center">
+              <hr />
+              <p
+                class="small position-absolute top-50 start-50 translate-middle bg-body px-3"
+              >
+                All plans included
+              </p>
+            </div>
+
+            <div class="card-body pt-0">
+              <ul class="list-unstyled mt-2 mb-0">
+                @for (
+                  feature of featuresList;
+                  track feature;
+                  let last = $last
+                ) {
+                  <li class="h6 fw-light" [ngClass]="{ 'mb-3': !last }">
+                    <i
+                      class="bi me-2"
+                      [ngClass]="
+                        item.available_features.includes(feature.id)
+                          ? 'bi-patch-check-fill text-success'
+                          : 'bi-x-octagon-fill text-danger'
+                      "
+                    ></i
+                    >{{ feature.feature }}
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <div class="card-footer text-center d-grid pb-0">
+              <button
+                type="button"
+                class="btn mb-0"
+                [ngClass]="item.tag == 'Recommended' ? 'btn-dark' : 'btn-light'"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,489 @@
+<div class="storyboard-container">
+    <!-- Loading State for Initial Frame Load -->
+    <div class="frames-loading-overlay" *ngIf="isLoadingFrames">
+      <div class="frames-loading-content">
+        <div class="frames-loading-spinner">
+          <div class="loading-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+          </div>
+        </div>
+        <h3>جاري تحميل الإطارات...</h3>
+        <p>يرجى الانتظار بينما نحضر محتوى الإطارات</p>
+        <div class="loading-progress">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State when no frames exist -->
+    <div class="empty-frames-state" *ngIf="!isLoadingFrames && storyboardFrames.length === 0">
+      <div class="empty-frames-content">
+        <div class="empty-frames-icon">
+          <i class="fas fa-film"></i>
+          <div class="icon-sparkles">
+            <span class="sparkle sparkle-1">✨</span>
+            <span class="sparkle sparkle-2">✨</span>
+            <span class="sparkle sparkle-3">✨</span>
+          </div>
+        </div>
+        <h3>لا توجد إطارات حتى الآن</h3>
+        <p>ابدأ بإنشاء إطارات تفاعلية لهذه الفكرة التعليمية</p>
+        
+        <div class="generate-options">
+          <button 
+            class="generate-frames-btn primary" 
+            (click)="generateFramesForCurrentInsight()"
+            [disabled]="isGeneratingFrames"
+            [class.loading]="isGeneratingFrames">
+            <div class="btn-content">
+              <div class="btn-icon">
+                <i class="fas fa-magic" *ngIf="!isGeneratingFrames"></i>
+                <div class="btn-spinner" *ngIf="isGeneratingFrames">
+                  <div class="spinner-circle"></div>
+                </div>
+              </div>
+              <div class="btn-text">
+                <span class="btn-main-text">{{ isGeneratingFrames ? 'جاري الإنشاء...' : 'إنشاء الإطارات بالذكاء الاصطناعي' }}</span>
+                <span class="btn-sub-text">{{ isGeneratingFrames ? 'قد يستغرق هذا بضع ثوانٍ' : 'سيتم إنشاء قصة مرئية تلقائياً' }}</span>
+              </div>
+            </div>
+          </button>
+          
+          <button 
+            class="generate-frames-btn secondary" 
+            (click)="createManualFrame()"
+            [disabled]="isGeneratingFrames">
+            <i class="fas fa-plus"></i>
+            إنشاء إطار يدوياً
+          </button>
+        </div>
+
+        <div class="empty-features">
+          <div class="feature-item">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <span>إنشاء تلقائي بالذكاء الاصطناعي</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-images"></i>
+            <span>دعم للصور والمرفقات</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-edit"></i>
+            <span>قابل للتعديل والتخصيص</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Existing content when frames exist -->
+    <div *ngIf="!isLoadingFrames && storyboardFrames.length > 0">
+      <!-- Save Actions Header -->
+      <div class="save-actions-header">
+        <div class="save-status">
+          <div class="save-status-text">{{ getSaveStatusText() }}</div>
+          <div class="frames-count">{{ storyboardFrames.length }} إطار</div>
+        </div>
+        
+        <div class="save-buttons">
+          <button 
+            class="save-btn secondary"
+            (click)="regenerateFrames()"
+            [disabled]="isGeneratingFrames"
+            [class.loading]="isGeneratingFrames">
+            <i class="fas fa-sync-alt" [class.fa-spin]="isGeneratingFrames"></i>
+            {{ isGeneratingFrames ? 'جاري الإنشاء...' : 'إعادة إنشاء' }}
+          </button>
+          
+          <button 
+            class="save-btn primary" 
+            (click)="saveAllFrames()" 
+            [disabled]="isSaveDisabled()"
+            [class.loading]="isSaving">
+            <i class="fas fa-spinner fa-spin" *ngIf="isSaving"></i>
+            <i class="fas fa-save" *ngIf="!isSaving"></i>
+            {{ isSaving ? 'حفظ جاري...' : 'حفظ الإطارات' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Save Error Display -->
+      <div class="save-error-banner" *ngIf="saveError">
+        <div class="error-content">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ saveError }}</span>
+          <button class="retry-btn" (click)="retrySave()">
+            <i class="fas fa-redo"></i>
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+
+      <!-- Generation Error Display -->
+      <div class="generation-error-banner" *ngIf="generationError">
+        <div class="error-content">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>{{ generationError }}</span>
+          <button class="retry-btn" (click)="retryGeneration()">
+            <i class="fas fa-redo"></i>
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+
+      <!-- Existing header content -->
+      <div class="header">
+        <!-- Scene Legend with Add Frame Buttons -->
+        <div class="scene-legend">
+          <h4>مفتاح المشاهد:</h4>
+          <div class="legend-items">
+            <div *ngFor="let keyScene of keySceneTypes" class="legend-item">
+              <div class="legend-color" [style.background-color]="keyScene.color"></div>
+              <div class="legend-content">
+                <span class="legend-name">{{ keyScene.scene_type }}</span>
+                <span class="legend-desc">{{ keyScene.description }}</span>
+              </div>
+              <button 
+                class="add-frame-btn" 
+                [style.background-color]="keyScene.color"
+                (click)="addNewFrameForScene(keyScene)"
+                title="إضافة إطار جديد لهذا المشهد">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Existing frames grid -->
+      <div 
+        class="frames-grid"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="storyboardFrames"
+        cdkDropListOrientation="mixed"
+        [cdkDropListSortingDisabled]="false">
+        
+        <div 
+          *ngFor="let frame of storyboardFrames; let i = index" 
+          class="frame-card"
+          [class]="getFrameColorClass(frame)"
+          [class.being-edited]="isFrameBeingEdited(frame)"
+          [style.border-color]="getFrameBorderColor(frame)"
+          [attr.data-frame-id]="frame.id"
+          cdkDrag
+          [cdkDragData]="frame"
+          (cdkDragStarted)="onDragStarted()"
+          (cdkDragEnded)="onDragEnded()"
+          (cdkDragMoved)="onDragMoved($event)"
+          (click)="onFrameClick(frame)">
+          
+          <!-- Scene Indicator -->
+          <div class="scene-indicator" [style.background-color]="getFrameBorderColor(frame)">
+            <span class="scene-name">{{ getSceneName(frame) }}</span>
+          </div>
+    
+          <!-- Drag Handle -->
+          <div class="drag-handle" cdkDragHandle>
+            <i class="fas fa-grip-vertical"></i>
+          </div>
+    
+          <!-- Custom Drag Preview -->
+          <div class="custom-drag-preview" *cdkDragPreview>
+            <div class="preview-card">
+              <div class="preview-header">
+                <div class="preview-image">
+                  <i class="fas fa-image"></i>
+                </div>
+                <div class="preview-info">
+                  <div class="preview-title">{{ frame.title }}</div>
+                  <div class="preview-number">Frame {{ i + 1 }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Enhanced Placeholder -->
+          <div class="enhanced-placeholder" *cdkDragPlaceholder>
+            <div class="placeholder-border">
+              <div class="placeholder-content">
+                <div class="drop-zone-indicator">
+                  <i class="fas fa-arrows-alt"></i>
+                  <span>إسقط هنا</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="frame-header">
+            <div class="frame-image-container">
+              <div class="frame-image">
+                <i class="fas fa-image placeholder-icon"></i>
+              </div>
+            </div>
+            <div class="frame-title">{{ frame.title }}</div>
+          </div>
+    
+          <div class="frame-navigation">
+            <button class="nav-btn" (click)="onActionClick('previous', frame, $event)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="action-btn edit-btn" (click)="onFrameClick(frame); $event.stopPropagation()">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="onActionClick('camera', frame, $event)">
+              <i class="fas fa-camera"></i>
+            </button>
+            <button class="action-btn" (click)="onActionClick('skecth', frame, $event)">
+                <i class="fas fa-code"></i> 
+            </button>
+            <button class="action-btn" (click)="onActionClick('copy', frame, $event)" title="نسخ معلومات الإطار">
+                <i class="fas fa-copy"></i>
+              </button>
+            <button class="action-btn delete-btn" (click)="onActionClick('delete', frame, $event)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="nav-btn" (click)="onActionClick('next', frame, $event)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+    
+          <div class="frame-info">
+            <div class="frame-number">
+              <span class="frame-label">Frame {{ i + 1 }}</span>
+              <span class="frame-id">{{ frame.id || 'New' }}</span>
+            </div>
+          </div>
+    
+          <div class="frame-content">
+            <div class="content-section">
+              <div class="icon-text">
+                <i class="fas fa-video text-icon"></i>
+                <p class="description">{{ frame.description }}</p>
+              </div>
+            </div>
+    
+            <div class="content-section">
+              <div class="icon-text">
+                <i class="fas fa-clock text-icon"></i>
+                <p class="duration">{{ frame.duration }}</p>
+              </div>
+            </div>
+    
+            <div class="content-section">
+              <div class="icon-text">
+                <i class="fas fa-microphone text-icon"></i>
+                <p class="additional-info">{{ frame.voiceOver }}</p>
+              </div>
+            </div>
+          </div>
+    
+          <div class="frame-footer">
+            <div class="footer-item">
+              <i class="fas fa-sticky-note"></i>
+              <span>{{ frame.notes }}</span>
+            </div>
+            <div class="footer-item">
+              <i class="fas fa-plus-circle"></i>
+              <span>{{ frame.extraReq }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- EDITABLE MODAL -->
+    <div class="modal-overlay" *ngIf="selectedFrame" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>تحرير الإطار - Frame {{ getFrameIndex(selectedFrame) + 1 }}</h3>
+          <button class="close-btn" (click)="closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="frame-edit-form">
+            <!-- Scene Type Selection -->
+            <div class="form-group">
+              <label for="sceneId">نوع المشهد:</label>
+              <select 
+                id="sceneId" 
+                [(ngModel)]="selectedFrame.sceneId" 
+                name="sceneId"
+                class="form-control scene-select"
+                (change)="onFrameFieldChange()">
+                <option value="" disabled>اختر نوع المشهد</option>
+                <option *ngFor="let sceneType of keySceneTypes" [value]="sceneType.id">
+                  {{ sceneType.scene_type }} - {{ sceneType.description }}
+                </option>
+              </select>
+              <div class="scene-preview" [style.background-color]="getFrameBorderColor(selectedFrame)">
+                {{ getSceneName(selectedFrame) }}
+              </div>
+            </div>
+
+            <!-- Title Field -->
+            <div class="form-group">
+              <label for="title">عنوان الإطار:</label>
+              <input 
+                type="text" 
+                id="title"
+                [(ngModel)]="selectedFrame.title" 
+                name="title"
+                class="form-control"
+                placeholder="أدخل عنوان الإطار"
+                (input)="onFrameFieldChange()"
+                maxlength="200">
+            </div>
+
+            <!-- Description Field -->
+            <div class="form-group">
+              <label for="description">الوصف:</label>
+              <textarea 
+                id="description"
+                [(ngModel)]="selectedFrame.description" 
+                name="description"
+                class="form-control textarea-field"
+                placeholder="أدخل وصف الإطار"
+                (input)="onFrameFieldChange()"
+                rows="4"
+                maxlength="500"></textarea>
+            </div>
+
+            <!-- Voice Over Field -->
+            <div class="form-group">
+              <label for="voiceOver">النص الصوتي:</label>
+              <textarea 
+                id="voiceOver"
+                [(ngModel)]="selectedFrame.voiceOver" 
+                name="voiceOver"
+                class="form-control textarea-field"
+                placeholder="أدخل النص الصوتي"
+                (input)="onFrameFieldChange()"
+                rows="3"
+                maxlength="800"></textarea>
+            </div>
+
+            <!-- Duration Field -->
+            <div class="form-group">
+              <label for="duration">المدة:</label>
+              <input 
+                type="text" 
+                id="duration"
+                [(ngModel)]="selectedFrame.duration" 
+                name="duration"
+                class="form-control duration-input"
+                placeholder="00:00:15"
+                pattern="^[0-9]{2}:[0-9]{2}:[0-9]{2}$"
+                (input)="onFrameFieldChange()"
+                title="تنسيق الوقت: HH:MM:SS">
+            </div>
+
+            <!-- Notes Field -->
+            <div class="form-group">
+              <label for="notes">ملاحظات الإنتاج:</label>
+              <textarea 
+                id="notes"
+                [(ngModel)]="selectedFrame.notes" 
+                name="notes"
+                class="form-control textarea-field"
+                placeholder="أدخل ملاحظات للفريق"
+                (input)="onFrameFieldChange()"
+                rows="2"
+                maxlength="300"></textarea>
+            </div>
+
+            <!-- Extra Requirements Field -->
+            <div class="form-group">
+              <label for="extraReq">متطلبات إضافية:</label>
+              <textarea 
+                id="extraReq"
+                [(ngModel)]="selectedFrame.extraReq" 
+                name="extraReq"
+                class="form-control textarea-field"
+                placeholder="أدخل متطلبات إضافية"
+                (input)="onFrameFieldChange()"
+                rows="2"
+                maxlength="300"></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button 
+            type="button" 
+            class="modal-action-btn" 
+            (click)="onPreviousFrame()"
+            [disabled]="getFrameIndex(selectedFrame) === 0">
+            <i class="fas fa-chevron-left"></i> السابق
+          </button>
+          <button 
+            type="button" 
+            class="modal-action-btn" 
+            (click)="onNextFrame()"
+            [disabled]="getFrameIndex(selectedFrame) === storyboardFrames.length - 1">
+            التالي <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saving Overlay -->
+    <div class="saving-overlay" *ngIf="isSaving">
+      <div class="saving-content">
+        <div class="saving-spinner">
+          <div class="spinner"></div>
+        </div>
+        <p>جاري حفظ الإطارات...</p>
+        <small>{{ storyboardFrames.length }} إطار</small>
+      </div>
+    </div>
+
+    <!-- Frame Generation Overlay -->
+    <div class="generation-overlay" *ngIf="isGeneratingFrames">
+      <div class="generation-content">
+        <div class="generation-animation">
+          <div class="ai-brain">
+            <div class="brain-core"></div>
+            <div class="brain-waves">
+              <div class="wave wave-1"></div>
+              <div class="wave wave-2"></div>
+              <div class="wave wave-3"></div>
+            </div>
+          </div>
+        </div>
+        <h3>الذكاء الاصطناعي يعمل...</h3>
+        <p>جاري إنشاء قصة مرئية تفاعلية لهذه الفكرة التعليمية</p>
+        <div class="generation-steps">
+          <div class="step" [class.active]="generationStep >= 1">
+            <i class="fas fa-search"></i>
+            <span>تحليل المحتوى</span>
+          </div>
+          <div class="step" [class.active]="generationStep >= 2">
+            <i class="fas fa-lightbulb"></i>
+            <span>توليد الأفكار</span>
+          </div>
+          <div class="step" [class.active]="generationStep >= 3">
+            <i class="fas fa-film"></i>
+            <span>إنشاء الإطارات</span>
+          </div>
+        </div>
+        <div class="generation-progress">
+          <div class="progress-bar" [style.width.%]="generationProgress"></div>
+        </div>
+        <small>قد يستغرق هذا 30-60 ثانية</small>
+      </div>
+    </div>
+</div>
+
+
+
+ 
+
+ 
+
+ 
+
+ 

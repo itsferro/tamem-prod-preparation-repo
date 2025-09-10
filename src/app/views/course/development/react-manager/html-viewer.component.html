@@ -1,0 +1,79 @@
+<div class="html-manager-overlay">
+  <div class="html-manager-container" style="background-color: dimgray;">
+    <!-- Header with all buttons -->
+    <div class="manager-header">
+      <div class="frame-info">
+        <h3>Frame #{{ frameId }}</h3>
+      </div>
+      <div class="header-actions">
+
+
+          <!-- Edit button -->
+          <button class="edit-btn" 
+          (click)="updateHtmlCode()" 
+          [disabled]="isSaving || !editorCode || isLoading">
+    <i class="fas fa-save" *ngIf="!isSaving"></i>
+    <div class="loading-spinner" *ngIf="isSaving"></div>
+    {{ isSaving ? 'Saving...' : 'Update Current Code' }}
+  </button>
+
+
+        <!-- Mode switcher buttons -->
+        <div class="mode-switcher">
+          <button class="mode-btn" 
+                  [class.active]="mode === 'editor'"
+                  (click)="switchToEditor()" 
+                  [disabled]="isLoading">
+            <i class="fas fa-code"></i> Editor
+          </button>
+          <button class="mode-btn" 
+                  [class.active]="mode === 'viewer'"
+                  (click)="switchToViewer()" 
+                  [disabled]="isLoading">
+            <i class="fas fa-eye"></i> Viewer
+          </button>
+        </div>
+
+        <!-- Save button -->
+        <button class="save-btn" 
+                (click)="saveHtmlCode()" 
+                [disabled]="isSaving || !editorCode || isLoading">
+          <i class="fas fa-save" *ngIf="!isSaving"></i>
+          <div class="loading-spinner" *ngIf="isSaving"></div>
+          {{ isSaving ? 'Saving...' : 'Save New Version' }}
+        </button>
+
+        <!-- Close button -->
+        <button class="close-btn" (click)="close()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Error banner -->
+    <div class="error-banner" *ngIf="loadError">
+      <i class="fas fa-exclamation-circle"></i> {{ loadError }}
+    </div>
+
+    <!-- Main content area (no sidebar) -->
+    <div class="manager-content">
+      <div class="content-panel">
+        <!-- Editor -->
+        <div *ngIf="mode === 'editor'" class="editor-container"  style="background-color: white;;">
+          <textarea
+            class="code-textarea"
+            [(ngModel)]="editorCode"
+            spellcheck="false"
+            [disabled]="isLoading"
+            placeholder="Loading HTML content...">
+          </textarea>
+        </div>
+
+        <!-- Viewer -->
+        <div *ngIf="mode === 'viewer'" class="viewer-container">
+          <div id="html-viewer-container" class="html-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

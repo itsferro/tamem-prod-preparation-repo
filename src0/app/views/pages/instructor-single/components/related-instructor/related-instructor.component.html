@@ -1,0 +1,63 @@
+<section>
+  <div class="container">
+    <div class="row mb-4">
+      <h2 class="mb-0">Related Instructors</h2>
+    </div>
+
+    <div class="tiny-slider arrow-round arrow-creative arrow-blur arrow-hover">
+      <ng-tiny-slider [config]="sliderConfig" class="tiny-slider-inner">
+        @for (item of instructorList; track $index) {
+          <div class="card bg-transparent">
+            <div class="position-relative">
+              <img [src]="item.image" class="card-img" alt="course image" />
+
+              <div class="card-img-overlay d-flex flex-column p-3">
+                <div class="w-100 mt-auto text-end">
+                  <a
+                    href="javascript:void(0);"
+                    class="badge text-bg-info rounded-1"
+                    ><i class="fas fa-user-graduate me-2"></i
+                    >{{ item.students }}</a
+                  >
+                  <a
+                    href="javascript:void(0);"
+                    class="badge text-bg-orange rounded-1 ms-1"
+                    ><i class="fas fa-clipboard-list me-2"></i
+                    >{{ item.lecture | number: '2.0' }}</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <h5 class="card-title">
+                <a href="javascript:void(0);">{{ item.name }}</a>
+              </h5>
+              <p class="mb-2">{{ item.title }}</p>
+
+              <ul class="list-inline hstack justify-content-center">
+                <ng-template #t let-fill="fill">
+                  <i class="far fa-star text-warning me-1">
+                    @if (fill > 0) {
+                      <i
+                        class="fas fa-star text-warning filled"
+                        [style.width.%]="fill"
+                      ></i>
+                    }
+                  </i>
+                </ng-template>
+
+                <ngb-rating
+                  [(rate)]="item.rating"
+                  [starTemplate]="t"
+                  [readonly]="true"
+                  [max]="5"
+                />
+              </ul>
+            </div>
+          </div>
+        }
+      </ng-tiny-slider>
+    </div>
+  </div>
+</section>

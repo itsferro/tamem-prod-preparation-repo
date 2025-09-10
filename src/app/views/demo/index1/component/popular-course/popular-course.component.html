@@ -1,0 +1,525 @@
+<section>
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+        <h2 class="fs-1">Most Popular Courses</h2>
+        <p class="mb-0">
+          Choose from hundreds of courses from specialist organizations
+        </p>
+      </div>
+    </div>
+
+    <ul
+      ngbNav
+      #nav="ngbNav"
+      class="nav nav-pills nav-pills-bg-soft justify-content-sm-center mb-4 px-3"
+      id="course-pills-tab"
+      role="tablist"
+    >
+      <li ngbNavItem class="nav-item me-2 me-sm-5">
+        <button
+          ngbNavLink
+          class="nav-link mb-2 mb-md-0"
+          id="course-pills-tab-1"
+          data-bs-toggle="pill"
+          data-bs-target="#course-pills-tabs-1"
+          type="button"
+          role="tab"
+          aria-controls="course-pills-tabs-1"
+          aria-selected="false"
+        >
+          Web Design
+        </button>
+        <ng-template ngbNavContent>
+          <div
+            class="tab-pane fade show active"
+            id="course-pills-tabs-1"
+            role="tabpanel"
+            aria-labelledby="course-pills-tab-1"
+          >
+            <div class="row g-4">
+              @for (item of courseList; track $index) {
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                  <div class="card shadow h-100">
+                    <img
+                      [src]="item.image"
+                      class="card-img-top"
+                      alt="course image"
+                    />
+
+                    <div class="card-body pb-0">
+                      <div class="d-flex justify-content-between mb-2">
+                        <a
+                          href="javascript:void(0);"
+                          class="badge bg-{{
+                            item.badge.class
+                          }} bg-opacity-10 text-{{ item.badge.class }}"
+                          >{{ item.badge.text }}</a
+                        >
+                        <a
+                          href="javascript:void(0);"
+                          [ngClass]="item.isLike ? 'text-danger' : 'h6 mb-0'"
+                          ><i
+                            class="fa-heart"
+                            [ngClass]="item.isLike ? 'fas' : 'far'"
+                          ></i
+                        ></a>
+                      </div>
+
+                      <h5 class="card-title fw-normal">
+                        <a href="javascript:void(0);">{{ item.title }}</a>
+                      </h5>
+                      <p class="mb-2 text-truncate-2">{{ item.description }}</p>
+
+                      <ul class="list-inline mb-0">
+                        <ng-template #t let-fill="fill">
+                          <i class="far fa-star text-warning me-1">
+                            @if (fill > 0) {
+                              <i
+                                class="fas fa-star text-warning filled"
+                                [style.width.%]="fill"
+                              ></i>
+                            }
+                          </i>
+                        </ng-template>
+
+                        <ngb-rating
+                          [(rate)]="item.rating"
+                          [starTemplate]="t"
+                          [readonly]="true"
+                          [max]="5"
+                        />
+                        <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                          {{ item.rating }}/5.0
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="card-footer pt-0 pb-3">
+                      <hr />
+                      <div class="d-flex justify-content-between">
+                        <span class="h6 fw-light mb-0"
+                          ><i class="far fa-clock text-danger me-2"></i
+                          >{{ item.duration }}</span
+                        >
+                        <span class="h6 fw-light mb-0"
+                          ><i class="fas fa-table text-orange me-2"></i
+                          >{{ item.lectures }} lectures</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem class="nav-item me-2 me-sm-5">
+        <button
+          ngbNavLink
+          class="nav-link mb-2 mb-md-0"
+          id="course-pills-tab-2"
+          data-bs-toggle="pill"
+          data-bs-target="#course-pills-tabs-2"
+          type="button"
+          role="tab"
+          aria-controls="course-pills-tabs-2"
+          aria-selected="false"
+        >
+          Development
+        </button>
+        <ng-template ngbNavContent>
+          <div
+            class="tab-pane fade show active"
+            id="course-pills-tabs-1"
+            role="tabpanel"
+            aria-labelledby="course-pills-tab-1"
+          >
+            <div class="row g-4">
+              @for (item of courseList; track $index) {
+                @if (item.type == 'development') {
+                  <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card shadow h-100">
+                      <img
+                        [src]="item.image"
+                        class="card-img-top"
+                        alt="course image"
+                      />
+
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between mb-2">
+                          <a
+                            href="javascript:void(0);"
+                            class="badge bg-{{
+                              item.badge.class
+                            }} bg-opacity-10 text-{{ item.badge.class }}"
+                            >{{ item.badge.text }}</a
+                          >
+                          <a href="javascript:void(0);" class="h6 mb-0"
+                            ><i class="far fa-heart"></i
+                          ></a>
+                        </div>
+
+                        <h5 class="card-title fw-normal">
+                          <a href="javascript:void(0);">{{ item.title }}</a>
+                        </h5>
+                        <p class="mb-2 text-truncate-2">
+                          {{ item.description }}
+                        </p>
+
+                        <ul class="list-inline mb-0">
+                          <ng-template #t let-fill="fill">
+                            <i class="far fa-star text-warning me-1">
+                              @if (fill > 0) {
+                                <i
+                                  class="fas fa-star text-warning filled"
+                                  [style.width.%]="fill"
+                                ></i>
+                              }
+                            </i>
+                          </ng-template>
+
+                          <ngb-rating
+                            [(rate)]="item.rating"
+                            [starTemplate]="t"
+                            [readonly]="true"
+                            [max]="5"
+                          />
+                          <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                            {{ item.rating }}/5.0
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="card-footer pt-0 pb-3">
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                          <span class="h6 fw-light mb-0"
+                            ><i class="far fa-clock text-danger me-2"></i
+                            >{{ item.duration }}</span
+                          >
+                          <span class="h6 fw-light mb-0"
+                            ><i class="fas fa-table text-orange me-2"></i
+                            >{{ item.lectures }} lectures</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem class="nav-item me-2 me-sm-5">
+        <button
+          ngbNavLink
+          class="nav-link mb-2 mb-md-0"
+          id="course-pills-tab-3"
+          data-bs-toggle="pill"
+          data-bs-target="#course-pills-tabs-3"
+          type="button"
+          role="tab"
+          aria-controls="course-pills-tabs-3"
+          aria-selected="false"
+        >
+          Graphic Design
+        </button>
+        <ng-template ngbNavContent>
+          <div
+            class="tab-pane fade show active"
+            id="course-pills-tabs-1"
+            role="tabpanel"
+            aria-labelledby="course-pills-tab-1"
+          >
+            <div class="row g-4">
+              @for (item of courseList; track $index) {
+                @if (item.type == 'graphic') {
+                  <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card shadow h-100">
+                      <img
+                        [src]="item.image"
+                        class="card-img-top"
+                        alt="course image"
+                      />
+
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between mb-2">
+                          <a
+                            href="javascript:void(0);"
+                            class="badge bg-{{
+                              item.badge.class
+                            }} bg-opacity-10 text-{{ item.badge.class }}"
+                            >{{ item.badge.text }}</a
+                          >
+                          <a href="javascript:void(0);" class="h6 mb-0"
+                            ><i class="far fa-heart"></i
+                          ></a>
+                        </div>
+
+                        <h5 class="card-title fw-normal">
+                          <a href="javascript:void(0);">{{ item.title }}</a>
+                        </h5>
+                        <p class="mb-2 text-truncate-2">
+                          {{ item.description }}
+                        </p>
+
+                        <ul class="list-inline mb-0">
+                          <ng-template #t let-fill="fill">
+                            <i class="far fa-star text-warning me-1">
+                              @if (fill > 0) {
+                                <i
+                                  class="fas fa-star text-warning filled"
+                                  [style.width.%]="fill"
+                                ></i>
+                              }
+                            </i>
+                          </ng-template>
+
+                          <ngb-rating
+                            [(rate)]="item.rating"
+                            [starTemplate]="t"
+                            [readonly]="true"
+                            [max]="5"
+                          />
+                          <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                            {{ item.rating }}/5.0
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="card-footer pt-0 pb-3">
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                          <span class="h6 fw-light mb-0"
+                            ><i class="far fa-clock text-danger me-2"></i
+                            >{{ item.duration }}</span
+                          >
+                          <span class="h6 fw-light mb-0"
+                            ><i class="fas fa-table text-orange me-2"></i
+                            >{{ item.lectures }} lectures</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem class="nav-item me-2 me-sm-5">
+        <button
+          ngbNavLink
+          class="nav-link mb-2 mb-md-0"
+          id="course-pills-tab-4"
+          data-bs-toggle="pill"
+          data-bs-target="#course-pills-tabs-4"
+          type="button"
+          role="tab"
+          aria-controls="course-pills-tabs-4"
+          aria-selected="false"
+        >
+          Marketing
+        </button>
+        <ng-template ngbNavContent>
+          <div
+            class="tab-pane fade show active"
+            id="course-pills-tabs-1"
+            role="tabpanel"
+            aria-labelledby="course-pills-tab-1"
+          >
+            <div class="row g-4">
+              @for (item of courseList; track $index) {
+                @if (item.type == 'marketing') {
+                  <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card shadow h-100">
+                      <img
+                        [src]="item.image"
+                        class="card-img-top"
+                        alt="course image"
+                      />
+
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between mb-2">
+                          <a
+                            href="javascript:void(0);"
+                            class="badge bg-{{
+                              item.badge.class
+                            }} bg-opacity-10 text-{{ item.badge.class }}"
+                            >{{ item.badge.text }}</a
+                          >
+                          <a href="javascript:void(0);" class="h6 mb-0"
+                            ><i class="far fa-heart"></i
+                          ></a>
+                        </div>
+
+                        <h5 class="card-title fw-normal">
+                          <a href="javascript:void(0);">{{ item.title }}</a>
+                        </h5>
+                        <p class="mb-2 text-truncate-2">
+                          {{ item.description }}
+                        </p>
+
+                        <ul class="list-inline mb-0">
+                          <li class="list-inline-item me-0 small">
+                            <ng-template #t let-fill="fill">
+                              <i class="far fa-star text-warning me-1">
+                                @if (fill > 0) {
+                                  <i
+                                    class="fas fa-star text-warning filled"
+                                    [style.width.%]="fill"
+                                  ></i>
+                                }
+                              </i>
+                            </ng-template>
+
+                            <ngb-rating
+                              [(rate)]="item.rating"
+                              [starTemplate]="t"
+                              [readonly]="true"
+                              [max]="5"
+                            />
+                          </li>
+
+                          <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                            {{ item.rating }}/5.0
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="card-footer pt-0 pb-3">
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                          <span class="h6 fw-light mb-0"
+                            ><i class="far fa-clock text-danger me-2"></i
+                            >{{ item.duration }}</span
+                          >
+                          <span class="h6 fw-light mb-0"
+                            ><i class="fas fa-table text-orange me-2"></i
+                            >{{ item.lectures }} lectures</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem class="nav-item me-2 me-sm-5">
+        <button
+          ngbNavLink
+          class="nav-link mb-2 mb-md-0"
+          id="course-pills-tab-5"
+          data-bs-toggle="pill"
+          data-bs-target="#course-pills-tabs-5"
+          type="button"
+          role="tab"
+          aria-controls="course-pills-tabs-5"
+          aria-selected="false"
+        >
+          Finance
+        </button>
+        <ng-template ngbNavContent>
+          <div
+            class="tab-pane fade show active"
+            id="course-pills-tabs-1"
+            role="tabpanel"
+            aria-labelledby="course-pills-tab-1"
+          >
+            <div class="row g-4">
+              @for (item of courseList; track $index) {
+                @if (item.type == 'finance') {
+                  <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card shadow h-100">
+                      <img
+                        [src]="item.image"
+                        class="card-img-top"
+                        alt="course image"
+                      />
+
+                      <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between mb-2">
+                          <a
+                            href="javascript:void(0);"
+                            class="badge bg-{{
+                              item.badge.class
+                            }} bg-opacity-10 text-{{ item.badge.class }}"
+                            >{{ item.badge.text }}</a
+                          >
+                          <a href="javascript:void(0);" class="h6 mb-0"
+                            ><i class="far fa-heart"></i
+                          ></a>
+                        </div>
+
+                        <h5 class="card-title fw-normal">
+                          <a href="javascript:void(0);">{{ item.title }}</a>
+                        </h5>
+                        <p class="mb-2 text-truncate-2">
+                          {{ item.description }}
+                        </p>
+
+                        <ul class="list-inline mb-0">
+                          <ng-template #t let-fill="fill">
+                            <i class="far fa-star text-warning me-1">
+                              @if (fill > 0) {
+                                <i
+                                  class="fas fa-star text-warning filled"
+                                  [style.width.%]="fill"
+                                ></i>
+                              }
+                            </i>
+                          </ng-template>
+
+                          <ngb-rating
+                            [(rate)]="item.rating"
+                            [starTemplate]="t"
+                            [readonly]="true"
+                            [max]="5"
+                          />
+                          <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                            {{ item.rating }}/5.0
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="card-footer pt-0 pb-3">
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                          <span class="h6 fw-light mb-0"
+                            ><i class="far fa-clock text-danger me-2"></i
+                            >{{ item.duration }}</span
+                          >
+                          <span class="h6 fw-light mb-0"
+                            ><i class="fas fa-table text-orange me-2"></i
+                            >{{ item.lectures }} lectures</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div
+      [ngbNavOutlet]="nav"
+      class="tab-content"
+      id="course-pills-tabContent"
+    ></div>
+  </div>
+</section>

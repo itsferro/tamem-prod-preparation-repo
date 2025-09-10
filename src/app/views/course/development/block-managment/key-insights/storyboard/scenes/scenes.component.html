@@ -1,0 +1,202 @@
+<div class="storyboard-container">
+    <div class="header">
+      <!-- <h2 class="title">لوحة إدارة مشاهد البلوك</h2>
+      <p class="subtitle">إدارة وتصميم إطارات القصة المصورة - اسحب الإطارات لإعادة ترتيبها</p> -->
+      
+      <!-- Scene Legend -->
+      <div class="scene-legend">
+        <h4>مفتاح المشاهد:</h4>
+        <div class="legend-items">
+          <div *ngFor="let scene of scenes" class="legend-item">
+            <div class="legend-color" [style.background-color]="scene.color"></div>
+            <span class="legend-name">{{ scene.name }}</span>
+            <span class="legend-desc">{{ scene.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div 
+      class="frames-grid"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="storyboardFrames"
+      cdkDropListOrientation="mixed"
+      [cdkDropListSortingDisabled]="false">
+      
+      <div 
+        *ngFor="let frame of storyboardFrames; let i = index" 
+        class="frame-card"
+        [class]="getFrameColorClass(frame)"
+        [style.border-color]="getFrameBorderColor(frame)"
+        cdkDrag
+        [cdkDragData]="frame"
+        (cdkDragStarted)="onDragStarted()"
+        (cdkDragEnded)="onDragEnded()"
+        (cdkDragMoved)="onDragMoved($event)"
+        (click)="onFrameClick(frame)">
+        
+        <!-- Scene Indicator -->
+        <div class="scene-indicator" [style.background-color]="getFrameBorderColor(frame)">
+          <span class="scene-name">{{ getSceneName(frame) }}</span>
+        </div>
+  
+        <!-- Drag Handle -->
+        <div class="drag-handle" cdkDragHandle>
+          <i class="fas fa-grip-vertical"></i>
+        </div>
+  
+        <!-- Custom Drag Preview -->
+        <div class="custom-drag-preview" *cdkDragPreview>
+          <div class="preview-card">
+            <div class="preview-header">
+              <div class="preview-image">
+                <i class="fas fa-image"></i>
+              </div>
+              <div class="preview-info">
+                <div class="preview-title">{{ frame.title }}</div>
+                <div class="preview-number">Frame {{ i + 1 }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Enhanced Placeholder -->
+        <div class="enhanced-placeholder" *cdkDragPlaceholder>
+          <div class="placeholder-border">
+            <div class="placeholder-content">
+              <div class="drop-zone-indicator">
+                <i class="fas fa-arrows-alt"></i>
+                <span>إسقط هنا</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="frame-header">
+          <div class="frame-image-container">
+            <div class="frame-image">
+              <i class="fas fa-image placeholder-icon"></i>
+            </div>
+          </div>
+          <div class="frame-title">{{ frame.title }}</div>
+        </div>
+  
+        <div class="frame-navigation">
+          <button class="nav-btn" (click)="onActionClick('previous', frame, $event)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="action-btn" (click)="onActionClick('camera', frame, $event)">
+            <i class="fas fa-camera"></i>
+          </button>
+          <button class="action-btn" (click)="onActionClick('download', frame, $event)">
+            <i class="fas fa-download"></i>
+          </button>
+          <button class="action-btn" (click)="onActionClick('share', frame, $event)">
+            <i class="fas fa-share"></i>
+          </button>
+          <button class="action-btn delete-btn" (click)="onActionClick('delete', frame, $event)">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button class="nav-btn" (click)="onActionClick('next', frame, $event)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+  
+        <div class="frame-info">
+          <div class="frame-number">
+            <span class="frame-label">Frame {{ i + 1 }}</span>
+            <span class="frame-id">{{ frame.id }}</span>
+          </div>
+        </div>
+  
+        <div class="frame-content">
+          <div class="content-section">
+            <div class="icon-text">
+              <i class="fas fa-video text-icon"></i>
+              <p class="description">{{ frame.description }}</p>
+            </div>
+          </div>
+  
+          <div class="content-section">
+            <div class="icon-text">
+              <i class="fas fa-clock text-icon"></i>
+              <p class="duration">{{ frame.duration }}</p>
+            </div>
+          </div>
+  
+          <div class="content-section">
+            <div class="icon-text">
+              <i class="fas fa-microphone text-icon"></i>
+              <p class="additional-info">مطلوب تسجيل صوتي عالي الجودة مع إضافة المؤثرات الصوتية المناسبة للمشهد</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="frame-footer">
+          <div class="footer-item">
+            <i class="fas fa-sticky-note"></i>
+            <span>{{ frame.notes }}</span>
+          </div>
+          <div class="footer-item">
+            <i class="fas fa-plus-circle"></i>
+            <span>{{ frame.extraReq }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal for detailed view -->
+    <div class="modal-overlay" *ngIf="selectedFrame" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>{{ selectedFrame.title }}</h3>
+          <button class="close-btn" (click)="closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="modal-image">
+            <i class="fas fa-image placeholder-icon-large"></i>
+          </div>
+          
+          <div class="modal-details">
+            <div class="detail-row">
+              <label>المشهد:</label>
+              <p>{{ getSceneName(selectedFrame) }}</p>
+            </div>
+            
+            <div class="detail-row">
+              <label>الوصف:</label>
+              <p>{{ selectedFrame.description }}</p>
+            </div>
+            
+            <div class="detail-row">
+              <label>المدة:</label>
+              <p>{{ selectedFrame.duration }}</p>
+            </div>
+            
+            <div class="detail-row">
+              <label>ملاحظات:</label>
+              <p>{{ selectedFrame.notes }}</p>
+            </div>
+            
+            <div class="detail-row">
+              <label>متطلبات إضافية:</label>
+              <p>{{ selectedFrame.extraReq }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="modal-action-btn" (click)="onPreviousFrame()">
+            <i class="fas fa-chevron-left"></i> السابق
+          </button>
+          <button class="modal-action-btn" (click)="onNextFrame()">
+            التالي <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

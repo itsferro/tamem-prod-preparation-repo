@@ -1,0 +1,109 @@
+<form class="row g-3 mt-0">
+  <div class="col-md-6 bg-light-input">
+    <label for="yourName" class="form-label">Your name *</label>
+    <input type="text" class="form-control" id="yourName" placeholder="Name" />
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="emailInput" class="form-label">Email address *</label>
+    <input
+      type="email"
+      class="form-control"
+      id="emailInput"
+      placeholder="Email"
+    />
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="mobileNumber" class="form-label">Mobile number *</label>
+    <input
+      type="text"
+      class="form-control"
+      id="mobileNumber"
+      placeholder="Mobile number"
+    />
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="mobileNumber" class="form-label">Select country *</label>
+    <select
+      selectFormInput
+      class="form-select js-choice"
+      aria-label=".form-select-lg"
+    >
+      <option value="">Select country</option>
+      <option>India</option>
+      <option>China</option>
+      <option>USA</option>
+      <option>Canada</option>
+      <option>Paris</option>
+      <option>Australia</option>
+      <option>Japan</option>
+      <option>Brazil</option>
+    </select>
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="mobileNumber" class="form-label">Select state *</label>
+    <select
+      selectFormInput
+      class="form-select js-choice"
+      aria-label=".form-select-lg"
+    >
+      <option value="">Select state</option>
+      <option>Maharashtra</option>
+      <option>Delhi</option>
+      <option>Punjab</option>
+      <option>London</option>
+      <option>New york</option>
+      <option>California</option>
+    </select>
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="postalCode" class="form-label">Postal code *</label>
+    <input
+      type="text"
+      class="form-control"
+      id="postalCode"
+      placeholder="PIN code"
+    />
+  </div>
+
+  <div class="col-md-6 bg-light-input">
+    <label for="address" class="form-label">Address *</label>
+    <input
+      type="text"
+      class="form-control"
+      id="address"
+      placeholder="Address"
+    />
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Your saved cards *</label>
+    <div class="row g-2">
+      <div class="col-2 col-sm-1 border rounded me-2">
+        <a href="javascript:void(0);"
+          ><img src="assets/images/client/mastercard.svg" alt=""
+        /></a>
+      </div>
+      <div class="col-2 col-sm-1 border rounded me-2">
+        <a href="javascript:void(0);"
+          ><img src="assets/images/client/visa.svg" alt=""
+        /></a>
+      </div>
+      <div class="col-2 col-sm-1 border rounded me-2">
+        <a href="javascript:void(0);"
+          ><img src="assets/images/client/ae-card.svg" alt=""
+        /></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-end">
+    <button type="submit" class="btn btn-primary mb-0" disabled>
+      Save changes
+    </button>
+  </div>
+</form>

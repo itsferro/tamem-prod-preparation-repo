@@ -1,0 +1,159 @@
+<section class="pt-9">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <P
+          >Perceived end knowledge certainly day sweetness why cordially. On
+          forth doubt miles of child. Exercise joy man children rejoiced. Yet
+          uncommonly his ten who diminution astonished. Demesne had new manners
+          savings staying had. Under folly balls, death own point now men. Match
+          way these she avoids seeing death. She who drift their fat off. Ask a
+          quick six seven offer see among. Handsome met debating sir dwelling
+          age material. As style lived he worse dried. Offered related so
+          visitors we private removed.</P
+        >
+        <p>
+          Yet uncommonly his ten who diminution astonished. Demesne had new
+          manners savings staying had. Under folly balls, death own point now
+          men. Match way these she avoids seeing death. She who drift their fat
+          off. Ask a quick six seven offer see among. As style lived he worse
+          dried. Offered related so visitors we private removed.
+        </p>
+
+        <div class="row mt-4">
+          <h5 class="mt-3">Why Study in Canada?</h5>
+
+          <div class="col-lg-4">
+            <ul class="list-group list-group-borderless">
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i>One of
+                the best places to live and work
+              </li>
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i
+                >Affordable education & living
+              </li>
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i>20
+                hrs/week work while Studying
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <ul class="list-group list-group-borderless">
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i>Degree
+                recognized all over the world
+              </li>
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i
+                >Career-oriented specialized courses
+              </li>
+              <li class="list-group-item h6 fw-normal d-flex">
+                <i class="bi bi-patch-check-fill text-success me-2"></i>2-year
+                study + 3-year work permit + PR
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <h5 class="mb-3">Top Courses To Study In Canada</h5>
+            <ul class="list-inline hstack gap-3 flex-wrap">
+              @for (course of courseList; track $index) {
+                <li class="list-inline-item">
+                  <a
+                    class="btn btn-light btn-sm mb-0"
+                    href="javascript:void(0);"
+                    >{{ course }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <h5 class="mb-3">Top Level Programs</h5>
+
+            <ul class="list-inline hstack gap-3 flex-wrap">
+              @for (program of programList; track $index) {
+                <li class="list-inline-item">
+                  <a
+                    class="btn btn-light btn-sm mb-0"
+                    href="javascript:void(0);"
+                    >{{ program }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="table-responsive-md border-0">
+              <table
+                class="table table caption-top table-bordered align-middle p-4 mb-0"
+              >
+                <caption class="h5 mb-0 bg-primary text-white ps-4 rounded-top">
+                  Intake & Deadline
+                </caption>
+
+                <thead class="border-0">
+                  <tr class="border-top-0 table-border-color">
+                    <th scope="col">Intake</th>
+                    <th scope="col">Months</th>
+                    <th scope="col">Deadline</th>
+                  </tr>
+                </thead>
+
+                <tbody class="border-top-0">
+                  @for (item of intakeList; track $index) {
+                    <tr>
+                      <td>
+                        <span class="text-body">{{ item.Intake }}</span>
+                      </td>
+                      <td>
+                        <span class="text-body">{{ item.Months }}</span>
+                      </td>
+                      <td>
+                        <span class="text-body">{{ item.Deadline }}</span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+          <h5>Top Universities In Canada</h5>
+
+          @for (item of universities; track $index) {
+            <div class="col-md-6 col-xl-4">
+              <div class="card card-body shadow p-4 align-items-start">
+                <img
+                  class="rounded-1 h-60px"
+                  [src]="item.logo"
+                  alt="university logo"
+                />
+                <h5 class="card-title mt-3 mb-0">{{ item.name }}</h5>
+                <span>{{ item.description }}</span>
+                <a
+                  routerLink="/index-5"
+                  class="btn btn-lg btn-link p-0 mt-3 stretched-link"
+                  ><u>Visit University</u></a
+                >
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+<div class="card shadow h-100">
+  <div class="card-header border-bottom p-4">
+    <h5 class="card-header-title">Notice board</h5>
+  </div>
+
+  <div class="card-body p-4">
+    <ngx-simplebar class="custom-scrollbar h-300px">
+      @for (item of noticeList; track $index; let last = $last) {
+        <div class="d-flex justify-content-between position-relative">
+          <div class="d-sm-flex">
+            <div
+              class="icon-lg bg-{{ item.iconColor }} bg-opacity-10 text-{{
+                item.iconColor
+              }} rounded-2 flex-shrink-0"
+            >
+              <i class="{{ item.icon }} fs-5"></i>
+            </div>
+
+            <div class="ms-0 ms-sm-3 mt-2 mt-sm-0">
+              <h6 class="mb-0">
+                <a href="javascript:void(0);" class="stretched-link">{{
+                  item.title
+                }}</a>
+              </h6>
+              <p class="mb-0">{{ item.description }}</p>
+              <span class="small">{{ item.time }}</span>
+            </div>
+          </div>
+        </div>
+        @if (!last) {
+          <hr />
+        }
+      }
+    </ngx-simplebar>
+  </div>
+
+  <div class="card-footer border-top">
+    <div class="alert alert-success d-flex align-items-center mb-0 py-2">
+      <div>
+        <small class="mb-0">45 more notices listed</small>
+      </div>
+      <div class="ms-auto">
+        <a class="btn btn-sm btn-success-soft mb-0" href="javascript:void();">
+          View all
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

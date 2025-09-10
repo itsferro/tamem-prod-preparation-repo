@@ -1,0 +1,86 @@
+<app-menu
+  navClassName="container"
+  [showContact]="true"
+  [showExtraPages]="false"
+  [fullWidth]="false"
+  [showIcon]="true"
+  [showCart]="true"
+  [showNotification]="true"
+/>
+
+<main>
+  <!-- =======================
+  Main Banner START -->
+  <index9-banner />
+  <!-- =======================
+  Main Banner END -->
+
+  <!-- =======================
+  Subject START -->
+  <index9-subject />
+  <!-- =======================
+  Subject END -->
+
+  <!-- =======================
+  About START -->
+  <index9-about />
+  <!-- =======================
+  About END -->
+
+  <!-- =======================
+  Action box START-->
+  <index9-action-box />
+  <!-- =======================
+  Action box END-->
+
+  <!-- =======================
+  Gallery START-->
+  <index9-gallery />
+  <!-- =======================
+  Gallery START-->
+
+  <!-- =======================
+  Blog START-->
+  <index9-blog />
+  <!-- =======================
+  Blog START-->
+</main>
+
+<app-footer className="bg-light" />
+
+@if (showAlert) {
+  <ngb-alert
+    type="light"
+    [dismissible]="false"
+    class="fade show position-fixed bottom-0 start-50 translate-middle-x z-index-99 d-lg-flex justify-content-between align-items-center shadow p-4 col-9 col-md-7 col-xxl-5"
+    role="alert"
+  >
+    <div>
+      <h4 class="text-dark">Admissions open!</h4>
+      <p class="m-0 pe-3">
+        We are so eager to be working with kids and making a difference in their
+        careers. Being a mentor is what we have always wanted to be.
+      </p>
+    </div>
+    <div class="d-flex mt-3 mt-lg-0">
+      <button
+        type="button"
+        class="btn btn-success btn-sm mb-0 me-2"
+        (click)="showAlert = false"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">Get Admission</span>
+      </button>
+      <div class="position-absolute end-0 top-0 mt-n3 me-n3">
+        <button
+          type="button"
+          class="btn btn-danger btn-round btn-sm mb-0"
+          (click)="showAlert = false"
+          aria-label="Close"
+        >
+          <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+        </button>
+      </div>
+    </div>
+  </ngb-alert>
+}

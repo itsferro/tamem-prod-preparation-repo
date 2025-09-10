@@ -1,0 +1,102 @@
+<div class="knowledge-check-container" dir="rtl" lang="ar">
+    <div class="challenge-header">
+      <h2>اختبار المعرفة الأساسية</h2>
+      <div class="progress-indicator">
+        <span class="progress-text">السؤال {{currentQuestionIndex + 1}} من {{questions.length}}</span>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(currentQuestionIndex / questions.length) * 100"></div>
+        </div>
+      </div>
+    </div>
+  
+    @if (!isCompleted) {
+      <div class="challenge-content">
+        <div class="question-card">
+          <div class="question-text">
+            <h3>{{currentQuestion.text}}</h3>
+          </div>
+  
+          <form [formGroup]="answerForm" (ngSubmit)="checkAnswer()">
+            <div class="options-list">
+              @for (option of currentQuestion.options; track option; let i = $index) {
+                <div class="option-item"
+                     [class.selected]="answerForm.controls['selectedOption'].value === i"
+                     [class.correct]="isSubmitted && i === currentQuestion.correctAnswer"
+                     [class.incorrect]="isSubmitted && answerForm.controls['selectedOption'].value === i && i !== currentQuestion.correctAnswer">
+                  <label class="option-label">
+                    <input type="radio" 
+                           [value]="i" 
+                           formControlName="selectedOption"
+                           [disabled]="isSubmitted">
+                    <span class="option-text">{{option}}</span>
+                  </label>
+                </div>
+              }
+            </div>
+  
+            @if (showExplanation) {
+              <div class="explanation-box">
+                <div class="explanation-content" [class.correct-answer]="isCorrect" [class.wrong-answer]="!isCorrect">
+                  <div class="explanation-header">
+                    <i class="fa" [class.fa-check-circle]="isCorrect" [class.fa-times-circle]="!isCorrect"></i>
+                    <h4>{{isCorrect ? 'إجابة صحيحة!' : 'إجابة خاطئة'}}</h4>
+                  </div>
+                  <p>{{currentQuestion.explanation}}</p>
+                </div>
+              </div>
+            }
+  
+            <div class="action-buttons">
+              <button type="submit" 
+                      class="submit-btn" 
+                      [disabled]="answerForm.invalid || isSubmitted">
+                تحقق من الإجابة
+              </button>
+              @if (isSubmitted) {
+                <button type="button" 
+                        class="next-btn" 
+                        (click)="nextQuestion()">
+                  {{isLastQuestion ? 'إنهاء الاختبار' : 'السؤال التالي'}}
+                </button>
+              }
+            </div>
+          </form>
+        </div>
+      </div>
+    } @else {
+      <div class="challenge-results">
+        <div class="results-card">
+          <div class="results-header">
+            <i class="fa fa-trophy"></i>
+            <h3>اكتمل الاختبار!</h3>
+          </div>
+          
+          <div class="score-display">
+            <div class="score-circle">
+              <svg viewBox="0 0 36 36">
+                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="circle-progress" 
+                      [attr.stroke-dasharray]="(totalCorrect / questions.length) * 100 + ', 100'" 
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <text x="18" y="20.35" class="percentage">{{totalCorrect}}/{{questions.length}}</text>
+              </svg>
+            </div>
+            <div class="score-text">
+              <p>لقد أجبت على <strong>{{totalCorrect}}</strong> من أصل <strong>{{questions.length}}</strong> أسئلة بشكل صحيح.</p>
+              <p class="score-message">{{getScoreMessage()}}</p>
+            </div>
+          </div>
+  
+          <div class="results-actions">
+            <button class="retry-btn" (click)="retryChallenge()">
+              <i class="fa fa-redo"></i> إعادة المحاولة
+            </button>
+            <button class="complete-btn" (click)="completeChallenge()">
+              <i class="fa fa-check"></i> إنهاء التحدي
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+  

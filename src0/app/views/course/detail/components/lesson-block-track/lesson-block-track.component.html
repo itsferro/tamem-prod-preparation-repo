@@ -1,0 +1,177 @@
+<div class="border-0 bg-transparent"   >
+    <div class="p-0">
+      <div class="table-responsive border-0">
+        <table class="table table-dark-gray align-middle mb-0 table-hover" style="padding-bottom:200px;">
+          <thead>
+            <tr>
+              
+              <th scope="col" class="border-0">Development Pipeline</th>
+              <th scope="col" class="border-0">Links</th>
+              <th scope="col" class="border-0 rounded-end">Actions</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            @if (lesson?.lessonBlocks && lesson?.lessonBlocks.length > 0) {
+            @for (block of lesson.lessonBlocks; track block.id) {
+  
+                <tr [attr.data-block-id]="block.id" 
+                [attr.data-progress]="getProgressPercentage(block)"
+                [ngClass]="{'bg-sketch-start': block.dev_status === 2, 'bg-sketch-end': block.dev_status === 3 
+                           ,'bg-studio-start': block.dev_status === 4, 'bg-studio-end': block.dev_status === 5
+                           , 'bg-finish': block.dev_status === 6}">
+            
+              <!-- Development Pipeline -->
+              <td>
+                <div class="block-info me-3 ms-0">
+                  <h6>
+                    <a href="javascript:void(0);">{{ block.title }}</a>
+                  </h6>
+                  <div class="d-sm-flex">
+                    <p class="h6 fw-light mb-0 small me-3">
+                      <i class="fas fa-clock text-orange me-2"></i>
+                      {{ block.duration || '0' }} minutes
+                    </p>
+                  </div>
+                </div>
+            
+                <!-- Block Stats only -->
+                <div class="pipeline-stats">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-secondary">#{{ block.id }}</span>
+                    <span class="text-muted small">{{ getProgressPercentage(block) }}%</span>
+                  </div>
+                </div>
+              </td>
+            
+              <!-- Links -->
+              <td>
+                <div class="dev-status-badge mb-2 d-flex flex-column">
+                  <button class="btn btn-sm btn-primary-soft btn-canva mb-2" title="Canva Design"
+                    [disabled]="!block.sketch_canva_link || block.sketch_canva_link === ''"
+                    (click)="navigateToCanva(block)">
+                    <i class="fas fa-drafting-compass me-1"></i>
+                    Canva
+                  </button>
+            
+                  <button class="btn btn-sm btn-success-soft btn-drive mb-2" title="Google Drive"
+                    [disabled]="!block.google_drive_link || block.google_drive_link === ''"
+                    (click)="navigateToGoogleDrive(block)">
+                    <i class="fab fa-google-drive me-1"></i>
+                    Drive
+                  </button>
+                </div>
+              </td>
+            
+              <!-- Actions -->
+              <td>
+                <div class="action-buttons-vertical">
+                  <button class="btn btn-sm btn-primary-soft btn-round mb-2" title="Storyboard"
+                    (click)="navigateToStoryboard(block)">
+                    <i class="fas fa-fw fa-film"></i>
+                  </button>
+                  
+                  <a href="javascript:void(0);" class="btn btn-sm btn-success-soft btn-round mb-2" title="Edit"
+                    (click)="editBlock(block)">
+                    <i class="far fa-fw fa-edit"></i>
+                  </a>
+                  
+                  <!-- Dropdown menu -->
+                  <!-- <div class="dropdown d-inline-block">
+                    <button class="btn btn-sm btn-info-soft btn-round mb-2" type="button"
+                      id="actionMenuButton-{{block.id}}"
+                      (click)="$event.preventDefault(); $event.stopPropagation(); toggleActionMenu(block.id)">
+                      <i class="far fa-fw fa-eye"></i>
+                    </button>
+                    
+                    <ul class="dropdown-menu dropdown-menu-end action-dropdown-menu shadow"
+                      [ngClass]="{'show': activeActionMenuId === block.id}"
+                      [attr.aria-labelledby]="'actionMenuButton-' + block.id">
+                      <li>
+                        <a class="dropdown-item" (click)="setDevBlockStatus(block, 'content')">
+                          <i class="fas fa-file-alt me-2 text-primary"></i>Content
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" (click)="setDevBlockStatus(block, 'storyboard')">
+                          <i class="fas fa-film me-2 text-success"></i>Storyboard
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" (click)="setDevBlockStatus(block, 'sketch')">
+                          <i class="fas fa-pencil-alt me-2 text-warning"></i>Sketch
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" (click)="setDevBlockStatus(block, 'create-studio')">
+                          <i class="fas fa-video me-2 text-danger"></i>Create Studio
+                        </a>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li>
+                        <a class="dropdown-item" (click)="setDevBlockStatus(block, 'finish')">
+                          <i class="fas fa-check-circle me-2 text-success"></i>Finish
+                        </a>
+                      </li>
+                    </ul>
+                  </div> -->
+                </div>
+              </td>
+            
+              <!-- Pipeline spanning all cells - positioned absolutely at bottom -->
+              <td colspan="3" class="pipeline-bottom-container"  (click)="openEditBlockTrackModal(block)">
+                <!-- Phase Icons Pipeline -->
+                <div class="phase-pipeline-bottom">
+                  <div class="d-flex align-items-center justify-content-start" style="direction: rtl; gap: 1rem;">
+                    @for (phase of getPhases(); track phase.id) {
+                      <div class="d-flex flex-column align-items-center phase-item"  (click)="openEditBlockTrackModal(block)">
+                        <!-- Phase Icon -->
+                        <div class="position-relative phase-icon-container mb-1">
+                          <div 
+                            class="phase-icon"
+                            [ngClass]="getPhaseIconClass(block, phase.id)"
+                            [attr.title]="phase.name + ': ' + getPhaseStatus(block, phase.id)">
+                            <i [class]="phase.iconClass"></i>
+                          </div>
+                        </div>
+                        
+                        <!-- Phase Title -->
+                        <div class="phase-title">{{ phase.shortName }}</div>
+                      </div>
+                    }
+                  </div>
+                  
+                  <!-- Progress Bar -->
+                  <div class="progress mt-3" style="height: 4px; direction: rtl;">
+                    <div 
+                      class="progress-bar bg-gradient" 
+                      role="progressbar" 
+                      [style.width.%]="getProgressPercentage(block)"
+                      [attr.aria-valuenow]="getProgressPercentage(block)" 
+                      aria-valuemin="0" 
+                      aria-valuemax="100">
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+  
+            }
+            } @else {
+            <tr>
+              <td colspan="4" class="text-center py-4">
+                <div class="d-flex flex-column align-items-center">
+                  <i class="fas fa-info-circle fa-2x text-muted mb-2"></i>
+                  <p class="mb-0">No blocks found for this lesson</p>
+                  <button class="btn btn-sm btn-primary mt-3">Add New Block</button>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

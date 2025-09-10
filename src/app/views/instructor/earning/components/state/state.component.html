@@ -1,0 +1,34 @@
+<div class="row g-4">
+  <div class="col-sm-6 col-lg-4">
+    <div class="text-center p-4 bg-light rounded-3">
+      <h6 class="text-body">Sales this month</h6>
+      <h2 class="mb-0 fs-1">{{ currency }}899.95</h2>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-4">
+    <div class="text-center p-4 bg-light rounded-3">
+      <h6 class="text-body">
+        To be paid
+        <a
+          tabindex="0"
+          class="h6 mb-0"
+          role="button"
+          data-bs-trigger="focus"
+          placement="top"
+          ngbPopover="After US royalty withholding tax"
+        >
+          <i class="bi bi-info-circle-fill small"></i>
+        </a>
+      </h6>
+      <h2 class="mb-0 fs-1">{{ currency }}750.35</h2>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-lg-4">
+    <div class="text-center p-4 bg-light rounded-3">
+      <h6 class="text-body">Lifetime Earnings</h6>
+      <h2 class="mb-0 fs-1">{{ currency }}4882.65</h2>
+    </div>
+  </div>
+</div>

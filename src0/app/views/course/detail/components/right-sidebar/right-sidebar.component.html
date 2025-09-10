@@ -1,0 +1,248 @@
+<div class="offcanvas-header bg-light">
+  <h5 class="offcanvas-title" id="offcanvasNavbarLabel"> {{ courseTitle }} </h5>
+
+</div>
+
+<!-- New theme management header with improved design - only visible in edit mode -->
+@if (editMode) {
+<div class="toc-management-header p-2 bg-white border-bottom">
+  <div class="d-flex align-items-center justify-content-between">
+    <button class="btn btn-primary btn-sm d-flex align-items-center" (click)="addTheme()">
+      <i class="fas fa-plus-circle me-1"></i>
+      <span>موضوع جديد</span>
+    </button>
+
+    <button class="btn btn-success btn-sm d-flex align-items-center" (click)="saveEntireCourseStructure()"
+      [disabled]="isLoading || !hasUnsavedChanges()">
+      @if (!isLoading) {
+      <span>
+        <i class="fas fa-save me-1"></i> حفظ الهيكل
+      </span>
+      }
+      @if (isLoading) {
+      <span>
+        <i class="fas fa-spinner fa-spin me-1"></i> جاري الحفظ...
+      </span>
+      }
+    </button>
+  </div>
+
+  <!-- Progress Bar -->
+  @if (isLoading) {
+  <div class="progress mt-2">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+      [style.width.%]="savingProgress" aria-valuenow="savingProgress" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  }
+</div>
+}
+
+<div class="offcanvas-body p-3 p-xl-0">
+  <form>
+    <!-- Table of Contents Component HTML - Dynamic from API -->
+    <div class="toc-container" style="direction:rtl;">
+      <div class="toc-header">
+        <!-- {{ courseTitle }} -->
+        الفهرس
+      </div>
+
+      <div class="toc-tree">
+        <!-- Show loading indicator if no themes available -->
+        @if (!this.isDataLoaded) {
+        <div class="p-3 text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">جاري التحميل...</span>
+          </div>
+          <p class="mt-2">جاري تحميل الفهرس...</p>
+        </div>
+        }
+
+        <!-- Empty state -->
+        @if (isDataLoaded && courseThemes.length === 0) {
+        <div class="p-3 text-center">
+          <div class="no-content-icon">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <p class="mt-2">لم يتم إنشاء أي محتوى بعد</p>
+          @if (editMode) {
+          <button class="btn btn-primary" (click)="addTheme()">
+            <i class="fas fa-plus"></i> إضافة موضوع جديد
+          </button>
+          }
+        </div>
+        }
+
+        <!-- Loop through each theme -->
+        @for (theme of courseThemes; track theme.id) {
+
+          @if (!editMode && !theme.is_visible) {
+            <!-- This unit will be completely skipped when not in edit mode -->
+          } @else {
+        <div class="group" [class.open]="theme.isOpen" [class.unsaved]="!theme.isSaved" >
+          <div class="group-header" [class.active]="theme.isActive">
+            <!-- Theme Toggle Icon -->
+            <span class="icon" (click)="toggleTheme(theme, $event)">
+              {{ theme.isOpen ? '−' : '+' }}
+            </span>
+
+            <!-- Theme Title or Edit Input -->
+            @if (theme.isEditing) {
+            <div class="d-flex align-items-center w-100">
+              <input [(ngModel)]="theme.title" [ngModelOptions]="{standalone: true}"
+                class="form-control form-control-sm me-2" placeholder="اسم الموضوع" />
+              <button class="btn btn-sm btn-success me-1" (click)="saveTheme(theme)">
+                حفظ
+              </button>
+              <button class="btn btn-sm btn-secondary" (click)="theme.isEditing = false">
+                إلغاء
+              </button>
+            </div>
+            } @else {
+            <span class="theme-title" (click)="toggleTheme(theme)">
+              {{ theme.title }}
+              @if (!theme.isSaved) {
+              <span class="badge bg-warning ms-2">غير محفوظ</span>
+              }
+              @if (editMode) {
+              <button class="btn btn-sm btn-outline-secondary me-2"
+                (click)="toggleThemeVisibility(theme); $event.stopPropagation();">
+                <i class="fas" [class.fa-eye]="theme.is_visible" [class.fa-eye-slash]="!theme.is_visible"></i>
+              </button>
+              }
+
+            </span>
+
+            <!-- Theme Management Actions - only visible in edit mode -->
+            @if (editMode) {
+            <div class="theme-actions ms-auto">
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="editTheme(theme)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteTheme(theme)">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-success" (click)="addUnit(theme)">
+                <i class="fas fa-plus"></i> وحدة
+              </button>
+            </div>
+            }
+            }
+          </div>
+
+          <!-- Units and Lessons Container -->
+          <div class="lessons" [style.display]="theme.isOpen ? 'block' : 'none'">
+            <!-- Loop through each unit in this theme -->
+            @for (unit of theme.course_units; track unit.id) {
+
+              @if (!editMode && !unit.is_visible) {
+                <!-- This unit will be completely skipped when not in edit mode -->
+              } @else {
+            <div class="unit-header" [class.editing]="unit.isEditing" [class.unsaved]="!unit.isSaved">
+              @if (unit.isEditing) {
+              <div class="d-flex align-items-center w-100">
+                <input [(ngModel)]="unit.title" [ngModelOptions]="{standalone: true}"
+                  class="form-control form-control-sm me-2" placeholder="اسم الوحدة" />
+                <button class="btn btn-sm btn-success me-1" (click)="saveUnit(theme, unit)">
+                  حفظ
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="unit.isEditing = false">
+                  إلغاء
+                </button>
+              </div>
+              } @else {
+              <div class="unit-title-container">
+                <span class="unit-title">
+                  {{ unit.title }}   
+                  @if (!unit.isSaved) {
+                  <span class="badge bg-warning ms-2">غير محفوظ</span>
+                  }
+                  @if (editMode) {
+                  <div class="ms-auto">
+                    <button class="btn btn-sm btn-outline-secondary me-2"
+                      (click)="toggleUnitVisibility(unit); $event.stopPropagation();">
+                      <i class="fas" [class.fa-eye]="unit.is_visible" [class.fa-eye-slash]="!unit.is_visible"></i>
+                    </button>
+                  </div>
+                  }
+                </span>
+
+                <!-- Unit Management Actions - only visible in edit mode -->
+                @if (editMode) {
+                <div class="unit-actions ms-auto">
+                  <button class="btn btn-sm btn-outline-primary me-1" (click)="editUnit(unit)">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteUnit(theme, unit)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-success" (click)="addLesson(unit)">
+                    <i class="fas fa-plus"></i> درس
+                  </button>
+                </div>
+                }
+              </div>
+              }
+            </div>
+            }
+
+            <!-- Lessons in this unit -->
+            @for (lesson of unit.course_lessons; track lesson.id) {
+            <div class="lesson" [class.active]="lesson.isActive" [class.unsaved]="!lesson.isSaved">
+              @if (lesson.isEditing) {
+              <div class="d-flex align-items-center w-100">
+                <input [(ngModel)]="lesson.title" [ngModelOptions]="{standalone: true}"
+                  class="form-control form-control-sm me-2" placeholder="اسم الدرس" />
+                <button class="btn btn-sm btn-success me-1" (click)="saveLesson(unit, lesson)">
+                  حفظ
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="lesson.isEditing = false">
+                  إلغاء
+                </button>
+              </div>
+              } @else {
+              <div class="lesson-content" (click)="selectLesson(theme, lesson)">
+                <span class="status" [class.completed]="lesson.status === 'completed'"
+                  [class.in-progress]="lesson.status === 'in-progress'"
+                  [class.not-started]="lesson.status === 'not-started'"></span>
+                <span class="lesson-title">
+                  {{ lesson.title }}
+                  @if (!lesson.isSaved) {
+                  <span class="badge bg-warning ms-2">غير محفوظ</span>
+                  }
+                </span>
+
+                <!-- Lesson Management Actions - only visible in edit mode -->
+                @if (editMode) {
+                <div class="lesson-actions ms-auto">
+                  <button class="btn btn-sm btn-outline-primary me-1"
+                    (click)="editLesson(lesson); $event.stopPropagation();">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger"
+                    (click)="deleteLesson(unit, lesson); $event.stopPropagation();">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                }
+              </div>
+              }
+            </div>
+            }
+            @empty {
+            <div class="no-lessons">لا توجد دروس في هذه الوحدة</div>
+            }
+            }
+            @empty {
+            <div class="no-lessons">لا توجد وحدات في هذا الموضوع</div>
+            }
+          </div>
+        </div>
+      }
+        }
+        @empty {
+        <div class="no-content">لا توجد مواضيع متاحة</div>
+        }
+      </div>
+    </div>
+  </form>
+</div>

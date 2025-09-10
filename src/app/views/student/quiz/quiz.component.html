@@ -1,0 +1,144 @@
+<div class="card border mb-5">
+  <div class="card-header border-bottom">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="row g-0">
+            <div class="col-md-2">
+              <img
+                src="assets/images/courses/4by3/01.jpg"
+                class="rounded-2"
+                alt="Card image"
+              />
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href="javascript:void(0);"
+                    >The Complete Digital Marketing Course - 12 Courses in 1</a
+                  >
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="card bg-transparent border rounded-3 mb-1">
+      <div id="stepper" class="bs-stepper stepper-outline" appStepper>
+        <div class="card-header bg-light border-bottom px-lg-5">
+          <div class="bs-stepper-header" role="tablist">
+            @for (item of quizList; track $index; let last = $last) {
+              <div class="step" [attr.data-target]="'#step-' + item.id">
+                <div class="d-grid text-center align-items-center">
+                  <button
+                    type="button"
+                    class="btn btn-link step-trigger mb-0"
+                    role="tab"
+                  >
+                    <span class="bs-stepper-circle">{{ item.id }}</span>
+                  </button>
+                </div>
+              </div>
+              @if (!last) {
+                <div class="line"></div>
+              }
+            }
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h6 class="text-danger text-end mb-0">
+            <i class="bi bi-clock-history me-2"></i>Time Left: 00:01:30
+          </h6>
+
+          <div class="bs-stepper-content">
+            <form>
+              @for (item of quizList; track $index; let last = $last) {
+                <div
+                  id="step-{{ item.id }}"
+                  role="tabpanel"
+                  class="content fade"
+                >
+                  <h4>{{ item.title }}</h4>
+
+                  <hr />
+                  <div class="vstack gap-2">
+                    <div>
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="ques"
+                        id="option1"
+                      />
+                      <label class="btn btn-outline-primary w-100" for="option1"
+                        >We have cybersecurity insurance coverage</label
+                      >
+                    </div>
+
+                    <div>
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="ques"
+                        id="option2"
+                      />
+                      <label class="btn btn-outline-primary w-100" for="option2"
+                        >Our dedicated staff will protect us</label
+                      >
+                    </div>
+
+                    <div>
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="ques"
+                        id="option3"
+                      />
+                      <label class="btn btn-outline-primary w-100" for="option3"
+                        >We give regular training for best practices</label
+                      >
+                    </div>
+
+                    <div>
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="ques"
+                        id="option4"
+                      />
+                      <label class="btn btn-outline-primary w-100" for="option4"
+                        >Third-party vendor protection</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center mt-3">
+                    @if (!last) {
+                      <button
+                        type="button"
+                        class="btn btn-primary next-btn mb-0"
+                      >
+                        Next question
+                      </button>
+                    } @else {
+                      <button
+                        type="button"
+                        class="btn btn-success next-btn mb-0"
+                      >
+                        View result
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+<footer class="pt-5 {{ className }}" [ngClass]="{ 'bg-dark': mode == 'dark' }">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-3">
+        <a class="me-0" routerLink="/">
+          @if (mode == 'dark') {
+            <img class="h-40px" src="assets/images/logo-light.svg" alt="logo" />
+          } @else {
+            <img
+              class="light-mode-item h-40px"
+              src="assets/images/logo.svg"
+              alt="logo"
+            />
+            <img
+              class="dark-mode-item h-40px"
+              src="assets/images/logo-light.svg"
+              alt="logo"
+            />
+          }
+        </a>
+        <p class="my-3" [ngClass]="{ 'text-body-secondary': mode == 'dark' }">
+          Eduport education theme, built specifically for the education centers
+          which is dedicated to teaching and involve learners.
+        </p>
+
+        <ul class="list-inline mb-0 mt-3">
+          @for (item of socials; track $index; let first = $first) {
+            <li class="list-inline-item" [ngClass]="{ 'ms-1': !first }">
+              <a
+                class="btn btn-white btn-sm shadow px-2 text-{{ item.label }}"
+                href="javascript:void(0);"
+              >
+                <i class="fab fa-fw {{ item.icon }}"></i
+              ></a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <div class="col-6 col-md-4">
+            <h5
+              class="mb-2 mb-md-4"
+              [ngClass]="{ 'text-white': mode == 'dark' }"
+            >
+              Company
+            </h5>
+            <ul
+              class="nav flex-column"
+              [ngClass]="{ 'text-primary-hover': mode == 'dark' }"
+            >
+              @for (item of companies; track $index) {
+                <li class="nav-item">
+                  <a class="nav-link" [routerLink]="item.link">{{
+                    item.label
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="col-6 col-md-4">
+            <h5
+              class="mb-2 mb-md-4"
+              [ngClass]="{ 'text-white': mode == 'dark' }"
+            >
+              Community
+            </h5>
+            <ul
+              class="nav flex-column"
+              [ngClass]="{ 'text-primary-hover': mode == 'dark' }"
+            >
+              @for (item of communities; track $index) {
+                <li class="nav-item">
+                  <a class="nav-link" [routerLink]="item.link">{{
+                    item.label
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="col-6 col-md-4">
+            <h5
+              class="mb-2 mb-md-4"
+              [ngClass]="{ 'text-white': mode == 'dark' }"
+            >
+              Teaching
+            </h5>
+            <ul
+              class="nav flex-column"
+              [ngClass]="{ 'text-primary-hover': mode == 'dark' }"
+            >
+              @for (item of teaching; track $index) {
+                <li class="nav-item">
+                  <a class="nav-link" [routerLink]="item.link">{{
+                    item.label
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <h5 class="mb-2 mb-md-4" [ngClass]="{ 'text-white': mode == 'dark' }">
+          Contact
+        </h5>
+
+        <p class="mb-2" [ngClass]="{ 'text-body-secondary': mode == 'dark' }">
+          Toll free:<span
+            class="h6 fw-light ms-2"
+            [ngClass]="{ 'text-white': mode == 'dark' }"
+            >+1234 568 963</span
+          >
+          <span class="d-block small">(9:AM to 8:PM IST)</span>
+        </p>
+
+        <p class="mb-0" [ngClass]="{ 'text-body-secondary': mode == 'dark' }">
+          Email:<span
+            class="h6 fw-light ms-2"
+            [ngClass]="{ 'text-white': mode == 'dark' }"
+            >example&#64;gmail.com</span
+          >
+        </p>
+
+        <div class="row g-2 mt-2">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-6">
+            <a href="javascript:void(0);">
+              <img src="assets/images/client/google-play.svg" alt="" />
+            </a>
+          </div>
+
+          <div class="col-6 col-sm-4 col-md-3 col-lg-6">
+            <a href="javascript:void(0);">
+              <img src="assets/images/client/app-store.svg" alt="app-store" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mt-4 mb-0" />
+
+    <div class="py-3">
+      <div class="container px-0">
+        <div
+          class="d-lg-flex justify-content-between align-items-center py-3 text-center text-md-left"
+        >
+          <div
+            [ngClass]="
+              mode == 'dark'
+                ? 'text-body-secondary'
+                : 'text-body text-primary-hover'
+            "
+          >
+            Copyrights ©{{ currentYear }} Eduport. Build by
+            <a
+              [href]="credits.website"
+              target="_blank"
+              [ngClass]="
+                mode == 'dark'
+                  ? 'text-body-secondary text-primary-hover'
+                  : 'text-body'
+              "
+              >{{ credits.name }}</a
+            >
+          </div>
+          <!-- copyright links-->
+          <div class="justify-content-center mt-3 mt-lg-0">
+            <ul class="nav list-inline justify-content-center mb-0">
+              <li
+                class="list-inline-item"
+                [ngClass]="{ 'text-primary-hover': mode == 'dark' }"
+              >
+                <div
+                  ngbDropdown
+                  placement="top"
+                  class="dropup mt-0 text-center text-sm-end"
+                >
+                  <a
+                    ngbDropdownToggle
+                    class="dropdown-toggle nav-link"
+                    href="javascript:void(0);"
+                    role="button"
+                    id="languageSwitcher"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-globe me-2"></i>Language
+                  </a>
+                  <ul
+                    ngbDropdownMenu
+                    class="dropdown-menu min-w-auto"
+                    aria-labelledby="languageSwitcher"
+                  >
+                    @for (item of languages; track $index) {
+                      <li>
+                        <a
+                          class="dropdown-item me-4"
+                          [ngClass]="{ 'text-body': mode == 'dark' }"
+                          href="javascript:void(0);"
+                          ><img
+                            class="fa-fw me-2"
+                            [src]="item.image"
+                            alt=""
+                          />{{ item.label }}</a
+                        >
+                      </li>
+                    }
+                  </ul>
+                </div>
+              </li>
+              <li
+                class="list-inline-item"
+                [ngClass]="{ 'text-primary-hover ms-1': mode == 'dark' }"
+              >
+                <a class="nav-link" href="javascript:void(0);">Terms of use</a>
+              </li>
+              <li
+                class="list-inline-item"
+                [ngClass]="{ 'text-primary-hover ms-1': mode == 'dark' }"
+              >
+                <a class="nav-link pe-0" href="javascript:void(0);"
+                  >Privacy policy</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

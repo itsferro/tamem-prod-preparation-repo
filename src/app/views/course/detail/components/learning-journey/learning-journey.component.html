@@ -1,0 +1,142 @@
+<div class="learning-journey-container" dir="rtl">
+    <!-- Journey Header -->
+    <!-- <div class="journey-header">
+      <div class="journey-info">
+        <h2>{{ currentBlock?.title || 'رحلة التعلم' }}</h2>
+        <p>{{ currentStep.description }}</p>
+      </div>
+      
+      <div class="journey-progress">
+        <div class="progress-label">التقدم: {{ progress.toFixed(0) }}%</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" [style.width.%]="progress"></div>
+        </div>
+        <div class="score-label">النقاط: {{ totalScore }}/{{ maxScore }}</div>
+      </div>
+      
+ 
+    </div> -->
+    
+    <!-- Journey Navigation Steps -->
+    <div class="journey-steps">
+      @for (step of activitySteps; track step.id; let i = $index) {
+        @if (step.type !== 'completion') {
+          <div class="step-indicator" 
+               [class.active]="i === currentStepIndex"
+               [class.completed]="step.completed"
+               [class.accessible]="isStepAccessible(i)"
+               (click)="goToStep(i)">
+            <div class="step-number">{{ i + 1 }}</div>
+            <div class="step-name">{{ step.title }}</div>
+          </div>
+        }
+      }
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="journey-content">
+      <!-- Knowledge Check Activity -->
+      @if (currentStep.type === 'knowledge-check') {
+        <detail-knowledge-check
+          [lessonId]="lesson?.id"
+          [challengeId]="currentStep.id"
+          (challengeCompleted)="onActivityCompleted($event)">
+        </detail-knowledge-check>
+      }
+      
+      <!-- Term Matching Activity -->
+      @if (currentStep.type === 'term-matching') {
+        <detail-term-matching
+          [lessonId]="lesson?.id"
+          [challengeId]="currentStep.id"
+          (challengeCompleted)="onActivityCompleted($event)">
+        </detail-term-matching>
+      }
+      
+      <!-- Process Ordering Activity -->
+      @if (currentStep.type === 'process-ordering') {
+        <detail-process-ordering
+          [lessonId]="lesson?.id"
+          [challengeId]="currentStep.id"
+          (challengeCompleted)="onActivityCompleted($event)">
+        </detail-process-ordering>
+      }
+      
+      <!-- Parts Identification Activity -->
+      @if (currentStep.type === 'parts-identification') {
+        <detail-parts-identification
+          (challengeCompleted)="onActivityCompleted(currentStep.maxScore || 15)"
+          (scoreEarned)="onActivityCompleted($event)">
+        </detail-parts-identification>
+      }
+      
+      <!-- Application Scenario Activity -->
+      @if (currentStep.type === 'application-scenario') {
+        <detail-application-senario
+          (challengeCompleted)="onActivityCompleted(currentStep.maxScore || 20)"
+          (scoreEarned)="onActivityCompleted($event)">
+        </detail-application-senario>
+      }
+      
+      <!-- Concept Map Activity -->
+      @if (currentStep.type === 'concept-map') {
+        <detail-concept-map
+          (challengeCompleted)="onActivityCompleted(currentStep.maxScore || 15)"
+          (scoreEarned)="onActivityCompleted($event)">
+        </detail-concept-map>
+      }
+      
+      <!-- Challenges Box Activity -->
+      @if (currentStep.type === 'challenges-box') {
+        <detail-challanges-box
+          [lessonData]="lesson"
+          (challengeCompleted)="onActivityCompleted({ score: 15, totalPossible: 15, passed: true })">
+        </detail-challanges-box>
+      }
+      
+      <!-- Journey Completion Screen -->
+      @if (currentStep.type === 'completion' || isCompleted) {
+        <div class="journey-completion">
+          <div class="completion-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h2>مبروك! لقد أكملت جميع الأنشطة</h2>
+          <div class="completion-stats">
+            <div class="stat-item">
+              <span class="stat-label">الدرجة النهائية:</span>
+              <span class="stat-value">{{ totalScore }}/{{ maxScore }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">النسبة المئوية:</span>
+              <span class="stat-value">{{ ((totalScore / maxScore) * 100).toFixed(1) }}%</span>
+            </div>
+          </div>
+          <div class="completion-message">
+            <p>لقد أظهرت فهماً جيداً للمفاهيم في هذه الوحدة. استمر في العمل الجيد!</p>
+          </div>
+          <div class="completion-actions">
+            <button class="btn btn-primary" (click)="onReturnToLesson()">
+              العودة إلى الدرس
+            </button>
+ 
+            
+          </div>
+        </div>
+      }
+    </div>
+
+
+    <div class="journey-actions" style="margin-top:20px;">
+      <button class="btn btn-outline-secondary" (click)="onReturnToLesson()">
+        <i class="fas fa-arrow-right me-1"></i> العودة للدرس
+      </button>
+
+      <button class="btn btn-warning"  style="float:left;" (click)="devSkipStep()">
+        <i class="fas fa-forward me-1"></i> Dev Skip
+      </button>
+
+
+    </div>
+
+
+  </div>

@@ -1,0 +1,161 @@
+<div
+  ngbAccordion
+  [closeOthers]="true"
+  class="accordion accordion-icon accordion-border"
+  id="accordionExample2"
+>
+  @for (data of courseList; track $index; let first = $first) {
+    <div
+      ngbAccordionItem
+      [collapsed]="first ? false : true"
+      class="accordion-item mb-3"
+    >
+      <h6 ngbAccordionHeader class="accordion-header font-base" id="heading-1">
+        <button
+          ngbAccordionButton
+          class="accordion-button fw-bold rounded d-flex"
+          type="button"
+        >
+          {{ data.week }} -
+          <span class="small ms-2">{{ data.dateRange }}</span>
+          <span class="small ms-0 ms-sm-2 d-none d-sm-block"
+            >({{ data.items.length }} Items)</span
+          >
+
+          @if (first) {
+            <span
+              class="text-secondary ms-auto pe-4"
+              placement="top"
+              ngbTooltip="Mark as completed"
+            >
+              <i class="bi bi-check-circle-fill"></i>
+            </span>
+          }
+        </button>
+      </h6>
+
+      <div
+        ngbAccordionCollapse
+        id="collapse-1"
+        class="accordion-collapse collapse show"
+        aria-labelledby="heading-1"
+        data-bs-parent="#accordionExample2"
+      >
+        <div ngbAccordionBody class="accordion-body mt-3">
+          <ng-template>
+            @for (item of data.items; track $index; let last = $last) {
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  @if (item.type == 'lecture') {
+                    <lightgallery
+                      [settings]="settings"
+                      class="icon-md position-relative"
+                    >
+                      <a
+                        data-glightbox
+                        data-gallery="office-tour"
+                        [href]="item.videoUrl"
+                      >
+                        <img [src]="item.image" class="rounded-1" alt="" />
+                        <small
+                          class="text-white position-absolute top-50 start-50 translate-middle"
+                          ><i class="fas fa-play me-0"></i
+                        ></small>
+                      </a>
+                    </lightgallery>
+                  } @else if (item.type == 'assignment') {
+                    <a
+                      href="javascript:void(0);"
+                      class="icon-md mb-0 position-static flex-shrink-0 text-body"
+                    >
+                      <i class="fas fa-fw fa-file-signature fs-5"></i>
+                    </a>
+                  } @else if (item.type == 'slide') {
+                    <a
+                      href="javascript:void(0);"
+                      class="icon-md mb-0 position-static flex-shrink-0 text-body"
+                    >
+                      <i class="fas fa-fw fa-file-alt fs-5"></i>
+                    </a>
+                  } @else {
+                    <a
+                      href="javascript:void(0);"
+                      class="icon-md mb-0 position-static flex-shrink-0 text-body"
+                    >
+                      <i class="fas fa-question-circle fa-fw fs-5"></i>
+                    </a>
+                  }
+
+                  <div class="ms-3">
+                    <a
+                      href="javascript:void(0);"
+                      class="d-inline-block text-truncate mb-0 h6 fw-normal w-100px w-sm-200px w-md-400px"
+                    >
+                      {{ item.title }}</a
+                    >
+                    <ul class="nav nav-divider small mb-0">
+                      @if (item.duration) {
+                        <li class="nav-item">{{ item.duration }}</li>
+                      }
+                      @if (item.points) {
+                        <li class="nav-item">{{ item.points }}pts</li>
+                      }
+                      @if (item.status) {
+                        <li class="nav-item">
+                          <a
+                            href="javascript:void(0);"
+                            [ngClass]="{
+                              'text-success': item.status == 'Submitted',
+                            }"
+                            >{{ item.status }}</a
+                          >
+                        </li>
+                      }
+                      @if (item.view) {
+                        <li class="nav-item">View</li>
+                      }
+                      @if (item.slides) {
+                        <li class="nav-item">{{ item.slides }} Slide</li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="hstack gap-2 align-items-center">
+                  @if (item.resume) {
+                    <a
+                      class="btn btn-sm btn-primary mb-0"
+                      href="javascript:void(0);"
+                      role="button"
+                      aria-expanded="false"
+                    >
+                      <span class="d-none d-sm-block">Resume</span>
+                      <span class="d-sm-none"
+                        ><i class="bi bi-play-fill"></i
+                      ></span>
+                    </a>
+                  }
+
+                  <a
+                    class="p-2 mb-0"
+                    [ngClass]="item.status ? 'text-success' : 'text-secondary'"
+                    placement="top"
+                    aria-label="Mark as Complete"
+                    [ngbTooltip]="
+                      item.status ? 'Completed' : 'Mark as Complete'
+                    "
+                  >
+                    <i class="bi bi-check-circle-fill"></i>
+                  </a>
+                </div>
+              </div>
+              @if (!last) {
+                <hr />
+              }
+            }
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  }
+</div>

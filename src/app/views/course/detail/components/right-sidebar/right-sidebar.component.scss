@@ -1,0 +1,546 @@
+/* Enhanced Table of Contents Component CSS */
+
+/* Container Styles */
+.toc-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* RTL Support */
+.toc-container[style*="direction:rtl"] {
+  text-align: right;
+}
+
+/* Header Styles */
+.toc-header {
+  background-color: rgb(97, 168, 230);
+  color: white;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Tree Structure */
+.toc-tree {
+  padding: 10px 0;
+  width: 100%;
+}
+
+/* Group (Theme) Styles */
+.group {
+  margin-bottom: 5px;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.group-header .icon {
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+  font-size: 16px;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #e8eaf6;
+  color: rgb(97, 168, 230);
+  flex-shrink: 0;
+}
+
+/* Theme Management Styles */
+.theme-actions {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.group-header:hover .theme-actions {
+  opacity: 1;
+}
+
+.theme-actions .btn {
+  margin-left: 5px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* Input Editing Styles */
+.group-header input.form-control {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+/* Unit Header Styles */
+.unit-header {
+  padding: 8px 30px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+}
+
+.unit-title-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.unit-title {
+  flex-grow: 1;
+  font-weight: 600;
+  color: #555;
+}
+
+.unit-actions {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.unit-header:hover .unit-actions {
+  opacity: 1;
+}
+
+.unit-actions .btn {
+  margin-left: 5px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* Lesson Styles */
+.lesson {
+  padding: 8px 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lesson-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.lesson-title {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.lesson-actions {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.lesson:hover .lesson-actions {
+  opacity: 1;
+}
+
+.lesson-actions .btn {
+  margin-left: 5px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* Status Indicator */
+.status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.status.completed {
+  background-color: #4caf50;
+}
+
+.status.in-progress {
+  background-color: #ff9800;
+}
+
+.status.not-started {
+  background-color: #e0e0e0;
+}
+
+/* Active and Hover States */
+.group-header.active {
+  background-color: #e8eaf6;
+}
+
+.lesson.active {
+  background-color: #e8eaf6;
+  color: rgb(97, 168, 230);
+}
+
+.lesson:hover {
+  background-color: #f0f0f0;
+}
+
+/* Editing Styles */
+.group-header.editing,
+.unit-header.editing,
+.lesson.editing {
+  background-color: #f5f5f5;
+}
+
+.editing input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.editing .btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.editing .btn {
+  margin-left: 5px;
+}
+
+/* Empty States */
+.no-lessons, 
+.no-content {
+  padding: 15px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  background-color: #f9f9f9;
+}
+
+/* Lessons Container */
+.lessons {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1199.98px) {
+  /* Ensure mobile offcanvas has proper height and scrolling */
+  .offcanvas-body {
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+  
+  /* Always show action buttons on mobile for better usability */
+  .theme-actions,
+  .unit-actions,
+  .lesson-actions {
+    opacity: 1;
+  }
+  
+  /* Make touch targets larger on mobile */
+  .lesson {
+    padding: 12px 25px;
+  }
+  
+  .group-header {
+    padding: 12px 15px;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 991.98px) {
+  .toc-container {
+    font-size: 14px;
+  }
+  
+  .theme-actions .btn,
+  .unit-actions .btn,
+  .lesson-actions .btn {
+    padding: 4px 8px;
+  }
+}
+
+/* Small screens (phones) */
+@media (max-width: 767.98px) {
+  .theme-actions,
+  .unit-actions,
+  .lesson-actions {
+    flex-direction: row; /* Keep buttons in a row */
+  }
+  
+  .theme-actions .btn,
+  .unit-actions .btn,
+  .lesson-actions .btn {
+    margin: 0 2px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  /* Reduce padding to fit more content */
+  .unit-header {
+    padding: 8px 15px;
+  }
+  
+  .lesson {
+    padding: 8px 20px;
+  }
+}
+
+/* Offcanvas Specific Styles */
+.offcanvas-body {
+  padding: 10px !important;
+}
+
+.offcanvas-body form {
+  width: 100%;
+}
+
+.d-grid .btn {
+  width: 100%;
+}
+
+/* Unsaved items styling */
+.group.unsaved,
+.unit-header.unsaved,
+.lesson.unsaved {
+  background-color: #fff3cd; /* Light yellow background */
+  border-right: 3px solid #ffc107; /* Amber border */
+}
+
+.unsaved .theme-title,
+.unsaved .unit-title,
+.unsaved .lesson-title {
+  color: #856404; /* Darker text for contrast */
+}
+
+/* Progress Bar Styling */
+.progress {
+  height: 5px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  background-color: #28a745; /* Green progress bar */
+}
+
+/* Badge for Unsaved Items */
+.badge.bg-warning {
+  font-size: 0.6em;
+  vertical-align: super;
+}
+
+/* Optional: Hover state for unsaved items */
+.unsaved:hover {
+  background-color: #ffe69c; /* Slightly darker yellow on hover */
+}
+
+/* Styles for the TOC management header */
+.toc-management-header {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Button styles */
+.toc-management-header .btn {
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+
+/* Add button styles */
+.toc-management-header .btn-primary {
+  background-color: #4e73df;
+  border-color: #4e73df;
+}
+
+.toc-management-header .btn-primary:hover {
+  background-color: #2e59d9;
+  border-color: #2653d4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(78, 115, 223, 0.25);
+}
+
+/* Save button styles */
+.toc-management-header .btn-success {
+  background-color: #1cc88a;
+  border-color: #1cc88a;
+}
+
+.toc-management-header .btn-success:hover:not([disabled]) {
+  background-color: #17a673;
+  border-color: #169b6b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(28, 200, 138, 0.25);
+}
+
+/* Disabled save button */
+.toc-management-header .btn-success[disabled] {
+  background-color: #a3e1c9;
+  border-color: #a3e1c9;
+}
+
+/* Progress bar styling */
+.toc-management-header .progress {
+  height: 4px;
+  border-radius: 2px;
+  background-color: #e6e6e6;
+  margin-top: 8px;
+}
+
+.toc-management-header .progress-bar {
+  background-color: #1cc88a;
+}
+
+/* Icon styling */
+.toc-management-header .fas {
+  font-size: 0.9rem;
+}
+
+/* RTL support */
+[dir="rtl"] .toc-management-header .fas {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+/* Unsaved indicator animation */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.badge.bg-warning {
+  animation: pulse 2s infinite;
+}
+
+/* Theme/unit/lesson hover effects */
+.group-header:hover,
+.unit-header:hover,
+.lesson:hover {
+  background-color: #f5f7fa;
+}
+
+/* Custom scrollbar for TOC */
+.offcanvas-body {
+  scrollbar-width: thin;
+  scrollbar-color: #cfd8dc #f1f1f1;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+  background-color: #cfd8dc;
+  border-radius: 6px;
+  border: 1px solid #f1f1f1;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb:hover {
+  background: #b0bec5;
+}
+
+/* Enhanced offcanvas header */
+.offcanvas-header {
+  border-bottom: 1px solid #e3e6f0;
+  padding: 1rem 1.5rem;
+
+}
+
+.offcanvas-header h5 {
+  font-weight: 600;
+  color: #5a5c69;
+  text-align: center !important;
+  width:100%;
+}
+
+/* Add some space between buttons and content */
+.toc-management-header {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+}
+
+/* Make buttons more touch-friendly on mobile */
+@media (max-width: 576px) {
+  .toc-management-header .btn {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* Fix for offcanvas visibility in mobile view */
+.offcanvas-end {
+  width: 100%;
+  max-width: 350px;
+}
+
+@media (min-width: 1200px) {
+  .offcanvas-xl.offcanvas-end {
+    transform: none !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Show actions when in mobile view */
+@media (max-width: 1199.98px) {
+  .theme-actions,
+  .unit-actions,
+  .lesson-actions {
+    opacity: 1;
+  }
+}
+
+
+/* Add visibility toggle button styles */
+.group-header .btn-outline-secondary,
+.unit-header .btn-outline-secondary {
+  padding: 2px 6px;
+  margin-right: 5px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.group-header .btn-outline-secondary:hover,
+.unit-header .btn-outline-secondary:hover {
+  opacity: 1;
+}
+
+.group-header .btn-outline-secondary .fas,
+.unit-header .btn-outline-secondary .fas {
+  font-size: 0.8rem;
+}

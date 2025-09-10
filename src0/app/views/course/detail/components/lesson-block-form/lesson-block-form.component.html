@@ -1,0 +1,503 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ isEditMode ? 'تعديل وحدة' : 'إضافة وحدة جديدة' }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="blockForm" (ngSubmit)="onSubmit()">
+      <!-- Nav Tabs -->
+      <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs nav-fill mb-4">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>
+            <i class="fas fa-info-circle me-1"></i> المعلومات الأساسية
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section">
+              <div class="row">
+                <!-- Title -->
+                <div class="col-md-12 mb-3">
+                  <label for="title" class="form-label">عنوان الوحدة <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="title" formControlName="title"
+                    placeholder="أدخل عنوان الوحدة">
+                  @if (blockForm.get('title')?.invalid && blockForm.get('title')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    @if (blockForm.get('title')?.errors?.['required']) {
+                    <span>عنوان الوحدة مطلوب</span>
+                    } @else if (blockForm.get('title')?.errors?.['minlength']) {
+                    <span>يجب أن يكون العنوان 3 أحرف على الأقل</span>
+                    } @else if (blockForm.get('title')?.errors?.['maxlength']) {
+                    <span>يجب ألا يتجاوز العنوان 100 حرف</span>
+                    }
+                  </div>
+                  }
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-12 mb-3">
+                  <label for="description" class="form-label">وصف الوحدة <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="description" formControlName="description" rows="3"
+                    placeholder="أدخل وصف الوحدة"></textarea>
+                  @if (blockForm.get('description')?.invalid && blockForm.get('description')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    @if (blockForm.get('description')?.errors?.['required']) {
+                    <span>وصف الوحدة مطلوب</span>
+                    } @else if (blockForm.get('description')?.errors?.['minlength']) {
+                    <span>يجب أن يكون الوصف 10 أحرف على الأقل</span>
+                    } @else if (blockForm.get('description')?.errors?.['maxlength']) {
+                    <span>يجب ألا يتجاوز الوصف 500 حرف</span>
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>
+            <i class="fas fa-cog me-1"></i> التفاصيل
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section">
+              <div class="row">
+                <!-- Order Number -->
+                <div class="col-md-6 mb-3">
+                  <label for="order" class="form-label">ترتيب الوحدة <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="order" formControlName="order" min="1">
+                  @if (blockForm.get('order')?.invalid && blockForm.get('order')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    <span>يجب إدخال رقم صحيح أكبر من 0</span>
+                  </div>
+                  }
+                </div>
+
+                <!-- Duration -->
+                <div class="col-md-6 mb-3">
+                  <label for="duration" class="form-label">مدة الوحدة <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="duration" formControlName="duration"
+                    placeholder="مثال: 5 دقائق">
+                  @if (blockForm.get('duration')?.invalid && blockForm.get('duration')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    <span>مدة الوحدة مطلوبة</span>
+                  </div>
+                  }
+                </div>
+
+                <!-- Average Completion Time -->
+                <div class="col-md-6 mb-3">
+                  <label for="avgCompletionTime" class="form-label">متوسط وقت الإكمال <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="avgCompletionTime" formControlName="avgCompletionTime"
+                    placeholder="مثال: 10 دقائق">
+                  @if (blockForm.get('avgCompletionTime')?.invalid && blockForm.get('avgCompletionTime')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    <span>متوسط وقت الإكمال مطلوب</span>
+                  </div>
+                  }
+                </div>
+
+                <!-- Activities Count -->
+                <div class="col-md-6 mb-3">
+                  <label for="activitiesCount" class="form-label">عدد الأنشطة <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="activitiesCount" formControlName="activitiesCount"
+                    min="1" max="20">
+                  @if (blockForm.get('activitiesCount')?.invalid && blockForm.get('activitiesCount')?.touched) {
+                  <div class="text-danger mt-1 small">
+                    <span>يجب إدخال رقم بين 1 و 20</span>
+                  </div>
+                  }
+                </div>
+
+                <!-- Difficulty Level -->
+                <div class="col-md-6 mb-3">
+                  <label for="difficulty" class="form-label">مستوى الصعوبة <span class="text-danger">*</span></label>
+                  <select class="form-select" id="difficulty" formControlName="difficulty">
+                    @for (level of difficultyLevels; track level.value) {
+                    <option [value]="level.value">{{ level.label }}</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Review Interval -->
+                <div class="col-md-6 mb-3">
+                  <label for="reviewInterval" class="form-label">فترة المراجعة</label>
+                  <select class="form-select" id="reviewInterval" formControlName="reviewInterval">
+                    @for (interval of reviewIntervals; track interval.value) {
+                    <option [value]="interval.value">{{ interval.label }}</option>
+                    }
+                  </select>
+                  <div class="form-text small">الفترة المقترحة قبل تنبيه الطالب بالمراجعة</div>
+                </div>
+
+                <!-- Prerequisites -->
+                <div class="col-md-6 mb-3">
+                  <label for="prerequisiteId" class="form-label">المتطلب السابق</label>
+                  <select class="form-select" id="prerequisiteId" formControlName="prerequisiteId">
+                    <option value="">لا يوجد</option>
+                    @for (block of getPrerequisiteOptions(); track block.id) {
+                    <option [value]="block.id">{{ block.title }} (الوحدة {{ block.order }})</option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Is Locked -->
+                <div class="col-md-6 mb-3">
+                  <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="isLocked" formControlName="isLocked">
+                    <label class="form-check-label" for="isLocked">
+                      وحدة مغلقة (تتطلب إذن للوصول)
+                    </label>
+                  </div>
+                </div>
+
+
+                <!-- Order Number -->
+                <div class="col-md-6 mb-3">
+                  <label for="order" class="form-label"> رقم صفحة كتاب التلميذ <span
+                      class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="studentBookPageNo" formControlName="studentBookPageNo"
+                    min="1">
+                </div>
+
+
+                <!-- Order Number -->
+                <div class="col-md-6 mb-3">
+                  <label for="order" class="form-label"> رقم صفحة كتاب المعلم <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="teacherBookPageNo" formControlName="teacherBookPageNo"
+                    min="1">
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>
+            <i class="fas fa-file-alt me-1"></i> المحتوى
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section">
+              <!-- Block Content -->
+              <div class="mb-3">
+                <label for="blockContent" class="form-label">محتوى الوحدة</label>
+                <textarea class="form-control" id="blockContent" formControlName="blockContent" rows="10"
+                  placeholder="أدخل محتوى الوحدة النصي هنا..."></textarea>
+                <div class="form-text">
+                  يمكنك إدخال محتوى تعليمي مفصل للوحدة هنا. سيتم استخدام هذا المحتوى لإنشاء الاختبارات والتحديات
+                  باستخدام أدوات الذكاء الاصطناعي.
+                </div>
+                @if (blockForm.get('blockContent')?.invalid && blockForm.get('blockContent')?.touched) {
+                <div class="text-danger mt-1 small">
+                  @if (blockForm.get('blockContent')?.errors?.['maxlength']) {
+                  <span>يجب ألا يتجاوز المحتوى 10000 حرف</span>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="4">
+          <a ngbNavLink>
+            <i class="fas fa-photo-video me-1"></i> الوسائط
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section">
+              <!-- Cover Image -->
+              <div class="media-section mb-4">
+                <h6 class="media-section-title">
+                  <i class="fas fa-image me-1"></i> صورة الغلاف
+                </h6>
+
+                <!-- Toggle for Cover Image Source -->
+                <div class="btn-group w-100 mb-3" role="group">
+                  <input type="radio" class="btn-check" name="coverImageType" id="coverImageTypeUpload"
+                    [value]="'upload'" formControlName="coverImageType">
+                  <label class="btn btn-outline-primary" for="coverImageTypeUpload">
+                    <i class="fas fa-upload me-1"></i> رفع ملف
+                  </label>
+
+                  <input type="radio" class="btn-check" name="coverImageType" id="coverImageTypeUrl" [value]="'url'"
+                    formControlName="coverImageType">
+                  <label class="btn btn-outline-primary" for="coverImageTypeUrl">
+                    <i class="fas fa-link me-1"></i> رابط صورة
+                  </label>
+                </div>
+
+                <!-- Cover Image Options -->
+                @if (blockForm.get('coverImageType')?.value === 'upload') {
+                <div class="mb-3">
+                  <input type="file" class="form-control" id="coverImageFile" (change)="onFileSelected($event, 'image')"
+                    accept="image/*">
+                  <div class="form-text small">اختر ملف صورة من جهازك</div>
+                </div>
+                } @else {
+                <div class="mb-3">
+                  <input type="url" class="form-control" id="coverImageUrl" formControlName="coverImageUrl"
+                    placeholder="أدخل رابط الصورة" (change)="onCoverImageUrlChange($event)">
+                  <div class="form-text small">أدخل رابط مباشر للصورة (URL)</div>
+                </div>
+                }
+
+                <!-- Image Preview -->
+                @if (previewImageUrl) {
+                <div class="image-preview-container">
+                  <img [src]="previewImageUrl" class="img-thumbnail image-preview" alt="معاينة صورة الغلاف">
+                  <button type="button" class="btn btn-sm btn-danger btn-clear-image" (click)="clearCoverImage()">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                } @else {
+                <div class="no-media-selected">
+                  <i class="fas fa-image media-icon"></i>
+                  <p>لم يتم اختيار صورة</p>
+                  <small>سيتم استخدام صورة افتراضية</small>
+                </div>
+                }
+              </div>
+
+              <!-- Video -->
+              <div class="media-section">
+                <h6 class="media-section-title">
+                  <i class="fas fa-video me-1"></i> ملف الفيديو
+                </h6>
+
+                <!-- Toggle for Video Source -->
+                <div class="btn-group w-100 mb-3" role="group">
+                  <input type="radio" class="btn-check" name="videoType" id="videoTypeUpload" [value]="'upload'"
+                    formControlName="videoType">
+                  <label class="btn btn-outline-primary" for="videoTypeUpload">
+                    <i class="fas fa-upload me-1"></i> رفع ملف
+                  </label>
+
+                  <input type="radio" class="btn-check" name="videoType" id="videoTypeUrl" [value]="'url'"
+                    formControlName="videoType">
+                  <label class="btn btn-outline-primary" for="videoTypeUrl">
+                    <i class="fas fa-link me-1"></i> رابط فيديو
+                  </label>
+                </div>
+
+                <!-- Video Options -->
+                @if (blockForm.get('videoType')?.value === 'upload') {
+                <div class="mb-3">
+                  <input type="file" class="form-control" id="videoFile" (change)="onFileSelected($event, 'video')"
+                    accept="video/*">
+                  <div class="form-text small">اختر ملف فيديو من جهازك</div>
+                </div>
+                } @else {
+                <div class="mb-3">
+                  <input type="url" class="form-control" id="videoUrl" formControlName="videoUrl"
+                    placeholder="أدخل رابط الفيديو (YouTube, Vimeo, أو رابط مباشر)" (change)="onVideoUrlChange($event)">
+                  <div class="form-text small">يمكن استخدام روابط يوتيوب أو فيميو أو أي رابط فيديو مباشر</div>
+                </div>
+                }
+
+                <!-- Video Preview or Status -->
+                @if (selectedVideoName) {
+                <div class="selected-video">
+                  <div class="video-info">
+                    <i class="fas fa-file-video video-icon"></i>
+                    <div class="video-details">
+                      <span class="video-name">{{ selectedVideoName }}</span>
+                      <small class="video-status">تم اختيار الفيديو</small>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-danger btn-clear-video" (click)="clearVideo()">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                } @else if (selectedVideoUrl) {
+                <div class="selected-video">
+                  <div class="video-info">
+                    <i class="fas fa-link video-icon"></i>
+                    <div class="video-details">
+                      <span class="video-name text-truncate">{{ selectedVideoUrl }}</span>
+                      <small class="video-status">رابط فيديو خارجي</small>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-danger btn-clear-video" (click)="clearVideo()">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                } @else {
+                <div class="no-media-selected">
+                  <i class="fas fa-film media-icon"></i>
+                  <p>لم يتم اختيار فيديو بعد</p>
+                </div>
+                }
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="5">
+          <a ngbNavLink>
+            <i class="fas fa-tasks me-1"></i> حالة التطوير
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section dev-status">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+
+                  <div class="form-text">
+                    يستخدم هذا الحقل لتتبع مراحل تطوير الوحدة. حدد المرحلة الحالية للوحدة.
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <div class="dev-status-info">
+
+                    <div *ngIf="loading" class="loading-text">جاري التحميل...</div>
+                    <div *ngIf="error">حدث خطأ في تحميل البيانات</div>
+
+                    <ul class="dev-stages" *ngIf="!loading && !error">
+                      <li *ngFor="let insight of blockKeyInsights">
+                        <!-- {{insight.id}}  -->
+                        <div style="color:#0557a6; ">{{insight.learning_objective}}
+                          <span [ngClass]="'difficulty-' + insight.difficulty_level.toLowerCase()">
+                            ({{ insight.difficulty_level }})
+                          </span>
+
+                        </div>
+                        <span>{{insight.insight_text}}</span>
+                      </li>
+                    </ul>
+
+
+                    <!-- <h6 class="mb-3">مراحل التطوير:</h6>
+                    <ul class="dev-stages">
+                      <li>1. <strong>لم يبدأ</strong> - لم يبدأ العمل على الوحدة بعد.</li>
+                      <li>2. <strong>تم البدء</strong> - تم البدء في العمل على الوحدة.</li>
+                      <li>3. <strong>تم إضافة المحتوى</strong> - تم إضافة المحتوى النصي للوحدة.</li>
+                      <li>4. <strong>تم إنشاء السيناريو</strong> - تم إنشاء إطارات السيناريو للوحدة.</li>
+                      <li>5. <strong>تم إضافة النصوص التوجيهية</strong> - تم إضافة نصوص توجيهية لإنشاء الصور.</li>
+                      <li>6. <strong>تم رفع الصور</strong> - تم رفع الصور لإطارات السيناريو.</li>
+                      <li>7. <strong>مكتمل</strong> - اكتملت جميع مراحل تطوير الوحدة.</li>
+                    </ul> -->
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <button type="button" class="btn btn-outline-primary" (click)="generateKeyInsights()"
+                    [disabled]="isSubmitting || !isEditMode">
+                    <i class="fas fa-tasks me-1"></i> Genereate Key insights
+                  </button>
+
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="6">
+          <a ngbNavLink>
+            <i class="fas fa-tasks me-1"></i> Block Dev Status
+          </a>
+          <ng-template ngbNavContent>
+            <div class="tab-section dev-status">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+
+                  <div class="form-text">
+                    Here the development proccess status :
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <!-- blocl dev status  -->
+                <div class="col-md-12 mb-3">
+                  <label for="title" class="form-label"> رابط السكيتش (كانفا) <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="title" formControlName="sketchCanvaLink"
+                    placeholder="أدخل الرابط  ">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="difficulty" class="form-label"> الحالة <span class="text-danger">*</span></label>
+                  <select class="form-select" id="devStatus" formControlName="devStatus" style="direction:ltr;">
+                    @for (stat of devStatusOptions; track stat.value) {
+                    <option [value]="stat.value">{{ stat.label }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <!-- blocl dev status  -->
+                <div class="col-md-12 mb-3">
+                  <label for="title" class="form-label"> رابط (Google Drive) <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="title" formControlName="googleDriveLink"
+                    placeholder="أدخل الرابط  ">
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          </ng-template>
+        </li>
+        <!-- end of li-6  -->
+
+      </ul>
+
+      <div [ngbNavOutlet]="nav"></div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <!-- Tab Navigation Buttons -->
+    <div class="tab-navigation">
+      <button type="button" class="btn btn-outline-secondary" [disabled]="activeTab === 1"
+        (click)="activeTab = activeTab - 1">
+        <i class="fas fa-chevron-right me-1"></i> السابق
+      </button>
+      <button type="button" class="btn btn-outline-secondary" [disabled]="activeTab === 5"
+        (click)="activeTab = activeTab + 1">
+        التالي <i class="fas fa-chevron-left ms-1"></i>
+      </button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button type="button" class="btn btn-outline-primary" (click)="openActionTrackingModal()"
+        [disabled]="isSubmitting || !isEditMode">
+        <i class="fas fa-tasks me-1"></i> Development Log
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSubmitting">إلغاء</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="blockForm.invalid || isSubmitting">
+        @if (isSubmitting) {
+        <span>
+          <i class="fas fa-spinner fa-spin me-1"></i> جاري الحفظ...
+        </span>
+        } @else {
+        <span>
+          {{ isEditMode ? 'حفظ التغييرات' : 'إضافة الوحدة' }}
+        </span>
+        }
+      </button>
+    </div>
+  </div>
+</div>

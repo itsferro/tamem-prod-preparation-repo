@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+:host {
+  display: block;
+}
+
+.surah-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 130px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    
+    .surah-number {
+      transform: scale(1.05);
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.surah-number {
+  width: 45px;
+  height: 45px;
+  background-color: #f8f7f0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #5d4037;
+  margin-left: 15px;
+  transition: transform 0.3s ease;
+  border: 2px solid #e5e1d8;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.surah-content {
+  flex: 1;
+  padding: 15px;
+  direction: rtl;
+}
+
+.surah-title {
+  margin-bottom: 12px;
+}
+
+.surah-name {
+  margin: 0;
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: #3c3c3c;
+  font-weight: 700;
+}
+
+.surah-english {
+  font-size: 14px;
+  color: #8d8d8d;
+  margin-right: 8px;
+}
+
+.surah-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-item {
+  margin-left: 15px;
+  
+  &:last-child {
+    margin-left: 0;
+  }
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #757575;
+  margin-bottom: 4px;
+}
+
+.progress-container {
+  width: 120px;
+  height: 8px;
+  background-color: #f0ead6;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  right: 0;
+  top: 9px;
+  font-size: 11px;
+  color: #757575;
+}
+
+.score-value {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.pages-info {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .completed {
+    font-weight: bold;
+    color: #5d4037;
+  }
+  
+  .separator {
+    color: #bbb;
+    margin: 0 3px;
+  }
+  
+  .total {
+    color: #8d8d8d;
+  }
+}
+
+.decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 4px;
+  transition: all 0.3s ease;
+}

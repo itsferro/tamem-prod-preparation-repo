@@ -1,0 +1,74 @@
+<header
+  class="navbar-light navbar-sticky"
+  [class.navbar-sticky-on]="scrollY >= 300"
+>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <app-logo-box />
+
+      <button
+        (click)="collapse.toggle()"
+        class="navbar-toggler ms-auto"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-animation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="isCollapsed"
+        class="navbar-collapse collapse"
+        id="navbarCollapse"
+      >
+        <ul class="navbar-nav navbar-nav-scroll ms-auto">
+          <li ngbDropdown class="nav-item dropdown">
+            <a
+              ngbDropdownToggle
+              class="nav-link dropdown-toggle active"
+              href="javascript:void(0);"
+              id="demoMenu"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              >Demos</a
+            >
+            <ul
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="demoMenu"
+            >
+              <li>
+                <a class="dropdown-item" href="javascript:void();">Menu Item</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="javascript:void();">Menu Item</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void();">Course</a>
+          </li>
+
+          <!-- Nav item 3 link-->
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void();">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="navbar-nav ms-2 d-none d-sm-block">
+        <button class="btn btn-sm btn-dark mb-0">Buy now</button>
+      </div>
+    </div>
+  </nav>
+</header>

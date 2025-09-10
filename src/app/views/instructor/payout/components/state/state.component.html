@@ -1,0 +1,32 @@
+<div class="row g-4 mb-4">
+  <div class="col-sm-6 col-md-4">
+    <div class="border p-3 rounded-3 h-100">
+      <div class="d-flex mb-1 justify-content-between align-items-center">
+        <h6 class="mb-0">Last month payout</h6>
+        <span class="badge bg-success bg-opacity-10 text-success ms-2 mb-0"
+          >Paid</span
+        >
+      </div>
+      <h2 class="mb-2 mt-2">{{ currency }}12,825</h2>
+      <a href="javascript:void(0);">View transaction</a>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="border p-3 rounded-3 h-100">
+      <h6 class="mb-0">This month earning</h6>
+      <h2 class="mb-2 mt-2">{{ currency }}15,356</h2>
+      <p class="mb-0">Expected payout on 05/01/{{ currentYear }}</p>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="bg-primary bg-opacity-10 h-100 p-3 rounded-3">
+      <h6 class="mb-0">Balance</h6>
+      <h2 class="mb-2 mt-2">{{ currency }}8,485</h2>
+      <a href="javascript:void(0);" class="btn btn-sm btn-primary mb-0"
+        >Withdraw Earning</a
+      >
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<form
+  [formGroup]="onlineFrom"
+  (ngSubmit)="onSubmit()"
+  class="row g-4 g-sm-3 mt-2 mb-0"
+>
+  <div class="col-12">
+    <label class="form-label">Name *</label>
+    <input
+      type="text"
+      formControlName="name"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['name'].errors }"
+      aria-label="First name"
+    />
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Email *</label>
+    <input
+      type="email"
+      formControlName="email"
+      [ngClass]="{ 'is-invalid': submit && form['email'].errors }"
+      class="form-control"
+    />
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Mobile number *</label>
+    <input
+      type="text"
+      formControlName="phone"
+      [ngClass]="{ 'is-invalid': submit && form['phone'].errors }"
+      class="form-control"
+      aria-label="Mobile number"
+    />
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Select class *</label>
+    <select
+      class="form-select js-choice"
+      formControlName="class"
+      [ngClass]="{ 'is-invalid': submit && form['class'].errors }"
+      aria-label=".form-select-sm"
+    >
+      <option value="">Select class</option>
+      <option>Digital marketing</option>
+      <option>Business development</option>
+      <option>Science</option>
+      <option>Maths</option>
+      <option>Spoken english</option>
+    </select>
+  </div>
+
+  <div class="col-12 d-grid">
+    <button type="submit" class="btn btn-lg btn-primary mb-0">
+      Book a class
+    </button>
+  </div>
+</form>

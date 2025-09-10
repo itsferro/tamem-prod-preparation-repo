@@ -1,0 +1,74 @@
+<header
+  class="navbar-light navbar-sticky navbar-transparent"
+  [class.navbar-sticky-on]="scrollY >= 300"
+>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <app-logo-box />
+
+      <button
+        class="navbar-toggler ms-auto"
+        type="button"
+        (click)="collapse.toggle()"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-animation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="isCollapsed"
+        class="navbar-collapse collapse"
+        id="navbarCollapse"
+      >
+        <ul class="navbar-nav navbar-nav-scroll ms-auto">
+          <li ngbDropdown class="nav-item dropdown">
+            <a
+              ngbDropdownToggle
+              class="nav-link dropdown-toggle active"
+              href="javascript:void(0);"
+              id="demoMenu"
+              >{{ menuItems.title }}</a
+            >
+            <ul
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="demoMenu"
+            >
+              @for (subItem of menuItems.subItems; track $index) {
+                <li>
+                  <a class="dropdown-item" [routerLink]="subItem.link">{{
+                    subItem.title
+                  }}</a>
+                </li>
+              }
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void(0);">Course</a>
+          </li>
+
+          <!-- Nav item 3 link-->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <app-theme-switcher />
+
+      <div class="navbar-nav ms-3 d-none d-sm-block">
+        <button class="btn btn-sm btn-dark mb-0">Buy now</button>
+      </div>
+    </div>
+  </nav>
+</header>

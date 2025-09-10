@@ -1,0 +1,42 @@
+<section class="pt-0 pt-sm-5">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12 text-center mx-auto">
+        <h2 class="h1 mb-0">What We Offer</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="tiny-slider arrow-hover arrow-blur arrow-round">
+        <ng-tiny-slider
+          [config]="sliderConfig"
+          class="tiny-slider-inner"
+          data-arrow="true"
+          data-dots="false"
+          data-items-xl="4"
+          data-items-lg="3"
+          data-items-md="2"
+          data-items-xs="1"
+          data-autoplay="2000"
+        >
+          @for (item of offersData; track $index) {
+            <div>
+              <div class="card text-center bg-transparent">
+                <img [src]="item.image" class="card-img" alt="Course img" />
+
+                <div class="card-body px-2">
+                  <h5 class="card-title">{{ item.title }}</h5>
+                  <a
+                    href="javascript:void(0);"
+                    class="btn btn-sm btn-danger mb-0"
+                    >Enquire Now</a
+                  >
+                </div>
+              </div>
+            </div>
+          }
+        </ng-tiny-slider>
+      </div>
+    </div>
+  </div>
+</section>

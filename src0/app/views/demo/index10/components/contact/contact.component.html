@@ -1,0 +1,160 @@
+<section
+  id="contact-form"
+  class="position-relative overflow-hidden pt-0 pt-md-5"
+>
+  <div class="container">
+    <div class="row g-4 g-lg-5 align-items-center">
+      <div class="col-lg-6">
+        <h2 class="h1 mb-3">Get in touch with us</h2>
+        <p>
+          Claim your free 10-minute phone call to see if we are right for your
+          kid.
+        </p>
+
+        <div class="row mt-5">
+          <div class="col-sm-6 col-lg-12 col-xl-6 mb-5">
+            <div class="card card-body shadow">
+              <div
+                class="icon-lg bg-success text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6"
+              >
+                <i class="bi bi-whatsapp"></i>
+              </div>
+              <h6>WhatsApp number</h6>
+              <p class="h6 mb-0">
+                <a
+                  href="javascript:void(0);"
+                  class="text-primary-hover mb-0 fw-light stretched-link"
+                  >+256 359 556</a
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-12 col-xl-6 mb-5 mb-xl-0">
+            <div class="card card-body shadow">
+              <div
+                class="icon-lg bg-purple text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6"
+              >
+                <i class="fas fa-tty"></i>
+              </div>
+              <h6>Telephone</h6>
+              <p class="h6 mb-0">
+                <a
+                  href="javascript:void(0);"
+                  class="text-primary-hover mb-0 fw-light stretched-link"
+                  >+123 456 789</a
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 mb-5 mb-xl-0">
+            <div class="card card-body shadow">
+              <div
+                class="icon-lg bg-orange text-white rounded-circle position-absolute top-0 start-100 translate-middle ms-n6"
+              >
+                <i class="fas fa-globe"></i>
+              </div>
+              <h6>Address</h6>
+              <p class="h6 mb-0">
+                <a
+                  href="javascript:void(0);"
+                  class="text-primary-hover mb-0 fw-light stretched-link"
+                  >2492 Centennial NW, Acworth, GA, 30102</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card card-body shadow p-4 p-sm-5 position-relative">
+          <form
+            [formGroup]="contactForm"
+            (ngSubmit)="onSubmit()"
+            class="row g-3 position-relative"
+          >
+            <div class="col-md-6 col-lg-12 col-xl-6">
+              <label class="form-label">Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+                aria-label="Name"
+              />
+            </div>
+
+            <div class="col-md-6 col-lg-12 col-xl-6">
+              <label class="form-label">Phone number *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="phone"
+                [ngClass]="{ 'is-invalid': submitted && form['phone'].errors }"
+              />
+            </div>
+
+            <div class="col-md-6 col-lg-12 col-xl-6">
+              <label class="form-label">Whatsapp number *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="wpNumber"
+                [ngClass]="{
+                  'is-invalid': submitted && form['wpNumber'].errors,
+                }"
+              />
+            </div>
+
+            <div class="col-md-6 col-lg-12 col-xl-6">
+              <label class="form-label">Email *</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && form['email'].errors }"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Contact Purpose</label>
+              <select
+                class="form-select js-choice z-index-9"
+                formControlName="contact"
+                aria-label=".form-select-sm"
+              >
+                <option value="">Contact Purpose</option>
+                <option>IELTS</option>
+                <option>PTE</option>
+                <option>GRE</option>
+                <option>Study In CANADA</option>
+                <option>Study In U.K.</option>
+                <option>Get In Touch With Our Executive</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Message *</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="message"
+                [ngClass]="{
+                  'is-invalid': submitted && form['message'].errors,
+                }"
+              ></textarea>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary mb-0">
+                Send Inquiry
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

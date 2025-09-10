@@ -1,0 +1,42 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+<main>
+  <!-- =======================
+  Main Content START -->
+  <section class="pb-0 pt-4 pb-md-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <blog-detail-info />
+
+          <blog-detail-video />
+
+          <blog-detail-quote />
+
+          <blog-detail-image />
+
+          <blog-detail-content />
+
+          <blog-detail-tags />
+
+          <hr />
+
+          <blog-detail-comment />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Main Content END -->
+
+  <!-- =======================
+  Related blog START -->
+  <detail-related-blog />
+  <!-- =======================
+  Related blog END -->
+</main>
+
+<app-footer className="bg-light" />

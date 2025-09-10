@@ -1,0 +1,161 @@
+<div class="content-explainer-container">
+    <div class="header">
+      <h2>Content Explainer - Block Content Generator</h2>
+      <p>Generate content based on lesson images for Block ID: <strong>{{ blockId || 'Not provided' }}</strong></p>
+    </div>
+  
+    <div class="input-section">
+      <div class="button-group">
+        <button 
+          class="load-btn"
+          (click)="loadCurrentContent()"
+          [disabled]="isLoadingCurrent || !blockId || blockId <= 0"
+        >
+          <span *ngIf="!isLoadingCurrent">🔄 Load Current Content</span>
+          <span *ngIf="isLoadingCurrent" class="loading-text">
+            <i class="spinner"></i>
+            Loading...
+          </span>
+        </button>
+        
+        <button 
+          class="generate-btn"
+          (click)="generateContent()"
+          [disabled]="isLoading || !blockId || blockId <= 0"
+        >
+          <span *ngIf="!isLoading">✨ Generate New Content</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <i class="spinner"></i>
+            Generating...
+          </span>
+        </button>
+        
+        <button 
+          class="clear-btn"
+          (click)="clearContent()"
+          [disabled]="isLoading || isLoadingCurrent"
+        >
+          🗑️ Clear All
+        </button>
+      </div>
+    </div>
+  
+    <div class="error-message" *ngIf="error">
+      <i class="error-icon">⚠️</i>
+      {{ error }}
+    </div>
+
+    <!-- Current Content Section -->
+    <div class="content-section current-content" *ngIf="currentContent !== null">
+      <div class="content-header">
+        <h3>📄 Current Block Content</h3>
+        <div class="header-actions">
+          <span class="block-id-label">Block ID: {{ blockId }}</span>
+          <span class="content-status" [class]="currentContent ? 'has-content' : 'no-content'">
+            {{ currentContent ? 'Has Content' : 'Empty' }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="text-viewer" *ngIf="currentContent">
+        <pre class="content-text current" style="direction:rtl;text-align:right;">{{ currentContent }}</pre>
+      </div>
+      
+      <div class="empty-content" *ngIf="!currentContent">
+        <div class="empty-icon">🔭</div>
+        <p>This block currently has no content</p>
+      </div>
+    </div>
+
+    <!-- Generated Content Section -->
+    <div class="content-section generated-content" *ngIf="generatedContent">
+      <div class="content-header">
+        <h3>✨ Generated Content</h3>
+        <div class="header-actions">
+          <span class="block-id-label">Block ID: {{ blockId }}</span>
+          <div class="action-buttons">
+            <button 
+              class="save-btn"
+              (click)="saveContent()"
+              [disabled]="isSaving || !generatedContent"
+              title="Save generated content"
+            >
+              <span *ngIf="!isSaving">💾 Save & Replace</span>
+              <span *ngIf="isSaving" class="loading-text">
+                <i class="spinner"></i>
+                Saving...
+              </span>
+            </button>
+            
+            <button 
+              class="discard-btn"
+              (click)="discardGenerated()"
+              [disabled]="isSaving"
+              title="Discard generated content"
+            >
+              🗑️ Discard
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-viewer">
+        <pre class="content-text generated" style="direction:rtl;text-align:right;">{{ generatedContent }}</pre>
+      </div>
+    </div>
+
+    <!-- Comparison Section (when both contents exist) -->
+    <div class="comparison-section" *ngIf="currentContent && generatedContent">
+      <div class="comparison-header">
+        <h3>🔍 Content Comparison</h3>
+        <p>Review both versions before deciding to save the new content</p>
+      </div>
+      
+      <div class="comparison-grid">
+        <div class="comparison-item current">
+          <h4>Current Content</h4>
+          <div class="content-preview">
+            <pre style="direction:rtl;text-align:right;">{{ currentContent | slice:0:200 }}{{ currentContent.length > 200 ? '...' : '' }}</pre>
+          </div>
+          <div class="content-stats">
+            <small>Length: {{ currentContent.length }} characters</small>
+          </div>
+        </div>
+        
+        <div class="comparison-divider">
+          <div class="vs-icon">VS</div>
+          <div class="arrow">→</div>
+        </div>
+        
+        <div class="comparison-item generated">
+          <h4>Generated Content</h4>
+          <div class="content-preview">
+            <pre style="direction:rtl;text-align:right;">{{ generatedContent | slice:0:200 }}{{ generatedContent.length > 200 ? '...' : '' }}</pre>
+          </div>
+          <div class="content-stats">
+            <small>Length: {{ generatedContent.length }} characters</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="currentContent === null && !generatedContent && !isLoading && !isLoadingCurrent && !error">
+      <div class="empty-icon">📚</div>
+      <p *ngIf="blockId && blockId > 0">Click "Load Current Content" to view existing content, or "Generate New Content" to create content for Block ID: {{ blockId }}</p>
+      <p *ngIf="!blockId || blockId <= 0">No valid Block ID provided. Please provide a valid Block ID to work with block content.</p>
+    </div>
+  
+    <!-- Debug info (remove in production) -->
+    <div class="debug-info" style="background: #f0f0f0; padding: 10px; margin-top: 20px; font-size: 12px; border-radius: 4px;" *ngIf="true">
+      <strong>Debug Info:</strong><br>
+      Block ID: {{ blockId }}<br>
+      Is Loading Current: {{ isLoadingCurrent }}<br>
+      Is Loading Generated: {{ isLoading }}<br>
+      Is Saving: {{ isSaving }}<br>
+      Has Error: {{ !!error }}<br>
+      Current Content Length: {{ currentContent?.length || 'null' }}<br>
+      Generated Content Length: {{ generatedContent.length || 0 }}<br>
+      Error Message: {{ error || 'None' }}
+    </div>
+  </div>

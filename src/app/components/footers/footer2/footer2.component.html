@@ -1,0 +1,153 @@
+<footer [ngClass]="{ 'pt-5': showTitle } + ' ' + className">
+  <div class="container">
+    <div
+      class="row g-4 justify-content-between"
+      [ngClass]="{ 'pt-5': !showTitle }"
+    >
+      <div class="col-md-5 col-lg-4">
+        <a class="me-0" routerLink="/">
+          <img
+            class="light-mode-item h-40px"
+            src="assets/images/logo.svg"
+            alt="logo"
+          />
+          <img
+            class="dark-mode-item h-40px"
+            src="assets/images/logo-light.svg"
+            alt="logo"
+          />
+        </a>
+
+        <p class="my-3">
+          Eduport education theme, built specifically for the education centers
+          which is dedicated to teaching and involve learners.
+        </p>
+
+        <form
+          [formGroup]="subscribeForm"
+          (ngSubmit)="onSubmit()"
+          class="row row-cols-lg-auto g-2"
+        >
+          <div class="col-12">
+            <input
+              type="email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submit && form['email'].errors }"
+              class="form-control"
+              placeholder="Enter your email address"
+            />
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-dark m-0">Subscribe</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-7 col-lg-6">
+        <div class="row g-4 g-lg-5">
+          <div class="col-6 col-sm-4">
+            @if (showTitle) {
+              <h5 class="mb-2 mb-md-3">Company</h5>
+            }
+            <ul class="nav flex-column">
+              @for (item of item1List; track $index; let first = $first) {
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    [ngClass]="{ 'pt-0': first && !showTitle }"
+                    [routerLink]="item.link"
+                    >{{ item.label }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="col-6 col-sm-4">
+            @if (showTitle) {
+              <h5 class="mb-2 mb-md-3">Teaching</h5>
+            }
+            <ul class="nav flex-column">
+              @for (item of item2List; track $index; let first = $first) {
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    [ngClass]="{ 'pt-0': first }"
+                    [routerLink]="item.link"
+                    >{{ item.label }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="col-6 col-sm-4">
+            <ul class="nav flex-column">
+              @if (showTitle) {
+                <h5 class="mb-2 mb-md-3">Follow Us</h5>
+              }
+              @for (item of socials; track $index; let first = $first) {
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    [ngClass]="{ 'pt-0': first }"
+                    [routerLink]="item.link"
+                  >
+                    @if (item.label == 'linkedin') {
+                      <i
+                        class="fab fa-{{ item.label }} text-{{
+                          item.label
+                        }} me-2"
+                      ></i>
+                    } @else {
+                      <i
+                        class="fab fa-{{ item.label }}-square text-{{
+                          item.label
+                        }} me-2"
+                      ></i>
+                    }
+                    {{ item.label | titlecase }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="d-md-flex justify-content-between align-items-center pt-2 pb-4 text-center"
+        >
+          <div class="text-primary-hover">
+            Copyrights ©{{ year }} Eduport. Build by
+            <a [href]="credits.website" target="_blank" class="text-reset">{{
+              credits.name
+            }}</a
+            >.
+          </div>
+          <!-- copyright links-->
+          <div class="nav justify-content-center mt-3 mt-md-0">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="nav-link" href="javascript:void(0);">Terms of use</a>
+              </li>
+              <li class="list-inline-item ms-1">
+                <a class="nav-link" href="javascript:void(0);"
+                  >Privacy policy</a
+                >
+              </li>
+              <li class="list-inline-item pe-0 ms-1">
+                <a class="nav-link" href="javascript:void(0);">Cookies</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,193 @@
+<div class="card border bg-transparent rounded-3">
+  <div class="card-header bg-transparent border-bottom">
+    <h3 class="mb-0">{{ lesson?.title || 'Lesson Content' }}</h3>
+  </div>
+
+  <div class="card-body">
+    <div class="row g-3 align-items-center justify-content-between mb-4">
+      <div class="col-md-8">
+        <form class="rounded position-relative">
+          <input
+            class="form-control pe-5 bg-transparent"
+            type="search"
+            placeholder="Search blocks..."
+            aria-label="Search"
+          />
+          <button
+            class="bg-transparent p-2 position-absolute top-50 end-0 translate-middle-y border-0 text-primary-hover text-reset"
+            type="submit"
+          >
+            <i class="fas fa-search fs-6"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="col-md-3">
+        <form>
+          <select
+            selectFormInput
+            class="form-select js-choice border-0 z-index-9 bg-transparent"
+            aria-label=".form-select-sm"
+          >
+            <option value="">Sort by</option>
+            <option>Date</option>
+            <option>Title</option>
+            <option>Status</option>
+            <option>Type</option>
+          </select>
+        </form>
+      </div>
+    </div>
+
+    <div class="table-responsive border-0">
+      <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="border-0 rounded-start">Block Information</th>
+            <th scope="col" class="border-0">Difficulty</th>
+            <th scope="col" class="border-0">Rating</th>
+            <th scope="col" class="border-0 rounded-end">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @if (lesson?.lessonBlocks && lesson?.lessonBlocks.length > 0) {
+            @for (block of lesson.lessonBlocks; track block.id) {
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="image-container position-relative">
+                      <img [src]="block.coverImage || getDefaultCoverImage(block)" class="block-cover-image" alt="{{ block.title }}" 
+                           onerror="this.src='/assets/images/courses/blocks/placeholder-video.jpg'"/>
+                      
+                      <div 
+                        class="status-badge image-overlay-badge"
+                        [ngClass]="block.status || 'draft'"
+                      >
+                        @if (block.status === 'published') {
+                          <i class="fas fa-check-circle"></i>
+                        } @else if (block.status === 'draft') {
+                          <i class="fas fa-edit"></i>
+                        } @else if (block.status === 'review') {
+                          <i class="fas fa-sync-alt"></i>
+                        } @else if (block.status === 'rejected') {
+                          <i class="fas fa-times-circle"></i>
+                        } @else {
+                          <i class="fas fa-book"></i>
+                        }
+                        <span class="badge-text">{{ getStatusLabel(block) }}</span>
+                      </div>
+                    </div>
+                    <div class="block-info me-3 ms-0">
+                      <h6>
+                        <a href="javascript:void(0);">{{ block.title }}</a>
+                      </h6>
+
+                      <div class="d-sm-flex">
+                        <p class="h6 fw-light mb-0 small me-3">
+                          <i class="fas fa-clock text-orange me-2"></i>
+                          {{ block.duration || '0' }} minutes
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="difficulty-level">
+                    <div class="difficulty-dots">
+                      @for (dot of getArrayOfLength(5); track $index) {
+                        <span class="difficulty-dot" [class.active]="$index < getBlockDifficulty(block)"></span>
+                      }
+                    </div>
+                    <span class="difficulty-label">{{ getDifficultyLabel(getBlockDifficulty(block)) }}</span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="rating">
+                    <div class="stars">
+                      @for (star of getStarArray(getBlockRating(block)); track $index) {
+                        @if (star === 1) {
+                          <i class="fas fa-star text-warning"></i>
+                        } @else if (star === 0.5) {
+                          <i class="fas fa-star-half-alt text-warning"></i>
+                        } @else {
+                          <i class="far fa-star text-muted"></i>
+                        }
+                      }
+                    </div>
+                    <span class="rating-value">{{ getBlockRating(block) }}/5</span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="action-buttons-vertical">
+                    <a
+                      href="javascript:void(0);"
+                      class="btn btn-sm btn-success-soft btn-round mb-2"
+                      title="Edit"
+                    >
+                      <i class="far fa-fw fa-edit"></i>
+                    </a>
+                    <button 
+                      class="btn btn-sm btn-info-soft btn-round mb-2" 
+                      title="View"
+                    >
+                      <i class="far fa-fw fa-eye"></i>
+                    </button>
+                    <button 
+                      class="btn btn-sm btn-danger-soft btn-round"
+                      title="Delete"
+                    >
+                      <i class="fas fa-fw fa-times"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          } @else {
+            <tr>
+              <td colspan="4" class="text-center py-4">
+                <div class="d-flex flex-column align-items-center">
+                  <i class="fas fa-info-circle fa-2x text-muted mb-2"></i>
+                  <p class="mb-0">No blocks found for this lesson</p>
+                  <button class="btn btn-sm btn-primary mt-3">Add New Block</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="d-sm-flex justify-content-sm-between align-items-sm-center mt-4 mt-sm-3"
+    >
+      @if (lesson?.lessonBlocks && lesson?.lessonBlocks.length > 0) {
+        <p class="mb-0 text-center text-sm-start">
+          Showing {{ lesson.lessonBlocks.length }} blocks
+        </p>
+
+        <nav class="d-flex justify-content-center mb-0" aria-label="navigation">
+          <ngb-pagination
+            [collectionSize]="lesson.lessonBlocks.length"
+            [page]="1"
+            [maxSize]="5"
+            size="sm"
+            class="pagination pagination-sm pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+          >
+            <ng-template ngbPaginationPrevious>
+              <i class="fas fa-angle-left"></i>
+            </ng-template>
+            <ng-template ngbPaginationNext>
+              <i class="fas fa-angle-right"></i>
+            </ng-template>
+          </ngb-pagination>
+        </nav>
+      } @else {
+        <p class="mb-0 text-center w-100">No blocks to display</p>
+      }
+    </div>
+  </div>
+</div> 

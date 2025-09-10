@@ -1,0 +1,81 @@
+<div class="learning-container" dir="rtl" lang="ar">
+    <!-- Header section -->
+    <div class="topic-header">
+      <div class="topic-title">{{topic.title}}</div>
+      <div class="topic-progress">
+        <span>{{totalItems}} من {{currentIndex + 1}}</span>
+        <div class="video-thumbnail">
+          <i class="fa fa-play"></i>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Content area -->
+    <div class="content-area">
+      <div class="content-card">
+        <!-- Arabic text example with blank -->
+        <p>
+          تحدث عملية التمثيل الضوئي في 
+          <span class="fill-blank" [class.revealed]="isRevealed" [class.correct-choice]="selectedOption && isCorrect" [class.incorrect-choice]="selectedOption && !isCorrect">
+            <span class="blank-word">{{selectedOption || 'البلاستيدات الخضراء'}}</span>
+          </span>
+          في خلايا النبات، والتي تحتوي على الصبغة الخضراء المسماة الكلوروفيل.
+        </p>
+  
+        <!-- Options for the blank - always visible, but styled differently after reveal -->
+        <div class="options-container">
+          @for (option of options; track option.text) {
+            <button class="option-btn" 
+                    [class.option-correct]="isRevealed && option.correct" 
+                    [class.option-incorrect]="isRevealed && !option.correct"
+                    [class.option-selected]="selectedOption === option.text"
+                    [disabled]="isRevealed || selectedOption"
+                    (click)="selectOption(option.text, option.correct)">
+              {{option.text}}
+            </button>
+          }
+        </div>
+  
+        <!-- Feedback after selection (before timer completes) -->
+        @if (selectedOption && !isRevealed) {
+          <div class="feedback-container">
+            <div [class.feedback-correct]="isCorrect" [class.feedback-incorrect]="!isCorrect">
+              <i class="fa" [class.fa-check-circle]="isCorrect" [class.fa-times-circle]="!isCorrect"></i>
+              {{isCorrect ? 'إجابة صحيحة!' : 'إجابة خاطئة'}}
+            </div>
+          </div>
+        }
+  
+        <!-- Interaction buttons -->
+        @if (!isRevealed && !selectedOption) {
+          <div class="interaction-buttons">
+            <button class="btn" (click)="showHint()">
+              <i class="fa fa-search"></i> تلميح
+            </button>
+            <button class="btn" (click)="listenForAnswer()">
+              <i class="fa fa-microphone"></i> أجب صوتياً
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <div class="progress-bar" 
+           [style.animation-duration]="timerDuration + 's'"
+           [style.animation-play-state]="isPaused ? 'paused' : 'running'">
+      </div>
+    </div>
+  
+    <!-- Navigation -->
+    <div class="navigation">
+      <button class="nav-btn next" (click)="goToNext()">
+        التالي <i class="fa fa-arrow-left"></i>
+      </button>
+      <button class="nav-btn prev" (click)="goToPrevious()" [disabled]="currentIndex === 0">
+        <i class="fa fa-arrow-right"></i> السابق
+      </button>
+    </div>
+  </div>
+  

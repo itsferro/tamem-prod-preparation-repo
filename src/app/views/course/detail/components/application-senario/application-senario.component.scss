@@ -1,0 +1,342 @@
+ /* application-scenario.component.css */
+.application-scenario {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 30px;
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 600px;
+  }
+  
+  .challenge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .challenge-header h2 {
+    font-size: 1.6rem;
+    color: #333;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  .progress-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .step-indicator, .score {
+    background-color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .step-indicator span, .score span {
+    font-weight: 700;
+    color: #4a6fa5;
+  }
+  
+  .scenario-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .scenario-content {
+    padding: 25px;
+  }
+  
+  .scenario-header {
+    margin-bottom: 20px;
+  }
+  
+  .scenario-header h3 {
+    font-size: 1.4rem;
+    color: #4a6fa5;
+    margin: 0;
+  }
+  
+  .scenario-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .scenario-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .scenario-description {
+    background-color: #f5f9ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .scenario-description p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+  }
+  
+  .scenario-question {
+    margin-bottom: 20px;
+  }
+  
+  .scenario-question h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  .answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .answer-option {
+    background-color: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  
+  .answer-option:hover:not(.selected) {
+    background-color: #e8f4fd;
+    border-color: #b8d4f1;
+  }
+  
+  .answer-option.selected {
+    background-color: #e8f4fd;
+    border-color: #4a6fa5;
+  }
+  
+  .answer-option.correct {
+    background-color: #e8f5e9;
+    border-color: #4CAF50;
+  }
+  
+  .answer-option.incorrect {
+    background-color: #ffebee;
+    border-color: #f44336;
+  }
+  
+  .option-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.4;
+  }
+  
+  .feedback-panel {
+    background-color: #f5f9ff;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .feedback-panel.correct-feedback {
+    background-color: #e8f5e9;
+  }
+  
+  .feedback-panel.incorrect-feedback {
+    background-color: #ffebee;
+  }
+  
+  .feedback-icon {
+    font-size: 2rem;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .feedback-icon .fa-check-circle {
+    color: #4CAF50;
+  }
+  
+  .feedback-icon .fa-times-circle {
+    color: #f44336;
+  }
+  
+  .feedback-content {
+    flex-grow: 1;
+  }
+  
+  .feedback-header {
+    margin-bottom: 10px;
+  }
+  
+  .feedback-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .feedback-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .scenario-navigation {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 15px 25px;
+  }
+  
+  .nav-btn {
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-btn:hover:not(:disabled) {
+    background-color: #6c8fc8;
+  }
+  
+  .nav-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .prev-btn {
+    background-color: #f5f5f5;
+    color: #666;
+  }
+  
+  .prev-btn:hover:not(:disabled) {
+    background-color: #e0e0e0;
+  }
+  
+  .completion-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  
+  .completion-message {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+  }
+  
+  .completion-message h3 {
+    font-size: 1.5rem;
+    color: #4a6fa5;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  
+  .completion-message p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 25px;
+  }
+  
+  .continue-btn {
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  .continue-btn:hover {
+    background-color: #6c8fc8;
+    transform: translateY(-2px);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Mobile Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    .application-scenario {
+      padding: 20px 15px;
+      border-radius: 0;
+    }
+    
+    .challenge-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .progress-info {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .scenario-content {
+      padding: 20px 15px;
+    }
+    
+    .scenario-image {
+      height: 200px;
+    }
+    
+    .completion-message {
+      max-width: 95%;
+      padding: 20px;
+    }
+  }
+  

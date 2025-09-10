@@ -1,0 +1,88 @@
+<h1 class="h3 mb-3">Edit Course</h1>
+
+<div class="card border rounded-3 mb-5">
+  <div id="stepper" class="bs-stepper stepper-outline" appStepper>
+    <div class="card-header bg-light border-bottom px-lg-5">
+      <div class="bs-stepper-header" role="tablist">
+        <div class="step" data-target="#step-1">
+          <div class="d-grid text-center align-items-center">
+            <button
+              type="button"
+              class="btn btn-link step-trigger mb-0"
+              role="tab"
+              id="steppertrigger1"
+              aria-controls="step-1"
+            >
+              <span class="bs-stepper-circle">1</span>
+            </button>
+            <h6 class="bs-stepper-label d-none d-md-block">Course details</h6>
+          </div>
+        </div>
+        <div class="line"></div>
+
+        <div class="step" data-target="#step-2">
+          <div class="d-grid text-center align-items-center">
+            <button
+              type="button"
+              class="btn btn-link step-trigger mb-0"
+              role="tab"
+              id="steppertrigger2"
+              aria-controls="step-2"
+            >
+              <span class="bs-stepper-circle">2</span>
+            </button>
+            <h6 class="bs-stepper-label d-none d-md-block">Course media</h6>
+          </div>
+        </div>
+        <div class="line"></div>
+
+        <div class="step" data-target="#step-3">
+          <div class="d-grid text-center align-items-center">
+            <button
+              type="button"
+              class="btn btn-link step-trigger mb-0"
+              role="tab"
+              id="steppertrigger3"
+              aria-controls="step-3"
+            >
+              <span class="bs-stepper-circle">3</span>
+            </button>
+            <h6 class="bs-stepper-label d-none d-md-block">Curriculum</h6>
+          </div>
+        </div>
+        <div class="line"></div>
+
+        <div class="step" data-target="#step-4">
+          <div class="d-grid text-center align-items-center">
+            <button
+              type="button"
+              class="btn btn-link step-trigger mb-0"
+              role="tab"
+              id="steppertrigger4"
+              aria-controls="step-4"
+            >
+              <span class="bs-stepper-circle">4</span>
+            </button>
+            <h6 class="bs-stepper-label d-none d-md-block">
+              Additional information
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body px-1 px-sm-4">
+      <div class="bs-stepper-content">
+        <form onsubmit="return false">
+          <edit-course-detail />
+
+          <edit-course-media />
+
+          <edit-course-curriculum />
+
+          <edit-course-additional-info />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

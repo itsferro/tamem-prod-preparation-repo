@@ -1,0 +1,38 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+  [showCart]="true"
+/>
+
+<main>
+  <!-- =======================
+  Page content START -->
+  <section class="pt-5">
+    <div class="container" data-sticky-container>
+      <div class="row g-4 g-sm-5">
+        <div class="col-xl-4">
+          <div
+            ng-sticky
+            class="sticky-container"
+            data-sticky
+            data-margin-top="80"
+            data-sticky-for="992"
+          >
+            <product-left-sidebar />
+          </div>
+        </div>
+
+        <div class="col-xl-8">
+          <product-info />
+
+          <product-book-detail />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Page content END -->
+</main>
+
+<app-footer className="bg-light" />

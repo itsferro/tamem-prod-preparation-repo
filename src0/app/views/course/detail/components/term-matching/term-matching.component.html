@@ -1,0 +1,105 @@
+<p>term-matching works!</p>
+<div class="term-matching-container" dir="rtl" lang="ar">
+    <div class="challenge-header">
+      <h2>مطابقة المصطلحات</h2>
+      <div class="progress-indicator">
+        <span class="progress-text">{{completedPairs}} / {{termPairs.length}} مكتملة</span>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(completedPairs / termPairs.length) * 100"></div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="challenge-instructions">
+      <p>اسحب المصطلحات وأفلتها لمطابقتها مع تعريفاتها الصحيحة.</p>
+    </div>
+  
+    @if (!isCompleted) {
+      <div class="matching-area">
+        <div class="terms-column">
+          <h3>المصطلحات</h3>
+          <div class="terms-list">
+            @for (term of shuffledTerms; track term.id) {
+              <div class="term-card" 
+                   [class.matched]="term.matched"
+                   [class.selected]="selectedTermId === term.id"
+                   [draggable]="!term.matched"
+                   (dragstart)="onDragStart($event, term.id, 'term')"
+                   (click)="onTermClick(term.id)">
+                {{term.text}}
+              </div>
+            }
+          </div>
+        </div>
+  
+        <div class="definitions-column">
+          <h3>التعريفات</h3>
+          <div class="definitions-list">
+            @for (definition of shuffledDefinitions; track definition.id) {
+              <div class="definition-card"
+                   [class.matched]="definition.matched"
+                   [class.selected]="selectedDefinitionId === definition.id"
+                   [class.correct]="definition.showCorrect"
+                   [class.incorrect]="definition.showIncorrect"
+                   [draggable]="!definition.matched"
+                   (dragstart)="onDragStart($event, definition.id, 'definition')"
+                   (dragover)="onDragOver($event)"
+                   (drop)="onDrop($event, definition.id)"
+                   (click)="onDefinitionClick(definition.id)">
+                {{definition.text}}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+  
+      <div class="action-buttons">
+        @if (selectedTermId !== null && selectedDefinitionId !== null) {
+          <button class="match-btn" (click)="checkMatch()">
+            تحقق من المطابقة
+          </button>
+        }
+        @if (showHintButton) {
+          <button class="hint-btn" (click)="showHint()">
+            <i class="fa fa-lightbulb"></i> إظهار تلميح
+          </button>
+        }
+      </div>
+    } @else {
+      <div class="challenge-results">
+        <div class="results-card">
+          <div class="results-header">
+            <i class="fa fa-trophy"></i>
+            <h3>اكتمل التحدي!</h3>
+          </div>
+          
+          <div class="score-display">
+            <div class="score-circle">
+              <svg viewBox="0 0 36 36">
+                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="circle-progress" 
+                      [attr.stroke-dasharray]="(score / maxScore) * 100 + ', 100'" 
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <text x="18" y="20.35" class="percentage">{{score}}/{{maxScore}}</text>
+              </svg>
+            </div>
+            <div class="score-text">
+              <p>لقد أكملت <strong>{{completedPairs}}</strong> من أصل <strong>{{termPairs.length}}</strong> مطابقات.</p>
+              <p>استخدمت <strong>{{hintsUsed}}</strong> تلميحات.</p>
+              <p class="score-message">{{getScoreMessage()}}</p>
+            </div>
+          </div>
+  
+          <div class="results-actions">
+            <button class="retry-btn" (click)="retryChallenge()">
+              <i class="fa fa-redo"></i> إعادة المحاولة
+            </button>
+            <button class="complete-btn" (click)="completeChallenge()">
+              <i class="fa fa-check"></i> إنهاء التحدي
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+  

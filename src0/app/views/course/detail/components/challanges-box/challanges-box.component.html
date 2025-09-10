@@ -1,0 +1,140 @@
+ <!-- challenges.component.html -->
+<div class="challenges-container">
+    <div class="challenges-header">
+      <h3 class="mb-3">تحديات الدرس</h3>
+      <p class="text-muted mb-4">أكمل كل التحديات بالترتيب لإتقان هذا الدرس</p>
+    </div>
+  
+    <!-- Challenges Roadmap -->
+    <div class="challenges-roadmap">
+      <div class="challenges-path">
+        <!-- Path Line -->
+        <div class="path-line"></div>
+  
+        <!-- Challenges -->
+        <div class="challenges-list">
+          @for (challenge of challenges; track challenge.id; let i = $index) {
+            <div class="challenge-item" 
+                [class]="{'active': challenge.status === 'active',
+                         'completed': challenge.status === 'completed',
+                         'locked': challenge.status === 'locked'}"
+                (click)="onChallengeClick(challenge)">
+              
+              <div class="challenge-circle">
+                @if (challenge.status === 'locked') {
+                  <i class="fas fa-lock"></i>
+                }
+                @if (challenge.status === 'active') {
+                  <i class="fas fa-play"></i>
+                }
+                @if (challenge.status === 'completed') {
+                  <i class="fas fa-check"></i>
+                }
+                @if (challenge.status !== 'locked') {
+                  <span class="challenge-number">{{ i + 1 }}</span>
+                }
+              </div>
+              
+              <div class="challenge-card">
+                <div class="challenge-icon">
+                  <i class="fas {{challenge.icon}}"></i>
+                </div>
+                <div class="challenge-info">
+                  <h4>{{ challenge.title }}</h4>
+                  <p>{{ challenge.description }}</p>
+                  <div class="challenge-meta">
+                    <span><i class="fas fa-clock"></i> {{ challenge.duration }}</span>
+                    <span><i class="fas fa-star"></i> {{ challenge.difficulty }}</span>
+                    @if (challenge.points) {
+                      <span><i class="fas fa-trophy"></i> {{ challenge.points }} نقطة</span>
+                    }
+                  </div>
+                </div>
+                <div class="challenge-status">
+                  @if (challenge.status === 'completed') {
+                    <span class="status-badge completed">
+                      مكتمل
+                    </span>
+                  }
+                  @if (challenge.status === 'active') {
+                    <span class="status-badge active">
+                      متاح الآن
+                    </span>
+                  }
+                  @if (challenge.status === 'locked') {
+                    <span class="status-badge locked">
+                      مغلق
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  
+    <!-- Selected Challenge Content -->
+    @if (selectedChallenge) {
+      <div class="selected-challenge-content mt-5">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">{{ selectedChallenge.title }}</h4>
+            <span class="badge" 
+                  [class]="{'bg-success': selectedChallenge.difficulty === 'سهل',
+                           'bg-warning text-dark': selectedChallenge.difficulty === 'متوسط',
+                           'bg-danger': selectedChallenge.difficulty === 'صعب'}">
+              {{ selectedChallenge.difficulty }}
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="selected-challenge-instructions mb-4">
+              <h5>تعليمات</h5>
+              <p>{{ selectedChallenge.instructions }}</p>
+            </div>
+  
+            <!-- Dynamic Challenge Content -->
+            <div class="challenge-content">
+              @switch (selectedChallenge.type) {
+                @case ('matching') {
+                  <div class="challenge-matching">
+                    <!-- Matching Challenge Interface Placeholder -->
+                    <p class="placeholder-text text-center py-5">واجهة تحدي المطابقة ستظهر هنا</p>
+                  </div>
+                }
+                @case ('ordering') {
+                  <div class="challenge-ordering">
+                    <!-- Ordering Challenge Interface Placeholder -->
+                    <p class="placeholder-text text-center py-5">واجهة تحدي الترتيب ستظهر هنا</p>
+                  </div>
+                }
+                @case ('identification') {
+                  <div class="challenge-identification">
+                    <!-- Identification Challenge Interface Placeholder -->
+                    <p class="placeholder-text text-center py-5">واجهة تحدي التعرف ستظهر هنا</p>
+                  </div>
+                }
+                @case ('quiz') {
+                  <div class="challenge-quiz">
+                    <!-- Quiz Challenge Interface Placeholder -->
+                    <p class="placeholder-text text-center py-5">واجهة تحدي الاختبار ستظهر هنا</p>
+                  </div>
+                }
+                @default {
+                  <p class="placeholder-text text-center py-5">نوع التحدي غير معروف</p>
+                }
+              }
+            </div>
+          </div>
+          <div class="card-footer bg-white d-flex justify-content-between">
+            <button class="btn btn-outline-secondary" (click)="backToChallenges()">
+              <i class="fas fa-arrow-left ml-2"></i> العودة للتحديات
+            </button>
+            <button class="btn btn-primary" (click)="completeChallenge()">
+              إكمال التحدي <i class="fas fa-check mr-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>

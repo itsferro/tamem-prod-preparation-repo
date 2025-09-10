@@ -1,0 +1,143 @@
+<header
+  class="navbar-light navbar-sticky"
+  [class.navbar-sticky-on]="scrollY >= 300"
+>
+  <nav class="navbar navbar-expand-xl z-index-9">
+    <div class="container">
+      <app-logo-box />
+
+      <button
+        class="navbar-toggler ms-auto"
+        (click)="collapse.toggle()"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-animation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div
+        #collapse="ngbCollapse"
+        [(ngbCollapse)]="isCollapsed"
+        class="navbar-collapse collapse"
+        id="navbarCollapse"
+      >
+        <div class="col-xxl-6">
+          <div class="nav my-3 my-xl-0 px-4 flex-nowrap align-items-center">
+            <div class="nav-item w-100">
+              <form class="rounded position-relative">
+                <input
+                  class="form-control pe-5 bg-secondary bg-opacity-10 border-0"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button
+                  class="btn btn-link bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+                  type="submit"
+                >
+                  <i class="fas fa-search fs-6 text-primary"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <ul class="navbar-nav navbar-nav-scroll ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void();">For Enterprise</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void();">Eduport Business</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void();">My learning</a>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="nav flex-row align-items-center list-unstyled ms-xl-auto">
+        <li class="nav-item ms-0 ms-sm-2 d-none d-sm-block">
+          <a class="btn btn-light btn-round mb-0" href="javascript:void();">
+            <i class="bi bi-heart fa-fw"></i
+          ></a>
+        </li>
+
+        <li class="nav-item ms-2 ms-sm-3 dropdown">
+          <app-notification />
+        </li>
+
+        <li class="nav-item ms-3 dropdown">
+          <app-profile-menu />
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <hr class="my-0" />
+
+  <nav class="navbar navbar-expand-xl nav-category">
+    <div class="container px-0">
+      <button
+        class="navbar-toggler m-auto w-100"
+        (click)="navbarCollapse.toggle()"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.aria-expanded]="!subMenuCollapsed"
+        aria-label="Toggle navigation"
+      >
+        <i class="bi bi-grid-fill"></i> Category
+      </button>
+
+      <div
+        #navbarCollapse="ngbCollapse"
+        [(ngbCollapse)]="subMenuCollapsed"
+        class="navbar-collapse w-100 collapse"
+        id="navbarCollapse2"
+      >
+        <ul class="navbar-nav navbar-nav-scroll mx-auto">
+          @for (item of menuItems; track $index) {
+            <li ngbDropdown class="nav-item">
+              @if (item.subItems) {
+                <a
+                  ngbDropdownToggle
+                  class="nav-link dropdown-toggle active"
+                  href="javascript:void(0);"
+                  id="demoMenu"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >{{ item.title }}</a
+                >
+                <ul
+                  ngbDropdownMenu
+                  class="dropdown-menu"
+                  aria-labelledby="demoMenu"
+                >
+                  @for (child of item.subItems; track child) {
+                    <li>
+                      <a class="dropdown-item" href="javascript:void();">{{
+                        child.title
+                      }}</a>
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <a class="nav-link" href="javascript:void();">{{
+                  item.title
+                }}</a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

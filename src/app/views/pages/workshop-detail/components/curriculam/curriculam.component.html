@@ -1,0 +1,161 @@
+<section class="pt-0">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h2 class="fs-1 mb-0">Course Curriculum</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div
+          ngbAccordion
+          [closeOthers]="true"
+          class="accordion accordion-icon accordion-bg-light"
+          id="accordionExample2"
+        >
+          @for (item of courseList; track $index) {
+            <div
+              ngbAccordionItem
+              [collapsed]="$index == 0 ? false : true"
+              class="accordion-item mb-3"
+            >
+              <h6 ngbAccordionHeader class="accordion-header" id="heading-1">
+                <button
+                  ngbAccordionButton
+                  class="accordion-button fw-bold rounded d-flex collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-1"
+                  aria-expanded="true"
+                  aria-controls="collapse-1"
+                >
+                  @if (item.icon) {
+                    <i class="bi bi-pc-display-horizontal me-3"></i>
+                  } @else {
+                    <span class="me-3">0{{ $index + 1 }}</span>
+                  }
+                  {{ item.title }}
+                </button>
+              </h6>
+
+              <div
+                ngbAccordionCollapse
+                id="collapse-1"
+                class="accordion-collapse collapse show"
+                aria-labelledby="heading-1"
+                data-bs-parent="#accordionExample2"
+              >
+                <div ngbAccordionBody class="accordion-body mt-3">
+                  <ng-template>
+                    @if (item.video) {
+                      @for (
+                        data of item.links;
+                        track $index;
+                        let last = $last
+                      ) {
+                        <div class="row justify-content-md-between">
+                          <div class="col-md-5">
+                            <h5>{{ data.title }}</h5>
+                            <ul class="list-group list-group-borderless">
+                              @for (detail of data.details; track detail) {
+                                <li class="list-group-item px-0">
+                                  <span class="h6 fw-normal"
+                                    ><i
+                                      class="{{
+                                        detail.icon
+                                      }} fa-fw text-primary me-2"
+                                    ></i
+                                    >{{ detail.text }}</span
+                                  >
+                                </li>
+                              }
+                            </ul>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="card shadow p-0">
+                              <lightgallery
+                                [settings]="settings"
+                                class="overflow-hidden rounded-3"
+                              >
+                                <img
+                                  [src]="data.image"
+                                  class="card-img"
+                                  alt="course image"
+                                />
+                                @if (data.videoLink) {
+                                  <div
+                                    class="bg-overlay bg-dark opacity-6"
+                                  ></div>
+                                  <div
+                                    class="card-img-overlay d-flex align-items-start flex-column p-3"
+                                  >
+                                    <div class="m-auto">
+                                      <a
+                                        href="https://www.youtube.com/embed/tXHviS-4ygo"
+                                        class="btn btn-lg btn-white btn-round mb-0"
+                                        data-glightbox=""
+                                        data-gallery="course-video"
+                                      >
+                                        <i class="fas fa-play"></i>
+                                      </a>
+                                    </div>
+                                  </div>
+                                }
+                              </lightgallery>
+                            </div>
+                          </div>
+                        </div>
+                        @if (!last) {
+                          <hr />
+                        }
+                      }
+                    } @else {
+                      @if (item.text) {
+                        <p>{{ item.text }}</p>
+                      }
+                      @for (link of item.links; track link; let last = $last) {
+                        <a
+                          href="javascript:void(0);"
+                          class="h6 fw-normal p-0 mb-0 align-items-center"
+                        >
+                          <i class="{{ link.icon }} fa-fw me-2"></i
+                          >{{ link.text }}</a
+                        >
+
+                        @if (!last) {
+                          <hr />
+                        }
+                      }
+                    }
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card card-body text-center bg-dark text-white p-5">
+          <h6 class="text-danger mb-3">
+            <i class="bi bi-hourglass-split me-2"></i>Hurry! Limited Seat
+            Available
+          </h6>
+          <h4 class="text-white">Developed your photo editing skills</h4>
+          <small>Jun 10 - Aug 5, 2022</small>
+          <h3 class="fs-1 text-white mt-3">{{ currency }}557</h3>
+          <a href="javascript:void(0);" class="btn btn-success mb-2"
+            >Enroll Now</a
+          >
+          <small class="mb-0"
+            >By clicking 'Enroll Now', you agree to our
+            <a href="javascript:void(0);" class="text-decoration-underline">
+              Terms of Service and Privacy Policy.</a
+            ></small
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

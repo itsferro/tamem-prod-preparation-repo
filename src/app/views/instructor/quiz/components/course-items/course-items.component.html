@@ -1,0 +1,162 @@
+<div class="card border bg-transparent rounded-3">
+  <div class="card-header bg-transparent border-bottom px-3">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-2">
+        <img
+          src="assets/images/courses/4by3/01.jpg"
+          class="rounded-2"
+          alt="Card image"
+        />
+      </div>
+      <div class="col-md-10">
+        <h3 class="card-title mb-0">
+          <a href="javascript:void(0);"
+            >The Complete Digital Marketing Course - 12 Courses in 1</a
+          >
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body p-4">
+    <div
+      ngbAccordion
+      [closeOthers]="true"
+      class="accordion accordion-icon accordion-bg-light"
+      id="accordionExample"
+    >
+      @for (item of courseList; track $index; let first = $first) {
+        <div
+          ngbAccordionItem
+          [collapsed]="first ? false : true"
+          class="accordion-item mb-3"
+        >
+          <h6 ngbAccordionHeader class="accordion-header" id="headingOne">
+            <button
+              ngbAccordionButton
+              class="accordion-button rounded collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              <span class="text-secondary fw-bold me-3">{{ item.id }}</span>
+              <span class="fw-bold">{{ item.question }}</span>
+            </button>
+          </h6>
+          <div
+            ngbAccordionCollapse
+            id="collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample"
+          >
+            <div ngbAccordionBody class="accordion-body mt-3">
+              <p class="mb-3">
+                <b class="text-dark">A</b> We have cybersecurity insurance
+                coverage
+              </p>
+              <p class="mb-3">
+                <b class="text-dark">B</b> Our dedicated staff will protect us
+              </p>
+              <p class="mb-3">
+                <b class="text-dark">C</b> We give regular training for best
+                practices
+              </p>
+              <p class="mb-3">
+                <b class="text-dark">D</b> Third-party vendor protection
+              </p>
+
+              <a
+                href="javascript:void(0);"
+                class="btn btn-sm btn-success-soft mb-0"
+                (click)="openModal(editQuestion)"
+                >Edit</a
+              >
+              <button class="btn btn-danger-soft btn-sm mb-0 ms-1">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<ng-template #editQuestion let-modal>
+  <div class="modal-header bg-dark">
+    <h5 class="modal-title text-white" id="editQuestionLabel">Edit Question</h5>
+    <button
+      type="button"
+      class="btn btn-sm btn-light mb-0 ms-auto"
+      (click)="modal.dismiss()"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="row text-start g-3">
+      <div class="col-12">
+        <label class="form-label">Question</label>
+        <input
+          class="form-control"
+          type="text"
+          value="How do you protect your business against cyber-crime?"
+          placeholder="Write a question"
+        />
+      </div>
+
+      <div class="col-6">
+        <label class="form-label">Option 1</label>
+        <input
+          class="form-control"
+          type="text"
+          value="We have cybersecurity insurance coverage"
+          placeholder="Write a option"
+        />
+      </div>
+
+      <div class="col-6">
+        <label class="form-label">Option 2</label>
+        <input
+          class="form-control"
+          type="text"
+          value="Our dedicated staff will protect us"
+          placeholder="Write a option"
+        />
+      </div>
+
+      <div class="col-6">
+        <label class="form-label">Option 3</label>
+        <input
+          class="form-control"
+          type="text"
+          value="We give regular training for best practices"
+          placeholder="Write a option"
+        />
+      </div>
+
+      <div class="col-6">
+        <label class="form-label">Option 4</label>
+        <input
+          class="form-control"
+          type="text"
+          value="Third-party vendor protection"
+          placeholder="Write a option"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger-soft my-0"
+      (click)="modal.dismiss()"
+    >
+      Close
+    </button>
+    <button type="button" class="btn btn-success my-0">Save change</button>
+  </div>
+</ng-template>

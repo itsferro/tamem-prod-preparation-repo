@@ -1,0 +1,59 @@
+<section class="pt-0 pt-md-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6 col-xl-5">
+        <h2 class="fs-1">Frequently Asked Questions</h2>
+        <p class="mb-0">
+          We are answering the most frequent questions. No worries if you do not
+          find the exact one. You can find out more by searching or continuing
+          by clicking the button below or directly
+          <a href="javascript:void(0);" class="text-decoration-underline"
+            >Contact our supports</a
+          >
+        </p>
+      </div>
+
+      <div class="col-lg-6 ms-xl-auto">
+        <div
+          ngbAccordion
+          [closeOthers]="true"
+          class="accordion accordion-icon accordion-bg-light"
+          id="accordionFaq"
+        >
+          @for (item of faqData; track $index) {
+            <div
+              ngbAccordionItem
+              class="accordion-item"
+              [collapsed]="$index == 0 ? false : true"
+            >
+              <h2 ngbAccordionHeader class="accordion-header" id="headingOne">
+                <button
+                  ngbAccordionButton
+                  class="accordion-button h6 rounded"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  {{ item.question }}
+                </button>
+              </h2>
+              <div
+                ngbAccordionCollapse
+                id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionFaq"
+              >
+                <div ngbAccordionBody class="accordion-body">
+                  {{ item.answer }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

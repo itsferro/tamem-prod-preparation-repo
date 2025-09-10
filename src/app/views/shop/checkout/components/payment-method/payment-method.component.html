@@ -1,0 +1,146 @@
+<div class="col-12">
+  <div
+    ngbAccordion
+    [closeOthers]="true"
+    class="accordion accordion-circle"
+    id="accordioncircle"
+  >
+    <div ngbAccordionItem [collapsed]="false" class="accordion-item mb-3">
+      <h6 ngbAccordionHeader class="accordion-header" id="heading-1">
+        <button
+          ngbAccordionButton
+          class="accordion-button rounded collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse-1"
+          aria-expanded="true"
+          aria-controls="collapse-1"
+        >
+          Credit or Debit Card
+        </button>
+      </h6>
+      <div
+        id="collapse-1"
+        ngbAccordionCollapse
+        class="accordion-collapse collapse show"
+        aria-labelledby="heading-1"
+        data-bs-parent="#accordioncircle"
+      >
+        <div ngbAccordionBody class="accordion-body">
+          <form class="row g-3">
+            <div class="col-12">
+              <label class="form-label"
+                >Card Number <span class="text-danger">*</span></label
+              >
+              <div class="position-relative">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="xxxx xxxx xxxx xxxx"
+                />
+                <img
+                  src="assets/images/client/visa.svg"
+                  class="w-40px position-absolute top-50 end-0 translate-middle-y me-2 d-none d-sm-block"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label"
+                >Expiration date <span class="text-danger">*</span></label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="2"
+                  placeholder="Month"
+                />
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="4"
+                  placeholder="Year"
+                />
+              </div>
+            </div>
+            <!--Cvv code  -->
+            <div class="col-md-6">
+              <label class="form-label"
+                >CVV / CVC <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                maxlength="3"
+                placeholder="xxx"
+              />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label"
+                >Name on Card <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                aria-label="name of card holder"
+                placeholder="Enter card holder name"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div ngbAccordionItem class="accordion-item mb-3">
+      <h6 ngbAccordionHeader class="accordion-header" id="heading-2">
+        <button
+          ngbAccordionButton
+          class="accordion-button collapsed rounded"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse-2"
+          aria-expanded="false"
+          aria-controls="collapse-2"
+        >
+          Pay with Net Banking
+        </button>
+      </h6>
+      <div
+        ngbAccordionCollapse
+        id="collapse-2"
+        class="accordion-collapse collapse"
+        aria-labelledby="heading-2"
+        data-bs-parent="#accordioncircle"
+      >
+        <div ngbAccordionBody class="accordion-body">
+          <form class="row text-start g-3">
+            <p class="mb-1">
+              In order to complete your transaction, we will transfer you over
+              to Eduport secure servers.
+            </p>
+            <p class="my-0">
+              Select your bank from the drop-down list and click proceed to
+              continue with your payment.
+            </p>
+
+            <div class="col-md-6">
+              <select
+                selectFormInput
+                class="form-select form-select-sm js-choice border-0"
+                aria-label=".form-select-sm"
+              >
+                <option value="">Please choose one</option>
+                <option>Bank of America</option>
+                <option>Bank of India</option>
+                <option>Bank of London</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

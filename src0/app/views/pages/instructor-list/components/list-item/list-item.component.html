@@ -1,0 +1,148 @@
+<section class="pt-4">
+  <div class="container">
+    <div class="row mb-4 align-items-center">
+      <div class="col-sm-6 col-xl-4">
+        <form class="border rounded p-2">
+          <div class="input-group input-borderless">
+            <input
+              class="form-control me-1"
+              type="search"
+              placeholder="Search instructor"
+            />
+            <button type="button" class="btn btn-primary mb-0 rounded">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-sm-6 col-xl-3 mt-3 mt-lg-0">
+        <form class="border rounded p-2 input-borderless">
+          <select
+            selectFormInput
+            class="form-select form-select-sm js-choice"
+            aria-label=".form-select-sm"
+          >
+            <option value="">Category</option>
+            <option>All</option>
+            <option>Development</option>
+            <option>Design</option>
+            <option>Accounting</option>
+            <option>Translation</option>
+            <option>Finance</option>
+            <option>Legal</option>
+            <option>Photography</option>
+            <option>Writing</option>
+            <option>Marketing</option>
+          </select>
+        </form>
+      </div>
+
+      <div class="col-sm-6 col-xl-3 mt-3 mt-xl-0">
+        <form class="border rounded p-2 input-borderless">
+          <select
+            selectFormInput
+            class="form-select form-select-sm js-choice"
+            aria-label=".form-select-sm"
+          >
+            <option value="">Sort by</option>
+            <option>Most popular</option>
+            <option>Most viewed</option>
+            <option>Top rated</option>
+          </select>
+        </form>
+      </div>
+
+      <div class="col-sm-6 col-xl-2 mt-3 mt-xl-0 d-grid">
+        <a href="javascript:void(0);" class="btn btn-lg btn-primary mb-0"
+          >Filter Results</a
+        >
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      @for (item of instructors; track $index) {
+        <div class="col-lg-10 col-xl-6">
+          <div class="card shadow p-2">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img [src]="item.image" class="rounded-3" alt="..." />
+              </div>
+
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div
+                    class="d-sm-flex justify-content-sm-between mb-2 mb-sm-3"
+                  >
+                    <div>
+                      <h5 class="card-title mb-0">
+                        <a href="javascript:void(0);">{{ item.name }}</a>
+                      </h5>
+                      <p class="small mb-2 mb-sm-0">{{ item.position }}</p>
+                    </div>
+                    <span class="h6 fw-light"
+                      >{{ item.rating.toFixed(1)
+                      }}<i class="fas fa-star text-warning ms-1"></i
+                    ></span>
+                  </div>
+                  <p class="text-truncate-2 mb-3">{{ item.description }}</p>
+
+                  <div
+                    class="d-sm-flex justify-content-sm-between align-items-center"
+                  >
+                    <h6 class="text-orange mb-0">{{ item.title }}</h6>
+
+                    <ul class="list-inline mb-0 mt-3 mt-sm-0">
+                      <li class="list-inline-item">
+                        <a
+                          class="mb-0 me-1 text-facebook"
+                          href="javascript:void(0);"
+                          ><i class="fab fa-fw fa-facebook-f"></i
+                        ></a>
+                      </li>
+                      <li class="list-inline-item ms-1">
+                        <a
+                          class="mb-0 me-1 text-instagram-gradient"
+                          href="javascript:void(0);"
+                          ><i class="fab fa-fw fa-instagram"></i
+                        ></a>
+                      </li>
+                      <li class="list-inline-item ms-1">
+                        <a
+                          class="mb-0 me-1 text-twitter"
+                          href="javascript:void(0);"
+                          ><i class="fab fa-fw fa-twitter"></i
+                        ></a>
+                      </li>
+                      <li class="list-inline-item ms-1">
+                        <a class="mb-0 text-linkedin" href="javascript:void(0);"
+                          ><i class="fab fa-fw fa-linkedin-in"></i
+                        ></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <nav class="mt-4 d-flex justify-content-center" aria-label="navigation">
+      <ngb-pagination
+        [collectionSize]="60"
+        [maxSize]="2"
+        [page]="2"
+        class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+      >
+        <ng-template ngbPaginationPrevious
+          ><i class="fas fa-angle-double-left"></i>
+        </ng-template>
+        <ng-template ngbPaginationNext
+          ><i class="fas fa-angle-double-right"></i>
+        </ng-template>
+      </ngb-pagination>
+    </nav>
+  </div>
+</section>

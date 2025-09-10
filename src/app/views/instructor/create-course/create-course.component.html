@@ -1,0 +1,134 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<section
+  class="py-0 bg-blue h-100px align-items-center d-flex h-200px rounded-0"
+  style="
+    background: url(assets/images/pattern/04.png) no-repeat center center;
+    background-size: cover;
+  "
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-white">Submit a new Course</h1>
+        <p class="text-white mb-0">
+          Read our
+          <a href="javascript:void(0);" class="text-white"
+            ><u>"Before you create a course"</u></a
+          >
+          article before submitting!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto text-center">
+        <p class="text-center">
+          Use this interface to add a new Course to the portal. Once you are
+          done adding the item it will be reviewed for quality. If approved,
+          your course will appear for sale and you will be informed by email
+          that your course has been accepted.
+        </p>
+      </div>
+    </div>
+
+    <div class="card bg-transparent border rounded-3 mb-5">
+      <div id="stepper" class="bs-stepper stepper-outline" appStepper>
+        <div class="card-header bg-light border-bottom px-lg-5">
+          <div class="bs-stepper-header" role="tablist">
+            <div class="step" data-target="#step-1">
+              <div class="d-grid text-center align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-link step-trigger mb-0"
+                  role="tab"
+                  id="steppertrigger1"
+                  aria-controls="step-1"
+                >
+                  <span class="bs-stepper-circle">1</span>
+                </button>
+                <h6 class="bs-stepper-label d-none d-md-block">
+                  Course details
+                </h6>
+              </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="step" data-target="#step-2">
+              <div class="d-grid text-center align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-link step-trigger mb-0"
+                  role="tab"
+                  id="steppertrigger2"
+                  aria-controls="step-2"
+                >
+                  <span class="bs-stepper-circle">2</span>
+                </button>
+                <h6 class="bs-stepper-label d-none d-md-block">Course media</h6>
+              </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="step" data-target="#step-3">
+              <div class="d-grid text-center align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-link step-trigger mb-0"
+                  role="tab"
+                  id="steppertrigger3"
+                  aria-controls="step-3"
+                >
+                  <span class="bs-stepper-circle">3</span>
+                </button>
+                <h6 class="bs-stepper-label d-none d-md-block">Curriculum</h6>
+              </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="step" data-target="#step-4">
+              <div class="d-grid text-center align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-link step-trigger mb-0"
+                  role="tab"
+                  id="steppertrigger4"
+                  aria-controls="step-4"
+                >
+                  <span class="bs-stepper-circle">4</span>
+                </button>
+                <h6 class="bs-stepper-label d-none d-md-block">
+                  Additional information
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="bs-stepper-content">
+            <form onsubmit="return false">
+              <course-detail />
+
+              <course-media />
+
+              <course-curriculum />
+
+              <course-additional-info />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer3 />

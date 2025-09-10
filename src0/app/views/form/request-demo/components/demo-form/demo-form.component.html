@@ -1,0 +1,110 @@
+<h3 class="mb-3 text-white">Fill out the form below</h3>
+
+<form
+  [formGroup]="requestFrom"
+  (ngSubmit)="onSubmit()"
+  class="row g-3 position-relative"
+>
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >First name <span class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      formControlName="fname"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['fname'].errors }"
+      id="firstName"
+    />
+  </div>
+
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >Last name <span class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      formControlName="lname"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['lname'].errors }"
+      id="lastName"
+    />
+  </div>
+
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >Email <span class="text-danger">*</span></label
+    >
+    <input
+      type="email"
+      formControlName="email"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['email'].errors }"
+      id="email"
+    />
+  </div>
+
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >Phone number <span class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      formControlName="phone"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['phone'].errors }"
+      id="phoneNumber"
+    />
+  </div>
+
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >City <span class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      formControlName="city"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['city'].errors }"
+      id="companyName"
+    />
+  </div>
+
+  <div class="col-md-6 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >First language <span class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      formControlName="language"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': submit && form['language'].errors }"
+      id="companySize"
+    />
+  </div>
+
+  <div class="col-12 bg-dark-input">
+    <label class="form-label text-white text-opacity-50"
+      >Additional note(s)</label
+    >
+    <textarea
+      class="form-control"
+      formControlName="note"
+      rows="3"
+      [ngClass]="{ 'is-invalid': submit && form['note'].errors }"
+      placeholder=""
+    ></textarea>
+  </div>
+
+  <div class="col-12 bg-dark-input">
+    <div class="d-grid">
+      <button type="submit" class="btn btn-lg btn-primary">
+        Request a demo
+      </button>
+    </div>
+    <p class="mb-0 text-white text-opacity-50 small">
+      Field required with <span class="text-danger fw-bold">*</span> are
+      required to complete the demo request
+    </p>
+  </div>
+</form>

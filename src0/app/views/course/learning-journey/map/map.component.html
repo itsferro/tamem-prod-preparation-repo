@@ -1,0 +1,100 @@
+<div class="challenges-dashboard" dir="rtl" lang="ar">
+
+ 
+
+      <div class="challenges-header" >
+        <div class="header-content">
+          <h2>{{ lessonTitle }}</h2>
+         
+          <div class="journey-stats">
+            <div class="stat-item">
+              <span class="stat-label">التقدم:</span>
+              <span class="stat-value">{{completedChallenges}}/{{totalChallenges}}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">النقاط:</span>
+              <span class="stat-value">{{currentScore}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">أكمل التحديات التالية لإثبات فهمك للدرس. يمكنك إعادة أي تحدي لتحسين درجتك.</div>
+
+
+      <!-- <div class="challenges-intro">
+        <p>أكمل التحديات التالية لإثبات فهمك للدرس. يمكنك إعادة أي تحدي لتحسين درجتك.</p>
+      </div> -->
+
+ 
+    <div class="challenges-list">
+      @for (step of steps; track step.stepId; let i = $index) {
+        <div class="challenge-card" 
+             [class.completed]="step.status === 'completed'" 
+             [class.in-progress]="step.status === 'in_progress'"
+             [class.locked]="isStepLocked(i)"
+             [class.newly-unlocked]="i === newlyUnlockedIndex">
+             
+          <div class="challenge-icon">
+            <i class="fa {{getIconForType(step)}}"></i>
+          </div>
+          <div class="challenge-content">
+            <h3>{{step.title}}</h3>
+            <p>{{step.description}}</p>
+            <div class="challenge-meta">
+              <span class="difficulty" [class]="'difficulty-' + (step.difficulty || getDifficultyLevel(step))">
+                {{getDifficultyText(step)}}
+              </span>
+              <span class="points">{{step.points || getPoints(step)}} نقطة</span>
+              
+              <!-- Display score for completed challenges -->
+              @if (step.status === 'completed') {
+                <span class="achieved-score">
+                  <i class="fa fa-trophy"></i> 
+                  {{ getStepScore(step) }}/{{ step.points || getPoints(step) }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="challenge-status">
+            @if (step.status === 'completed') {
+              <div class="completed-actions">
+                <div class="status-badge completed">
+                  <i class="fa fa-check-circle"></i> مكتمل
+                </div>
+                <button class="retake-challenge-btn" (click)="retakeChallenge(i)">
+                  <i class="fa fa-redo"></i> إعادة المحاولة
+                </button>
+              </div>
+            } @else if (step.status === 'in_progress') {
+              <div class="in-progress-actions">
+                <div class="status-badge in-progress">
+                  <i class="fa fa-spinner"></i> قيد التقدم
+                </div>
+                <button class="continue-challenge-btn" (click)="startChallenge(i)">
+                  متابعة
+                </button>
+              </div>
+            } @else if (isStepLocked(i)) {
+              <div class="status-badge locked">
+                <i class="fa fa-lock"></i> مقفل
+              </div>
+            } @else {
+              <button class="start-challenge-btn" (click)="startChallenge(i)">
+                ابدأ التحدي
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  
+    <div class="challenges-footer">
+      <div class="footer-note">
+        <i class="fa fa-info-circle"></i>
+        <span>أكمل جميع التحديات للانتقال إلى الدرس التالي</span>
+      </div>
+      <button class="exit-journey-btn" (click)="onExitJourney()">
+        خروج من الرحلة <i class="fa fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>

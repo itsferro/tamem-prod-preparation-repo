@@ -1,0 +1,49 @@
+<div class="card shadow h-100">
+  <div
+    class="card-header border-bottom d-flex justify-content-between align-items-center p-4"
+  >
+    <h5 class="card-header-title">Top Instructors</h5>
+    <a href="javascript:void(0);" class="btn btn-link p-0 mb-0">View all</a>
+  </div>
+
+  <div class="card-body p-4">
+    @for (item of instructors; track $index; let last = $last) {
+      <div class="d-sm-flex justify-content-between align-items-center">
+        <div class="d-sm-flex align-items-center mb-1 mb-sm-0">
+          <div class="avatar avatar-md flex-shrink-0">
+            <img
+              class="avatar-img rounded-circle"
+              [src]="item.avatar"
+              alt="avatar"
+            />
+          </div>
+
+          <div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
+            <h6 class="mb-1">
+              {{ item.name }}
+              @if (item.verified) {
+                <i class="bi bi-patch-check-fill text-info small"></i>
+              }
+            </h6>
+            <ul class="list-inline mb-0 small">
+              <li class="list-inline-item fw-light me-2 mb-1 mb-sm-0">
+                <i class="fas fa-book text-purple me-1"></i
+                >{{ item.courses }} Courses
+              </li>
+              <li class="list-inline-item fw-light me-2 mb-1 mb-sm-0 ms-1">
+                <i class="fas fa-star text-warning me-1"></i
+                >{{ item.rating }}/5.0
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <a href="javascript:void(0);" class="btn btn-sm btn-light mb-0">View</a>
+      </div>
+
+      @if (!last) {
+        <hr />
+      }
+    }
+  </div>
+</div>

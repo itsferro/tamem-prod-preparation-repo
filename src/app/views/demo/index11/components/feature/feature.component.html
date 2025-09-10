@@ -1,0 +1,29 @@
+<section class="position-relative">
+  <div class="position-absolute bottom-0 end-0">
+    <img src="assets/images/element/30.svg" class="h-300px" alt="" />
+  </div>
+
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4">
+        <h2>Why choose our classes</h2>
+        <p class="mb-0">
+          Comfort reached gay perhaps chamber his six detract besides add.
+          Moonlight newspaper up its enjoyment agreeable depending.
+        </p>
+      </div>
+
+      @for (item of features; track $index) {
+        <div class="col-sm-6 col-lg-4">
+          <div class="card card-body bg-light p-4 h-100">
+            <figure>
+              <div [innerHTML]="sanitizeIcon(item.icon)"></div>
+            </figure>
+            <h5>{{ item.title }}</h5>
+            <p class="mb-0">{{ item.content }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

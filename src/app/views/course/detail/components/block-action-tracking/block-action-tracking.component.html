@@ -1,0 +1,170 @@
+<div class="action-tracking-page">
+  <div class="container-fluid py-4">
+    <!-- Header section with navigation -->
+    <div class="header-section mb-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">
+          <i class="fas fa-tasks me-2"></i> 
+          Development Log: {{ blockTitle }}
+        </h2>
+        <button type="button" class="btn btn-outline-secondary" (click)="goBack()">
+          <i class="fas fa-arrow-left me-1"></i> Back to Block
+        </button>
+      </div>
+      <hr>
+    </div>
+
+    <!-- Loading and error states -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading action history...</p>
+    </div>
+
+    <div *ngIf="error && !loading" class="alert alert-danger">
+      <i class="fas fa-exclamation-triangle me-2"></i> {{ error }}
+    </div>
+
+    <!-- Main content when data is loaded -->
+    <div *ngIf="!loading && !error" class="action-tracking">
+      <!-- Actions History Card -->
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            <i class="fas fa-history me-2"></i> Action History
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover action-history-table">
+              <thead class="table-light">
+                <tr>
+                  <th>Action</th>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Notes</th>
+                  <th>Process Stage</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Show existing actions -->
+                <tr *ngFor="let action of actions">
+                  <td>{{ getActionLabel(action.action) }}</td>
+                  <td>{{ action.timestamp | date:'short' }}</td>
+                  <td>{{ action.user }}</td>
+                  <td>{{ action.notes }}</td>
+                  <td>{{ getProcessPartLabel(action.processPart) }}</td>
+                  <td>
+                    <span [ngClass]="getStatusClass(action.status)">
+                      {{ getStatusLabel(action.status) }}
+                    </span>
+                  </td>
+                </tr>
+                
+                <!-- Empty state if no actions -->
+                <tr *ngIf="!actions || actions.length === 0">
+                  <td colspan="6" class="text-center py-3 text-muted">
+                    <i class="fas fa-info-circle me-2"></i> No actions recorded for this block
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Add New Action Card -->
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            <i class="fas fa-plus-circle me-2"></i> Add New Action
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Process Part Selection -->
+            <div class="col-md-6 mb-3">
+              <label for="newActionProcessPart" class="form-label">Process Stage</label>
+              <select class="form-select" id="newActionProcessPart" [(ngModel)]="newAction.processPart" name="processPart">
+                <option value="">-- Select Stage --</option>
+                <option *ngFor="let part of processPartOptions" [value]="part.value">
+                  {{ part.label }}
+                </option>
+              </select>
+            </div>
+            
+            <!-- Status Selection -->
+            <div class="col-md-6 mb-3">
+              <label for="newActionStatus" class="form-label">Status</label>
+              <select class="form-select" id="newActionStatus" [(ngModel)]="newAction.status" name="status">
+                <option value="">-- Select Status --</option>
+                <option *ngFor="let status of statusOptions" [value]="status.value">
+                  {{ status.label }}
+                </option>
+              </select>
+            </div>
+            
+            <!-- Notes -->
+            <div class="col-12 mb-3">
+              <label for="newActionNotes" class="form-label">Notes</label>
+              <textarea class="form-control" id="newActionNotes" rows="3" 
+                        [(ngModel)]="newAction.notes" name="notes" 
+                        placeholder="Add notes about this action..."></textarea>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="col-12 text-end">
+              <button type="button" class="btn btn-primary" (click)="addNewAction()" 
+                      [disabled]="!newAction.processPart || !newAction.status">
+                <i class="fas fa-plus me-1"></i> Add Action
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Help Card -->
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">
+            <i class="fas fa-info-circle me-2"></i> Development Stages Guide
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="mb-2">Process Stages:</h6>
+              <ul class="dev-stages">
+                <li><strong>Initial Setup</strong> - Begin work on the block</li>
+                <li><strong>Content Creation</strong> - Adding textual content</li>
+                <li><strong>Storyboard Design</strong> - Creating the storyboard</li>
+                <li><strong>External Images</strong> - Adding external images</li>
+                <li><strong>CreateStudio Design</strong> - Creating designs in the studio</li>
+                <li><strong>Final Review</strong> - Final review and delivery</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6 class="mb-2">Status Types:</h6>
+              <ul class="dev-stages">
+                <li class="status-ongoing"><strong>In Progress</strong> - Work is ongoing</li>
+                <li class="status-issues"><strong>Having Issues</strong> - Experiencing problems</li>
+                <li class="status-help"><strong>Need Assistance</strong> - Help required</li>
+                <li class="status-stuck"><strong>Blocked</strong> - Work stopped</li>
+                <li class="status-done"><strong>Completed</strong> - Stage finished</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Save changes button -->
+      <div class="d-flex justify-content-end mb-4">
+        <button type="button" class="btn btn-primary btn-lg" (click)="saveActions()">
+          <i class="fas fa-save me-1"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

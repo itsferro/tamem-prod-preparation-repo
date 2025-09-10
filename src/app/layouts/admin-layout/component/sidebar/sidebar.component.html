@@ -1,0 +1,79 @@
+<div class="offcanvas-body sidebar-content d-flex flex-column bg-dark">
+  <ul class="navbar-nav flex-column" id="navbar-sidebar">
+    @for (item of menuItems; track $index) {
+      @if (item.isTitle) {
+        <li class="nav-item ms-2 my-2">{{ item.title }}</li>
+      } @else {
+        <li class="nav-item">
+          @if (item.subItems) {
+            <a
+              [class]="'nav-link' + getActiveClass(item)"
+              data-bs-toggle="collapse"
+              (click)="openDropMenu(item)"
+              role="button"
+              [attr.aria-expanded]="!item.isCollapsed"
+              aria-controls="collapsepage"
+            >
+              <i class="{{ item.icon }} fa-fw me-2"></i>{{ item.title }}
+            </a>
+            <ul
+              #collapse="ngbCollapse"
+              [(ngbCollapse)]="item.isCollapsed!"
+              class="nav collapse flex-column"
+              id="collapsepage"
+              data-bs-parent="#navbar-sidebar"
+            >
+              @for (subitem of item.subItems; track $index) {
+                <li class="nav-item">
+                  <a
+                    [class]="'nav-link' + getActiveClass(subitem)"
+                    [routerLink]="subitem.link"
+                    >{{ subitem.title }}</a
+                  >
+                </li>
+              }
+            </ul>
+          } @else {
+            <a
+              [routerLink]="item.link"
+              [class]="'nav-link' + getActiveClass(item)"
+              (click)="openDropMenu(item)"
+              ><i class="{{ item.icon }} fa-fw me-2"></i>{{ item.title }}</a
+            >
+          }
+        </li>
+      }
+    }
+  </ul>
+
+  <div class="px-3 mt-auto pt-3">
+    <div
+      class="d-flex align-items-center justify-content-between text-primary-hover"
+    >
+      <a
+        class="h5 mb-0 text-body"
+        routerLink="/admin/setting"
+        placement="top"
+        ngbTooltip="Settings"
+      >
+        <i class="bi bi-gear-fill"></i>
+      </a>
+      <a
+        class="h5 mb-0 text-body"
+        routerLink="/"
+        placement="top"
+        ngbTooltip="Home"
+      >
+        <i class="bi bi-globe"></i>
+      </a>
+      <a
+        class="h5 mb-0 text-body"
+        (click)="logout()"
+        placement="top"
+        ngbTooltip="Sign out"
+      >
+        <i class="bi bi-power"></i>
+      </a>
+    </div>
+  </div>
+</div>

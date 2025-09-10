@@ -1,0 +1,41 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <!-- =======================
+  Page Banner START -->
+  <pricing-banner />
+  <!-- =======================
+  Page Banner END -->
+
+  <!-- =======================
+  Client START -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row justify-content-center my-4">
+        <div class="col-12">
+          <app-client-slider [imageClass]="'grayscale'" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Client END -->
+
+  <!-- =======================
+  Feature END -->
+  <pricing-feature />
+  <!-- =======================
+  Feature END -->
+
+  <!-- =======================
+  FAQ START -->
+  <pricing-faq />
+  <!-- =======================
+  FAQ END -->
+</main>
+
+<app-footer className="bg-light" />

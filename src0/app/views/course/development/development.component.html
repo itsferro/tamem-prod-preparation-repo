@@ -1,0 +1,236 @@
+<app-menu
+navClassName="container"
+menuClassName="mx-auto"
+[SearchWithText]="true"
+/>
+
+<main>
+<!-- =======================
+Page Banner START -->
+<!-- <catalog-banner /> -->
+ 
+   <!-- <development-tasks />   -->
+
+
+   <!-- <development-admin-dashboard />   -->
+
+
+   <!-- Admin Dashboard Navigation -->
+<div class="admin-dashboard-header">
+   @if (isAdmin) {
+   <div class="container-fluid">
+     <div class="row align-items-center" style="background-color: #408cdd; padding: 20px; border-radius: 5px;">
+       <div class="col-lg-8" style="color: #343a40;">
+         <h4><i class="fas fa-tachometer-alt me-2"></i>Development Administration</h4>
+         <p class="mb-0">Comprehensive overview and management of course development</p>
+       </div>
+       <div class="col-lg-4">
+         <div class="admin-controls">
+           <!-- Course Selector -->
+           <div class="course-selector mb-3">
+             <label class="form-label text-white mb-2">
+               <i class="fas fa-graduation-cap me-1"></i>Select Course:
+             </label>
+             <select class="form-select course-select" 
+                     [(ngModel)]="selectedCourseId" 
+                     (ngModelChange)="onCourseChange($event)">
+               <option value="" disabled>Choose a course...</option>
+               @for (course of availableCourses; track course.id) {
+                 <option [value]="course.id">{{ course.name }}</option>
+               }
+             </select>
+           </div>
+           
+           <!-- Action Buttons -->
+           <div class="action-buttons text-end">
+             <button class="btn btn-outline-light me-2" [disabled]="!selectedCourseId">
+               <i class="fas fa-cog me-1"></i>Settings
+             </button>
+             <button class="btn btn-outline-light" [disabled]="!selectedCourseId">
+               <i class="fas fa-chart-bar me-1"></i>Reports
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+}
+
+ </div>
+ 
+ <!-- Admin Navigation Tabs -->
+ <div class="container-fluid">
+   <div class="admin-nav-tabs">
+     <ul class="nav nav-tabs">
+       @if (isAdmin) {
+       <li class="nav-item">
+         <a class="nav-link" 
+            [class.active]="activeTab === 'overview'"
+            (click)="setActiveTab('overview')"
+            href="javascript:void(0);">
+           <i class="fas fa-chart-pie me-2"></i>Overview
+         </a>
+       </li>
+      
+       <li class="nav-item">
+         <a class="nav-link" 
+            [class.active]="activeTab === 'blocks'"
+            (click)="setActiveTab('blocks')"
+            href="javascript:void(0);">
+           <i class="fas fa-cubes me-2"></i>Course Blocks
+         </a>
+       </li>
+   }
+       <li class="nav-item">
+         <a class="nav-link" 
+            [class.active]="activeTab === 'tasks'"
+            (click)="setActiveTab('tasks')"
+            href="javascript:void(0);">
+           <i class="fas fa-tasks me-2"></i>Tasks Management
+         </a>
+       </li>
+       @if (isAdmin) {
+       <li class="nav-item">
+         <a class="nav-link" 
+            [class.active]="activeTab === 'team'"
+            (click)="setActiveTab('team')"
+            href="javascript:void(0);">
+           <i class="fas fa-users me-2"></i>Team Performance
+         </a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" 
+            [class.active]="activeTab === 'analytics'"
+            (click)="setActiveTab('analytics')"
+            href="javascript:void(0);">
+           <i class="fas fa-analytics me-2"></i>Analytics
+         </a>
+       </li>
+   }
+     </ul>
+   </div>
+ 
+   <!-- Tab Content -->
+   <div class="tab-content">
+     <!-- Overview Tab -->
+     @if (activeTab === 'overview') {
+       <div class="tab-pane-content">
+         <div class="row">
+           <div class="col-12">
+             <div class="overview-card">
+               <h4><i class="fas fa-chart-pie me-2"></i>Development Overview</h4>
+               <p>High-level metrics and key performance indicators for course development.</p>
+               @if (selectedCourseId) {
+                 <p class="text-muted">Currently viewing: <strong>{{ getSelectedCourse()?.name }}</strong></p>
+               } @else {
+                 <p class="text-warning">Please select a course to view overview metrics.</p>
+               }
+             </div>
+           </div>
+         </div>
+       </div>
+     }
+ 
+     <!-- Course Blocks Tab (Default Active) -->
+     @if (activeTab === 'blocks') {
+       <div class="tab-pane-content">
+         @if (selectedCourseId) {
+           <development-block-managment [selectedCourseId]="selectedCourseId" />
+         } @else {
+           <div class="no-course-selected">
+             <div class="text-center p-5">
+               <i class="fas fa-graduation-cap fa-3x text-muted mb-3"></i>
+               <h4 class="text-muted">No Course Selected</h4>
+               <p class="text-muted">Please select a course from the dropdown above to view its development status.</p>
+             </div>
+           </div>
+         }
+       </div>
+     }
+ 
+<!-- Tasks Management Tab -->
+@if (activeTab === 'tasks') {
+   <div class="tab-pane-content">
+     @if (selectedCourseId) {
+       <development-task-managment [courseId]="6" />
+     } @else {
+       <div class="no-course-selected">
+         <div class="text-center p-5">
+           <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
+           <h4 class="text-muted">No Course Selected</h4>
+           <p class="text-muted">Please select a course from the dropdown above to view task management.</p>
+         </div>
+       </div>
+     }
+   </div>
+ }
+ 
+     <!-- Team Performance Tab -->
+     @if (activeTab === 'team') {
+       <div class="tab-pane-content">
+         <div class="row">
+           <div class="col-12">
+             <div class="overview-card">
+               <h4><i class="fas fa-users me-2"></i>Team Performance</h4>
+               <p>Individual and team performance metrics and analytics.</p>
+               @if (selectedCourseId) {
+                 <p class="text-muted">Currently viewing: <strong>{{ getSelectedCourse()?.name }}</strong></p>
+               } @else {
+                 <p class="text-warning">Please select a course to view team performance.</p>
+               }
+             </div>
+           </div>
+         </div>
+       </div>
+     }
+ 
+     <!-- Analytics Tab -->
+     @if (activeTab === 'analytics') {
+       <div class="tab-pane-content">
+         <div class="row">
+           <div class="col-12">
+             <div class="overview-card">
+               <h4><i class="fas fa-analytics me-2"></i>Advanced Analytics</h4>
+               <p>Detailed analytics and reporting for development processes.</p>
+               @if (selectedCourseId) {
+                 <p class="text-muted">Currently viewing: <strong>{{ getSelectedCourse()?.name }}</strong></p>
+               } @else {
+                 <p class="text-warning">Please select a course to view analytics.</p>
+               }
+             </div>
+           </div>
+         </div>
+       </div>
+     }
+
+
+
+   </div>
+ </div>
+
+
+<!-- =======================
+Page Banner END -->
+
+<!-- =======================
+Catalog START -->
+
+
+<!-- <catalog-list/> -->
+<!-- =======================
+Catalog END -->
+
+<!-- =======================
+Language START -->
+<!-- <categories-language /> -->
+<!-- =======================
+Language END -->
+
+<!-- =======================
+Action box START -->
+<!-- <catalog-action-box /> -->
+<!-- =======================
+Action box END -->
+</main>
+
+<app-footer className="bg-light" />

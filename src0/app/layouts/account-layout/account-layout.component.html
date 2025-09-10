@@ -1,0 +1,72 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <section class="pt-0">
+    <div class="container-fluid px-0">
+      <div
+        class="bg-blue h-100px h-md-200px rounded-0"
+        style="
+          background: url(assets/images/pattern/04.png) no-repeat center center;
+          background-size: cover;
+        "
+      ></div>
+    </div>
+    <div class="container mt-n4">
+      <div class="row">
+        <div class="col-12">
+          @if (instructorLayout) {
+            <app-instructor-profile />
+          }
+
+          @if (studentLayout) {
+            <app-student-profile />
+          }
+
+          <hr class="d-xl-none" />
+          <div
+            class="col-12 col-xl-3 d-flex justify-content-between align-items-center"
+          >
+            <a class="h6 mb-0 fw-bold d-xl-none" href="javascript:void(0);"
+              >Menu</a
+            >
+            <button
+              class="btn btn-primary d-xl-none"
+              type="button"
+              (click)="openMenu()"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasSidebar"
+              aria-controls="offcanvasSidebar"
+            >
+              <i class="fas fa-sliders-h"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pt-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3">
+          <div
+            class="offcanvas-xl offcanvas-end"
+            tabindex="-1"
+            id="offcanvasSidebar"
+          >
+            <app-sidebar [layout]="layout" [currentRoute]="currentRoute" />
+          </div>
+        </div>
+        <div class="col-xl-9">
+          <router-outlet />
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer3 />

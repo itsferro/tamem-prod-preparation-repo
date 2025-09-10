@@ -1,0 +1,74 @@
+<div class="container">
+  @if (showAlert) {
+    <ngb-alert
+      [type]="'success'"
+      [dismissible]="false"
+      class="d-flex justify-content-between align-items-center fade show mt-2 mb-0 rounded-3 pe-2"
+    >
+      <div>
+        <div class="avatar avatar-xs me-2">
+          <img
+            class="avatar-img rounded-circle"
+            src="assets/images/avatar/09.jpg"
+            alt="avatar"
+          />
+        </div>
+        The personality development class starts at 2:00 pm, click to
+        <a href="javascript:void(0);" class="alert-link">Join Now</a>
+      </div>
+      <button
+        type="button"
+        class="btn btn-link text-primary-hover mb-0 text-end"
+        (click)="showAlert = false"
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </ngb-alert>
+  }
+</div>
+
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <!-- =======================
+  Main Banner START -->
+  <index5-banner />
+  <!-- =======================
+  Main Banner END -->
+
+  <!-- =======================
+  About START -->
+  <index5-about />
+  <!-- =======================
+  About END -->
+
+  <!-- =======================
+  Listed college START -->
+  <index5-listed-college />
+  <!-- =======================
+  Listed college END -->
+
+  <!-- =======================
+  Counter START -->
+  <index5-counter />
+  <!-- =======================
+  Counter END -->
+
+  <!-- =======================
+  Latest news START -->
+  <index5-latest-news />
+  <!-- =======================
+  Latest news END -->
+
+  <!-- =======================
+  Event START -->
+  <index5-event />
+  <!-- =======================
+  Event END -->
+</main>
+
+<app-footer className="bg-light" />

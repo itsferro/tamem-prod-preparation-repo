@@ -1,0 +1,130 @@
+<section class="pb-5 pt-0 pt-lg-5">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+        <h2 class="fs-1">Our Trending Courses</h2>
+        <p class="mb-0">Check out most 🔥 courses in the market</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="tiny-slider arrow-round arrow-blur arrow-hover">
+        <ng-tiny-slider
+          [config]="SliderSetting"
+          class="tiny-slider-inner pb-1"
+          data-autoplay="true"
+          data-arrow="true"
+          data-edge="2"
+          data-dots="false"
+          data-items="3"
+          data-items-lg="2"
+          data-items-sm="1"
+        >
+          @for (item of courseList; track $index) {
+            <div>
+              <div class="card action-trigger-hover border bg-transparent">
+                <img
+                  [src]="item.image"
+                  class="card-img-top"
+                  alt="course image"
+                />
+
+                @if (item.ribbon) {
+                  <div class="ribbon mt-3">
+                    <span>{{ item.ribbon }}</span>
+                  </div>
+                }
+
+                <div class="card-body pb-0">
+                  <div class="d-flex justify-content-between mb-3">
+                    <span class="hstack gap-2">
+                      @for (badge of item.badges; track badge) {
+                        <a
+                          href="javascript:void(0);"
+                          class="badge"
+                          [ngClass]="
+                            badge.class == 'dark'
+                              ? 'text-bg-dark'
+                              : 'bg-primary text-primary bg-opacity-10'
+                          "
+                          >{{ badge.text }}</a
+                        >
+                      }
+                    </span>
+                    <a href="javascript:void(0);" class="h6 fw-light mb-0"
+                      ><i class="far fa-bookmark"></i
+                    ></a>
+                  </div>
+
+                  <h5 class="card-title">
+                    <a href="javascript:void(0);">{{ item.title }}</a>
+                  </h5>
+
+                  <div class="d-flex justify-content-between mb-2">
+                    <div class="hstack gap-2">
+                      <p class="text-warning m-0">
+                        {{ item.rating
+                        }}<i class="fas fa-star text-warning ms-1"></i>
+                      </p>
+                      <span class="small">({{ item.reviews }})</span>
+                    </div>
+                    <div class="hstack gap-2">
+                      <p class="h6 fw-light mb-0 m-0">{{ item.students }}</p>
+                      <span class="small">(Student)</span>
+                    </div>
+                  </div>
+
+                  <div class="hstack gap-3">
+                    <span class="h6 fw-light mb-0"
+                      ><i class="far fa-clock text-danger me-2"></i
+                      >{{ item.time }}</span
+                    >
+                    <span class="h6 fw-light mb-0"
+                      ><i class="fas fa-table text-orange me-2"></i
+                      >{{ item.lectures }} lectures</span
+                    >
+                  </div>
+                </div>
+
+                <div class="card-footer pt-0 bg-transparent">
+                  <hr />
+
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="avatar avatar-sm">
+                        <img
+                          class="avatar-img rounded-1"
+                          [src]="item.instructor.avatar"
+                          alt="avatar"
+                        />
+                      </div>
+                      <p class="mb-0 ms-2">
+                        <a
+                          href="javascript:void(0);"
+                          class="h6 fw-light mb-0"
+                          >{{ item.instructor.name }}</a
+                        >
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 class="text-success mb-0 item-show">
+                        {{ item.price }}
+                      </h4>
+                      <a
+                        href="javascript:void(0);"
+                        class="btn btn-sm btn-success-soft item-show-hover"
+                        ><i class="fas fa-shopping-cart me-2"></i>Add to cart</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </ng-tiny-slider>
+      </div>
+    </div>
+  </div>
+</section>

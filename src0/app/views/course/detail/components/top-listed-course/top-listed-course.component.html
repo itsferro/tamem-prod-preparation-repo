@@ -1,0 +1,98 @@
+<section class="pt-0">
+  <div class="container">
+    <div class="row mb-4">
+      <h2 class="mb-0">Top Listed Courses</h2>
+    </div>
+
+    <div class="row">
+      <div class="tiny-slider arrow-round arrow-blur arrow-hover">
+        <ng-tiny-slider [config]="sliderConfig" class="tiny-slider-inner">
+          @for (item of courseList; track $index) {
+            <div class="pb-4">
+              <div class="card p-2 border">
+                <div class="rounded-top overflow-hidden">
+                  <div class="card-overlay-hover">
+                    <img
+                      [src]="item.image"
+                      class="card-img-top"
+                      alt="course image"
+                    />
+                  </div>
+
+                  <div class="card-img-overlay">
+                    <div class="card-element-hover d-flex justify-content-end">
+                      <a
+                        href="javascript:void(0);"
+                        class="icon-md bg-white rounded-circle text-center"
+                      >
+                        <i class="fas fa-shopping-cart text-danger"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <ul class="list-inline hstack gap-2 mb-0">
+                      <li
+                        class="list-inline-item d-flex justify-content-center align-items-center"
+                      >
+                        <div
+                          class="icon-md bg-orange bg-opacity-10 text-orange rounded-circle"
+                        >
+                          <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <span class="h6 fw-light ms-2 mb-0">{{
+                          item.info
+                        }}</span>
+                      </li>
+
+                      <li
+                        class="list-inline-item d-flex justify-content-center align-items-center"
+                      >
+                        <div
+                          class="icon-md bg-warning bg-opacity-15 text-warning rounded-circle"
+                        >
+                          <i class="fas fa-star"></i>
+                        </div>
+                        <span class="h6 fw-light ms-2 mb-0">{{
+                          item.rating
+                        }}</span>
+                      </li>
+                    </ul>
+
+                    <div class="avatar avatar-sm">
+                      <img
+                        class="avatar-img rounded-circle"
+                        [src]="item.avatar"
+                        alt="avatar"
+                      />
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <h5 class="card-title">
+                    <a href="javascript:void(0);">{{ item.title }}</a>
+                  </h5>
+
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      class="badge bg-info bg-opacity-10 text-info"
+                      ><i class="fas fa-circle small fw-bold me-2"></i
+                      >{{ item.category }}</a
+                    >
+
+                    <h3 class="text-success mb-0">${{ item.price }}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </ng-tiny-slider>
+      </div>
+    </div>
+  </div>
+</section>

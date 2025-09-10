@@ -1,0 +1,30 @@
+<section>
+  <div class="container">
+    <div class="row g-4">
+      @for (item of subjectsData; track $index) {
+        <div class="col-sm-6 col-lg-3">
+          <div
+            class="card bg-{{
+              item.background
+            }} bg-opacity-50 p-4 overflow-hidden h-100"
+          >
+            <div class="card-header bg-transparent p-0">
+              <h6>{{ item.grade_range }}</h6>
+            </div>
+
+            <div class="card-body p-0 mt-3">
+              <h3 class="mb-2">
+                <a href="javascript:void(0);" class="stretched-link">{{
+                  item.title
+                }}</a>
+              </h3>
+              <h6 class="lead">{{ item.lessons }} Lessons</h6>
+
+              <img [src]="item.image" class="opacity-5 mb-n5" alt="" />
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

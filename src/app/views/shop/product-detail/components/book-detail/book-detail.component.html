@@ -1,0 +1,362 @@
+<div class="col-12">
+  <ul
+    ngbNav
+    #nav="ngbNav"
+    class="nav nav-pills nav-pills-bg-soft px-3"
+    id="book-pills-tab"
+    role="tablist"
+  >
+    <li ngbNavItem class="nav-item me-2 me-sm-4" role="presentation">
+      <button
+        ngbNavLink
+        class="nav-link mb-0"
+        id="book-pills-tab-1"
+        data-bs-toggle="pill"
+        data-bs-target="#book-pills-1"
+        type="button"
+        role="tab"
+        aria-controls="book-pills-1"
+        aria-selected="true"
+      >
+        Author
+      </button>
+      <ng-template ngbNavContent>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <img
+              src="assets/images/instructor/08.jpg"
+              class="rounded-3"
+              alt=""
+            />
+          </div>
+          <div class="col-md-9">
+            <div class="d-sm-flex justify-content-sm-between">
+              <div class="mb-3">
+                <h3 class="mb-0">Dennis Barrett</h3>
+                <span>Publisher</span>
+              </div>
+
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                  <a class="mb-0 me-1 text-facebook" href="javascript:void(0);"
+                    ><i class="fab fa-fw fa-facebook-f"></i
+                  ></a>
+                </li>
+                <li class="list-inline-item ms-1">
+                  <a
+                    class="mb-0 me-1 text-instagram-gradient"
+                    href="javascript:void(0);"
+                    ><i class="fab fa-fw fa-instagram"></i
+                  ></a>
+                </li>
+                <li class="list-inline-item ms-1">
+                  <a class="mb-0 me-1 text-twitter" href="javascript:void(0);"
+                    ><i class="fab fa-fw fa-twitter"></i
+                  ></a>
+                </li>
+                <li class="list-inline-item ms-1">
+                  <a class="mb-0 text-linkedin" href="javascript:void(0);"
+                    ><i class="fab fa-fw fa-linkedin-in"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+
+            <P class="mt-3 mt-sm-0 mb-0"
+              >We understand that theory is important to build a solid
+              foundation, we understand that theory alone isn't going to get the
+              job done so that's why this course is packed with practical
+              hands-on examples that you can follow step by step.</P
+            >
+          </div>
+        </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem class="nav-item me-2 me-sm-4" role="presentation">
+      <button
+        ngbNavLink
+        class="nav-link mb-0"
+        id="book-pills-tab-2"
+        data-bs-toggle="pill"
+        data-bs-target="#book-pills-2"
+        type="button"
+        role="tab"
+        aria-controls="book-pills-2"
+        aria-selected="false"
+      >
+        Reviews
+      </button>
+      <ng-template ngbNavContent>
+        <div class="row mb-4">
+          <h4 class="mb-4">All Reviews</h4>
+
+          <div class="col-md-4 mb-3 mb-md-0">
+            <div class="text-center">
+              <h2 class="mb-0">{{ reviews.average_rating }}</h2>
+
+              <ul class="list-inline mb-0">
+                <ng-template #t let-fill="fill">
+                  <i class="far fa-star text-warning me-1">
+                    @if (fill > 0) {
+                      <i
+                        class="fas fa-star text-warning filled"
+                        [style.width.%]="fill"
+                      ></i>
+                    }
+                  </i>
+                </ng-template>
+
+                <ngb-rating
+                  [(rate)]="reviews.average_rating"
+                  [starTemplate]="t"
+                  [readonly]="true"
+                  [max]="5"
+                />
+              </ul>
+              <p class="mb-0">(Based on {{ reviews.total_reviews }} review)</p>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="row align-items-center text-center">
+              @for (progress of reviews.ratings_breakdown; track progress) {
+                <div class="col-6 col-sm-8">
+                  <ngb-progressbar
+                    type="warning"
+                    [value]="progress.percentage"
+                    [height]="'5px'"
+                  ></ngb-progressbar>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <ul class="list-inline mb-0">
+                    <ng-template #t let-fill="fill">
+                      <i class="far fa-star text-warning me-1">
+                        @if (fill > 0) {
+                          <i
+                            class="fas fa-star text-warning filled"
+                            [style.width.%]="fill"
+                          ></i>
+                        }
+                      </i>
+                    </ng-template>
+
+                    <ngb-rating
+                      [(rate)]="progress.star"
+                      [starTemplate]="t"
+                      [readonly]="true"
+                      [max]="5"
+                    />
+                  </ul>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          @for (review of reviews.reviews; track $index) {
+            <div class="d-md-flex my-4">
+              <div class="avatar avatar-xl me-4 flex-shrink-0">
+                <img
+                  class="avatar-img rounded-circle"
+                  [src]="review.reviewer.avatar"
+                  alt="avatar"
+                />
+              </div>
+
+              <div>
+                <div class="d-sm-flex mt-1 mt-md-0 align-items-center">
+                  <h5 class="me-3 mb-0">{{ review.reviewer.name }}</h5>
+
+                  <ul class="list-inline mb-0">
+                    <ng-template #t let-fill="fill">
+                      <i class="far fa-star text-warning me-1">
+                        @if (fill > 0) {
+                          <i
+                            class="fas fa-star text-warning filled"
+                            [style.width.%]="fill"
+                          ></i>
+                        }
+                      </i>
+                    </ng-template>
+
+                    <ngb-rating
+                      [(rate)]="review.rating"
+                      [starTemplate]="t"
+                      [readonly]="true"
+                      [max]="5"
+                    />
+                  </ul>
+                </div>
+
+                <p class="small mb-2">{{ review.date }}</p>
+                <p class="mb-2">{{ review.comment }}</p>
+
+                <a href="javascript:void(0);" class="text-body mb-0"
+                  ><i class="fas fa-reply me-2"></i>Reply</a
+                >
+              </div>
+            </div>
+
+            <hr />
+          }
+        </div>
+
+        <div class="mt-2">
+          <h5 class="mb-4">Leave a Review</h5>
+          <form
+            [formGroup]="reviewForm"
+            (ngSubmit)="onSubmit()"
+            class="row g-3"
+          >
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                id="inputtext"
+                formControlName="name"
+                form
+                placeholder="Name"
+                [ngClass]="{ 'is-invalid': submit && form['name'].errors }"
+                aria-label="First name"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submit && form['email'].errors }"
+                id="inputEmail4"
+              />
+            </div>
+
+            <div class="col-12">
+              <select
+                id="inputState2"
+                class="form-select js-choice"
+                formControlName="rating"
+                [ngClass]="{ 'is-invalid': submit && form['rating'].errors }"
+              >
+                <option selected="">★★★★★ (5/5)</option>
+                <option>★★★★☆ (4/5)</option>
+                <option>★★★☆☆ (3/5)</option>
+                <option>★★☆☆☆ (2/5)</option>
+                <option>★☆☆☆☆ (1/5)</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                formControlName="message"
+                [ngClass]="{ 'is-invalid': submit && form['message'].errors }"
+                placeholder="Your review"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary mb-0">
+                Post Review
+              </button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem class="nav-item me-2 me-sm-4" role="presentation">
+      <button
+        ngbNavLink
+        class="nav-link mb-0"
+        id="book-pills-tab-3"
+        data-bs-toggle="pill"
+        data-bs-target="#book-pills-3"
+        type="button"
+        role="tab"
+        aria-controls="book-pills-3"
+        aria-selected="false"
+      >
+        Shipping Method
+      </button>
+      <ng-template ngbNavContent>
+        <p>
+          As it so contrasted oh estimating instrument. Size like body someone
+          had. Are conduct viewing boy minutes warrant the expense? Tolerably
+          behavior may admit daughters offending her ask own. Praise effect
+          wishes change way and any wanted. Lively use looked latter regard had.
+          Do he it part more last in.
+        </p>
+
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="bg-light p-4 rounded-3">
+              <div class="row g-4 text-center mx-auto">
+                <div class="col-md-4 text-center">
+                  <div
+                    class="icon-xl bg-dark bg-opacity-10 mx-auto rounded-circle mb-3"
+                  >
+                    <i class="far fa-fw fa-file-alt"></i>
+                  </div>
+                  <h6>You place your order</h6>
+                </div>
+
+                <div class="col-md-4 text-center">
+                  <div
+                    class="icon-xl bg-dark bg-opacity-10 mx-auto rounded-circle mb-3"
+                  >
+                    <i class="fas fa-fw fa-truck-moving"></i>
+                  </div>
+
+                  <h6>We Ship Your Order</h6>
+                </div>
+
+                <div class="col-md-4 text-center">
+                  <div
+                    class="icon-xl bg-dark bg-opacity-10 mx-auto rounded-circle mb-3"
+                  >
+                    <i class="fas fa-fw fa-people-carry"></i>
+                  </div>
+
+                  <h6>Delivery</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Are conduct viewing boy minutes warrant the expense? Tolerably
+          behavior may admit daughters offending her ask own. Praise effect
+          wishes change way and any wanted. Lively use looked latter regard had.
+          Do he it part more last in.
+        </p>
+        <p>
+          <b>Processing time:</b> The time it takes to prepare your item(s) to
+          ship from our warehouse. This includes preparing your items,
+          performing quality checks, and packing for shipment.
+        </p>
+        <p>
+          <b>Shipping time:</b> The time for your item(s) to travel from our
+          warehouse to your destination.
+        </p>
+        <p>
+          Tolerably behavior may admit daughters offending her ask own. Praise
+          effect wishes change way and any wanted. Lively use looked latter
+          regard had. Do he it part more last in.
+        </p>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div
+    [ngbNavOutlet]="nav"
+    class="tab-content pt-4 px-3"
+    id="book-pills-tabContent"
+  ></div>
+</div>

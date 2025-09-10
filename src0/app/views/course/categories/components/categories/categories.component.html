@@ -1,0 +1,36 @@
+<section>
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+        <h2>Choose a Categories</h2>
+        <p class="mb-0">
+          Perceived end knowledge certainly day sweetness why cordially
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (item of categories; track $index) {
+        <div class="col-sm-6 col-md-4 col-xl-3">
+          <div
+            class="card card-body text-center position-relative btn-transition p-4 {{
+              item.background_class
+            }}"
+            (click)="goToCategory(item.category)"
+          >
+            <div class="icon-xl bg-body mx-auto rounded-circle mb-3">
+              <img [src]="item.image" alt="" />
+            </div>
+
+            <h5 class="mb-2">
+              <a href="javascript:void(0);" class="stretched-link">{{
+                item.category
+              }}</a>
+            </h5>
+            <h6 class="mb-0">{{ item.courses }} Courses</h6>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

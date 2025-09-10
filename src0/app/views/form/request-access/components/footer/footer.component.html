@@ -1,0 +1,59 @@
+<footer>
+  <div class="container">
+    <div class="row mx-auto">
+      <div class="col-lg-6 mx-auto text-center my-5">
+        <a class="me-0 mb-3 text-center" routerLink="/">
+          <img
+            class="light-mode-item mx-auto h-40px"
+            src="assets/images/logo.svg"
+            alt="logo"
+          />
+          <img
+            class="dark-mode-item mx-auto h-40px"
+            src="assets/images/logo-light.svg"
+            alt="logo"
+          />
+        </a>
+        <p class="mt-3">
+          Eduport education theme, built specifically for the education centers
+          which is dedicated to teaching and involving learners.
+        </p>
+
+        <ul
+          class="nav text-center text-sm-end justify-content-center justify-content-center text-primary-hover mt-3 mt-md-0"
+        >
+          @for (item of footerData; track $index; let last = $last) {
+            <li class="nav-item">
+              <a
+                class="nav-link text-body"
+                [ngClass]="{ 'pe-0': last }"
+                [routerLink]="item.link"
+                >{{ item.label }}</a
+              >
+            </li>
+          }
+        </ul>
+
+        <ul class="list-inline mb-0 social-media-btn mt-3">
+          @for (item of socials; track $index; let first = $first) {
+            <li class="list-inline-item" [ngClass]="{ 'ms-1': !first }">
+              <a
+                class="btn btn-white btn-sm shadow px-2 text-{{ item.label }}"
+                href="javascript:void(0);"
+              >
+                <i class="fab fa-fw {{ item.icon }}"></i>
+              </a>
+            </li>
+          }
+        </ul>
+
+        <div class="text-body text-primary-hover mt-3">
+          Copyrights ©{{ currentYear }} Eduport. Build by
+          <a [href]="credits.website" target="_blank" class="text-body">{{
+            credits.name
+          }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,89 @@
+<div class="row g-4 justify-content-center">
+  @for (item of productsList; track $index) {
+    <div class="col-lg-10 col-xxl-6">
+      <div class="card rounded overflow-hidden shadow">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="item.image" alt="card image" />
+          </div>
+
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <h5 class="card-title mb-0">
+                  <a href="javascript:void(0);">{{ item.title }}</a>
+                </h5>
+
+                <a href="javascript:void(0);" class="h6 fw-light"
+                  ><i
+                    [ngClass]="
+                      item.wishlist
+                        ? 'fas fa-heart text-danger'
+                        : 'far fa-heart'
+                    "
+                  ></i
+                ></a>
+              </div>
+
+              <ul class="list-inline mb-1">
+                <li class="list-inline-item h6 fw-light mb-1 mb-sm-0 me-2">
+                  <i class="far fa-clock text-danger me-2"></i
+                  >{{ item.duration }}
+                </li>
+                <li class="list-inline-item h6 fw-light mb-1 mb-sm-0 ms-1 me-2">
+                  <i class="fas fa-table text-orange me-2"></i
+                  >{{ item.lectures }} lectures
+                </li>
+                <li class="list-inline-item h6 fw-light ms-1">
+                  <i class="fas fa-signal text-success me-2"></i
+                  >{{ item.level }}
+                </li>
+              </ul>
+
+              <ul class="list-inline mb-0">
+                <ng-template #t let-fill="fill">
+                  <i class="far fa-star text-warning me-1">
+                    @if (fill > 0) {
+                      <i
+                        class="fas fa-star text-warning filled"
+                        [style.width.%]="fill"
+                      ></i>
+                    }
+                  </i>
+                </ng-template>
+
+                <ngb-rating
+                  [(rate)]="item.rating"
+                  [starTemplate]="t"
+                  [readonly]="true"
+                  [max]="5"
+                />
+                <li class="list-inline-item ms-2 h6 fw-light">
+                  {{ item.rating }}/5.0
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="col-12">
+  <nav class="mt-4 d-flex justify-content-center" aria-label="navigation">
+    <ngb-pagination
+      [collectionSize]="60"
+      [maxSize]="2"
+      [page]="2"
+      class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0"
+    >
+      <ng-template ngbPaginationPrevious
+        ><i class="fas fa-angle-double-left"></i>
+      </ng-template>
+      <ng-template ngbPaginationNext
+        ><i class="fas fa-angle-double-right"></i>
+      </ng-template>
+    </ngb-pagination>
+  </nav>
+</div>

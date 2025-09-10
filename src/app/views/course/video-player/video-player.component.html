@@ -1,0 +1,75 @@
+<main>
+  <section class="py-0 bg-dark position-relative">
+    <div class="row g-0">
+      <div class="d-flex">
+        <div class="overflow-hidden fullscreen-video w-100">
+          <div class="video-player rounded-3">
+            <video
+              appPlyr
+              controls
+              crossorigin="anonymous"
+              poster="assets/images/videos/poster.jpg"
+              [playsInline]="true"
+            >
+              <source
+                src="assets/images/videos/360p.mp4"
+                type="video/mp4"
+                size="360"
+              />
+              <source
+                src="assets/images/videos/720p.mp4"
+                type="video/mp4"
+                size="720"
+              />
+              <source
+                src="assets/images/videos/1080p.mp4"
+                type="video/mp4"
+                size="1080"
+              />
+
+              <track
+                kind="captions"
+                label="English"
+                srclang="en"
+                src="assets/images/videos/en.vtt"
+                default
+              />
+              <track
+                kind="captions"
+                label="French"
+                srclang="fr"
+                src="assets/images/videos/fr.vtt"
+              />
+            </video>
+          </div>
+        </div>
+
+        <div class="justify-content-end position-relative">
+          <button
+            class="navbar-toggler btn btn-white mt-4 plyr-toggler"
+            type="button"
+            (click)="isCollapsed = !isCollapsed"
+            data-bs-toggle="collapse"
+            [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseWidthExample"
+          >
+            <span class="navbar-toggler-animation">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+
+          <div
+            #collapse="ngbCollapse"
+            [(ngbCollapse)]="isCollapsed"
+            class="collapse collapse-horizontal"
+            id="collapseWidthExample"
+          >
+            <video-course-content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

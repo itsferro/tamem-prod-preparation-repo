@@ -1,0 +1,13 @@
+<section class="bg-light">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      @for (client of clientList; track $index) {
+        <div class="col-6 col-sm-4 col-lg-2">
+          <div class="p-4 grayscale text-center">
+            <img [src]="client.image" alt="" />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

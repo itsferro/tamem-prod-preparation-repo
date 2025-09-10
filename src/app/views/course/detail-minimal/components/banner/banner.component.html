@@ -1,0 +1,60 @@
+<section class="py-0 pb-lg-5">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="video-player rounded-3">
+          <video
+            appPlyr
+            controls
+            crossorigin="anonymous"
+            playsinline
+            poster="assets/images/videos/poster.jpg"
+          >
+            <source
+              src="assets/images/videos/360p.mp4"
+              type="video/mp4"
+              size="360"
+            />
+            <source
+              src="assets/images/videos/720p.mp4"
+              type="video/mp4"
+              size="720"
+            />
+            <source
+              src="assets/images/videos/1080p.mp4"
+              type="video/mp4"
+              size="1080"
+            />
+
+            <track
+              kind="captions"
+              label="English"
+              srclang="en"
+              src="assets/images/videos/en.vtt"
+              default
+            />
+            <track
+              kind="captions"
+              label="French"
+              srclang="fr"
+              src="assets/images/videos/fr.vtt"
+            />
+          </video>
+        </div>
+      </div>
+
+      <div class="col-12 d-lg-none">
+        <button
+          class="btn btn-primary mb-3"
+          type="button"
+          data-bs-toggle="offcanvas"
+          (click)="openPlaylist()"
+          data-bs-target="#offcanvasSidebar"
+          aria-controls="offcanvasSidebar"
+        >
+          <i class="bi bi-camera-video me-1"></i> Playlist
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

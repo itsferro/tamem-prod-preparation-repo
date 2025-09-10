@@ -1,0 +1,33 @@
+<app-menu
+  navClassName="container"
+  menuClassName="mx-auto"
+  [SearchWithText]="true"
+/>
+
+<main>
+  <!-- =======================
+  Page Banner START -->
+  <faq-banner />
+  <!-- =======================
+  Page Banner END -->
+
+  <!-- =======================
+  Page content START -->
+  <section class="pt-5 pb-0 pb-lg-5">
+    <div class="container">
+      <div class="row g-4 g-md-5">
+        <div class="col-lg-8">
+          <faq-list />
+        </div>
+
+        <div class="col-lg-4">
+          <faq-right-sidebar />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+  Page content END -->
+</main>
+
+<app-footer className="bg-light" />

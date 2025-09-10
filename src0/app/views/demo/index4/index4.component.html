@@ -1,0 +1,110 @@
+<index4-topbar />
+
+<main>
+  <index4-banner />
+
+  <index4-video />
+
+  <index4-category />
+
+  <index4-feature />
+
+  <index4-action-box />
+
+  <index4-itcourse />
+
+  <index4-live-course />
+
+  <index4-action-box2 />
+</main>
+
+<app-footer [className]="'bg-light'" />
+
+@if (showAlert) {
+  <ngb-alert
+    type="dark"
+    [dismissible]="false"
+    class="sticky-element fade show bg-dark text-white rounded-3 shadow p-4 ms-3 mb-3 col-10 col-md-4 col-lg-3 col-xl-2 d-none d-lg-block"
+    role="alert"
+  >
+    <div class="d-sm-flex align-items-center mb-3">
+      <div>
+        <div class="icon-lg bg-purple rounded-circle text-purple">
+          <img
+            class="p-3"
+            src="assets/images/client/aftereffect.svg"
+            alt="avatar"
+          />
+        </div>
+      </div>
+
+      <div class="ms-sm-2 mt-2 mt-sm-0">
+        <h6 class="mb-0 text-white">Adobe after effect motion</h6>
+        <span class="small mb-0 me-3"
+          ><i class="far fa-clock text-danger me-2"></i>30 mins</span
+        >
+        <span class="small mb-0 me-1"
+          ><i class="fas fa-circle fw-bold text-success small me-2"></i
+          >Live</span
+        >
+      </div>
+    </div>
+    <p class="mb-0 small">
+      Its recommended that you complete this assignment to improve your design
+      skills for graphics
+    </p>
+
+    <div class="d-sm-flex justify-content-between mt-4">
+      <ul class="avatar-group mb-2 mb-sm-0">
+        <li class="avatar avatar-xs">
+          <img
+            class="avatar-img rounded-circle"
+            src="assets/images/avatar/01.jpg"
+            alt="avatar"
+          />
+        </li>
+        <li class="avatar avatar-xs">
+          <img
+            class="avatar-img rounded-circle"
+            src="assets/images/avatar/02.jpg"
+            alt="avatar"
+          />
+        </li>
+        <li class="avatar avatar-xs">
+          <img
+            class="avatar-img rounded-circle"
+            src="assets/images/avatar/03.jpg"
+            alt="avatar"
+          />
+        </li>
+        <li class="avatar avatar-xs">
+          <img
+            class="avatar-img rounded-circle"
+            src="assets/images/avatar/06.jpg"
+            alt="avatar"
+          />
+        </li>
+      </ul>
+
+      <button
+        type="button"
+        class="btn btn-success btn-sm mb-0"
+        (click)="showAlert = false"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">Join now</span>
+      </button>
+    </div>
+
+    <div class="position-absolute end-0 top-0 mt-n3 me-n3">
+      <button
+        type="button"
+        class="btn btn-danger btn-round btn-sm mb-0"
+        (click)="showAlert = false"
+        aria-label="Close"
+      >
+        <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+      </button>
+    </div>
+  </ngb-alert>
+}
